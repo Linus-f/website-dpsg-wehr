@@ -26,7 +26,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
                     <MantineProvider>
                         <div className="flex flex-col h-screen justify-between">
                             <Navbar />
-                            <div className="mx-auto max-w-4xl px-6 mb-auto">
+                            <div className="md:mx-auto md:max-w-4xl px-6 mb-auto">
                                 {children}
                             </div>
                             <Footer />
