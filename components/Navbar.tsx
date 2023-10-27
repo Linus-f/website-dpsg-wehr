@@ -8,11 +8,12 @@ import {
     IoChevronDownOutline as ChevronDown,
 } from "react-icons/io5";
 import Link from "next/link";
+import ToggleThemeButton from "./ToggleThemeButton";
 
 const links = [
     { link: "/aktuelles", label: "Aktuelles" },
     {
-        link: "#1",
+        link: "",
         label: "Gruppen",
         links: [
             { link: "/gruppen/woelflinge", label: "Wölflinge" },
@@ -32,7 +33,7 @@ export default function Navbar() {
             <Menu.Item key={item.link}>
                 <Link
                     href={item.link}
-                    className="block leading-none py-2 px-3 font-light hover:bg-gray-100 rounded"
+                    className="block leading-none py-2 px-3 font-light hover:bg-gray-100 dark:hover:bg-gray-500 rounded dark:text-white"
                 >
                     {item.label}
                 </Link>
@@ -50,17 +51,17 @@ export default function Navbar() {
                     <Menu.Target>
                         <Link
                             href={link.link}
-                            className="block leading-none py-2 px-3 font-light hover:bg-gray-100 rounded"
+                            className="block leading-none py-2 px-3 font-light hover:bg-gray-100 dark:hover:bg-gray-500 rounded"
                         >
                             <Center>
                                 <span className="mr-1">{link.label}</span>
-                                <div className="mt-1 text-gray-600">
+                                <div className="mt-1 text-gray-600 dark:text-white">
                                     <ChevronDown />
                                 </div>
                             </Center>
                         </Link>
                     </Menu.Target>
-                    <Menu.Dropdown>{menuItems}</Menu.Dropdown>
+                <Menu.Dropdown className="dark:bg-gray-700 dark:border-slate-800">{menuItems}</Menu.Dropdown>
                 </Menu>
             );
         }
@@ -69,7 +70,7 @@ export default function Navbar() {
             <Link
                 key={link.label}
                 href={link.link}
-                className="block leading-none py-2 px-3 font-light hover:bg-gray-100 rounded"
+                className="block leading-none py-2 px-3 font-light rounded hover:bg-gray-100 dark:hover:bg-gray-500"
             >
                 {link.label}
             </Link>
@@ -77,7 +78,7 @@ export default function Navbar() {
     });
 
     return (
-        <header className="h-14 mb-28 px-4 border-b-2 border-solid">
+        <header className="h-14 mb-28 px-4 shadow-md">
             <div className="h-14 flex justify-between items-center max-w-4xl mx-auto">
                 <Group>
                     <Burger
@@ -95,6 +96,7 @@ export default function Navbar() {
                     <Group ml={50} gap={5} visibleFrom="sm">
                         {items}
                     </Group>
+					<ToggleThemeButton />
                     {/*<Autocomplete
             placeholder="Search"
             leftSection={<div className='text-gray-400'><SearchIcon/></div>}
