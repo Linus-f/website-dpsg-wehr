@@ -3,6 +3,10 @@ import { Inter } from 'next/font/google'
 import './globals.css'
 import Link from 'next/link'
 import Footer from '@/components/Footer'
+import Navbar from '@/components/Navbar'
+import '@mantine/core/styles.css'
+
+import { MantineProvider, ColorSchemeScript } from '@mantine/core'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -11,11 +15,7 @@ export const metadata: Metadata = {
     description: 'Website der DPSG Wehr',
 }
 
-export default function RootLayout({
-        children,
-        }: {
-children: React.ReactNode
-}) {
+export default function RootLayout({ children }: { children: React.ReactNode }) {
     const header = (
         <header className="mx-auto max-w-2xl">
             <div className="text-center bg-slate-800 p-8 my-6 rounded-md">
@@ -29,16 +29,18 @@ children: React.ReactNode
 
     return (
         <html lang="de">
-            <body className={inter.className}>                
-                <div className='flex flex-col h-screen justify-between'>
-                    {header}
-                    <div className="mx-auto max-w-2xl px-6 mb-auto">
-                        {children}
+            <head>
+                <ColorSchemeScript />
+            </head>
+            <body className={inter.className}>
+                <MantineProvider>
+                    <div className="flex flex-col h-screen justify-between">
+                        <Navbar />
+                        <div className="mx-auto max-w-4xl px-6 mb-auto">{children}</div>
+                        <Footer />
                     </div>
-                
-                    <Footer />
-                </div>
+                </MantineProvider>
             </body>
         </html>
-    )
+    );
 }

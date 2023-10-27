@@ -5,6 +5,8 @@ import {
     IoLogoFacebook as Facebook,
 } from 'react-icons/io5'
 
+import dpsgLogo from '../public/dpsg.svg'
+
 function SocialLink({children, url, hoverColor} : {children: React.ReactNode, url: string, hoverColor: string}) {
     return (
         <Link href={url} target='_blank'>
@@ -68,7 +70,7 @@ function FooterDPSG() {
             <h1 className='font-semibold text-lg mb-2'>DPSG</h1>
             <Link href="https://www.dpsg.de" target='_blank'>
                 <Image
-                    src="dpsg.svg"
+                    src={dpsgLogo}
                     alt="DPSG Logo"
                     width="224"
                     height="108"
@@ -101,7 +103,7 @@ function FooterMain() {
 export default function Footer() {
     return (
         <footer className="bg-gray-800 pb-2 mt-14">
-            <div className="max-w-sm sm:max-w-2xl px-3 flex flex-col justify-center mx-auto my-0">
+            <div className="max-w-sm sm:max-w-4xl px-3 flex flex-col justify-center mx-auto my-0">
                 <FooterMain />
                 <SocialMedia />
             </div>
