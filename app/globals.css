@@ -9,6 +9,7 @@
     }
 }
 
+/* Removes default mantine menu item hover effect */
 button.mantine-Menu-item {
     background-color: transparent !important;
 }
