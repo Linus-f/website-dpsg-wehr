@@ -78,7 +78,7 @@ export default function Navbar() {
     });
 
     return (
-        <header className="h-14 mb-28 px-4 shadow-md">
+        <header className="h-14 px-4 shadow-md sticky top-0 z-50 dark:bg-gray-700 bg-gray-50">
             <div className="h-14 flex justify-between items-center max-w-4xl mx-auto">
                 <Group>
                     <Burger
