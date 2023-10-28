@@ -8,12 +8,12 @@ import {
 } from "react-icons/io5";
 import Link from "next/link";
 import ToggleThemeButton from "./ToggleThemeButton";
-import { naviagtionLinks } from "@/lib/config";
+import { navigationLinks } from "@/lib/config";
 
 
 export default function Navbar({sidebarOpened, toggleSidebar} : {sidebarOpened: boolean, toggleSidebar: () => void}) {
 
-    const items = naviagtionLinks.map((link) => {
+    const items = navigationLinks.map((link) => {
         const menuItems = link.links?.map((item) => (
             <Menu.Item key={item.link}>
                 <Link
