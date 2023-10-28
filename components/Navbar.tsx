@@ -1,7 +1,6 @@
 "use client";
 
 import { Autocomplete, Group, Burger, Menu, Center } from "@mantine/core";
-import { useDisclosure } from "@mantine/hooks";
 
 import {
     IoSearchOutline as SearchIcon,
@@ -9,26 +8,12 @@ import {
 } from "react-icons/io5";
 import Link from "next/link";
 import ToggleThemeButton from "./ToggleThemeButton";
+import { naviagtionLinks } from "@/lib/config";
 
-const links = [
-    { link: "/aktuelles", label: "Aktuelles" },
-    {
-        link: "",
-        label: "Gruppen",
-        links: [
-            { link: "/gruppen/woelflinge", label: "Wölflinge" },
-            { link: "/gruppen/jungpfadfinder", label: "Jungpfadfinder" },
-            { link: "/gruppen/pfadfinder", label: "Pfadfinder" },
-            { link: "/gruppen/rover", label: "Rover" },
-            { link: "/gruppen/leiter", label: "Leiterrunde" },
-        ],
-    },
-];
 
-export default function Navbar() {
-    const [opened, { toggle }] = useDisclosure(false);
+export default function Navbar({sidebarOpened, toggleSidebar} : {sidebarOpened: boolean, toggleSidebar: () => void}) {
 
-    const items = links.map((link) => {
+    const items = naviagtionLinks.map((link) => {
         const menuItems = link.links?.map((item) => (
             <Menu.Item key={item.link}>
                 <Link
@@ -82,8 +67,8 @@ export default function Navbar() {
             <div className="h-14 flex justify-between items-center max-w-4xl mx-auto">
                 <Group>
                     <Burger
-                        opened={opened}
-                        onClick={toggle}
+                        opened={sidebarOpened}
+                        onClick={toggleSidebar}
                         size="sm"
                         hiddenFrom="sm"
                     />

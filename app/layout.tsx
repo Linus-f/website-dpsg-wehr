@@ -1,11 +1,10 @@
 import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
 import './globals.css'
-import Footer from '@/components/Footer'
-import Navbar from '@/components/Navbar'
 import '@mantine/core/styles.css'
 import { MantineProvider } from '@mantine/core'
 import Providers from './providers'
+import PageLayout from '@/components/PageLayout'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -24,13 +23,9 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             <body className={inter.className}>
                 <Providers>
                     <MantineProvider>
-                        <Navbar />
-                        <div className="flex flex-col h-[calc(100vh-56px)] overflow-auto justify-between">
-                            <div className="md:mx-auto md:max-w-4xl px-6 my-8 relative">
-                                {children}
-                            </div>
-                            <Footer />
-                        </div>
+                        <PageLayout>
+                            {children}
+                        </PageLayout>
                     </MantineProvider>
                 </Providers>
             </body>

@@ -1,15 +1,10 @@
-import getPostMetadata  from '../components/PostMetadata';
-import PostPreview from '../components/PostPreview';
+import Content from './pages/startseite/page.mdx'
 
 export default function Home() {
-    const postMetadata = getPostMetadata();
-    const postPreviews = postMetadata.map(data => (
-        <PostPreview key={data.slug} {...data} />
-    ));
-
     return (
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            {postPreviews}
-        </div>
-    );
+        <article className="prose sm:prose-lg dark:prose-invert">
+            <Content />
+        </article>
+
+    )
 }
