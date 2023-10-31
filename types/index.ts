@@ -5,3 +5,9 @@ export interface PostMetadata {
     author: string;
     slug: string;
 }
+
+export interface ArcostData {
+    left: string;
+    middle: string;
+    right: string;
+}
