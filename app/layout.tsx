@@ -2,7 +2,6 @@ import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
 import './globals.css'
 import '@mantine/core/styles.css'
-import { MantineProvider } from '@mantine/core'
 import Providers from './providers'
 import PageLayout from '@/components/PageLayout'
 
@@ -14,6 +13,7 @@ export const metadata: Metadata = {
 }
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
+ 
 
     return (
         <html lang="de" suppressHydrationWarning>
@@ -22,11 +22,9 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             </head>
             <body className={inter.className}>
                 <Providers>
-                    <MantineProvider>
-                        <PageLayout>
-                            {children}
-                        </PageLayout>
-                    </MantineProvider>
+                    <PageLayout>
+                        {children}
+                    </PageLayout>
                 </Providers>
             </body>
         </html>

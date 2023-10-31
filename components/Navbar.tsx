@@ -75,7 +75,7 @@ export default function Navbar({sidebarOpened, toggleSidebar} : {sidebarOpened: 
                     />
                     <Link href="/">
                         <div className="flex flex-row items-center">
-                            <Image width={50} height={50} src="/images/logo.png" alt="Logo" />
+                            <Image width={54} height={54} src="/images/logo.png" alt="Logo" />
                             <h1 className="font-bold text-lg">Pfadfinder Wehr</h1>
                         </div>
                     </Link>
