@@ -1,7 +1,7 @@
 "use client"
 
 import { DetailedHTMLProps, ImgHTMLAttributes, useContext, useEffect, useState } from "react";
-import Image from "next/image";
+import ExportedImage from "next-image-export-optimizer";
 import { LightboxContext } from "@/lib/LightboxContext";
 
 export default function MDXImage(props:  DetailedHTMLProps<ImgHTMLAttributes<HTMLImageElement>, HTMLImageElement>) {
@@ -30,7 +30,7 @@ export default function MDXImage(props:  DetailedHTMLProps<ImgHTMLAttributes<HTM
     ), []);
 
     return (
-        <Image
+        <ExportedImage
             src={props.src as string}
             alt={props.alt as string}
             width={870}
@@ -38,6 +38,7 @@ export default function MDXImage(props:  DetailedHTMLProps<ImgHTMLAttributes<HTM
             id={props.src as string}
             onClick={() => setOpen(props.src as string)}
             className="object-contain h-auto max-w-full transition duration-300 drop-shadow-xl hover:drop-shadow-2xl hover:scale-105"
+            placeholder="blur"
         />
     );
 }

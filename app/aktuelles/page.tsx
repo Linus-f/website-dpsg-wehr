@@ -11,7 +11,7 @@ export default function Aktuelles() {
 });
 
     return (
-        <div className="grid grid-cols-1 s:grid-cols-2 gap-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 max-w-md mx-auto sm:max-w-max">
             {postPreviews}
         </div>
     );
