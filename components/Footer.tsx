@@ -5,7 +5,7 @@ import {
     IoLogoFacebook as Facebook,
 } from 'react-icons/io5'
 
-import dpsgLogo from '../public/dpsg.svg'
+import dpsgLogo from '@/public/dpsg.svg'
 
 function SocialLink({children, url, hoverColor} : {children: React.ReactNode, url: string, hoverColor: string}) {
     return (
