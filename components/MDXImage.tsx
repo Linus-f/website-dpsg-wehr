@@ -6,8 +6,11 @@ import { LightboxContext } from "@/lib/LightboxContext";
 
 export default function MDXImage(props:  DetailedHTMLProps<ImgHTMLAttributes<HTMLImageElement>, HTMLImageElement>) {
     const { setOpen, addSlide, slides } = useContext(LightboxContext);
+    const [ mounted, setMounted ] = useState(false);
     
     useEffect(() => {
+        if (!mounted) return;
+
         var hasSlide = false;
         slides.forEach(element => {
             hasSlide = hasSlide || element.src == props.src;
@@ -21,6 +24,10 @@ export default function MDXImage(props:  DetailedHTMLProps<ImgHTMLAttributes<HTM
             title: props.alt as string,
         });
     }, [slides]);
+
+    useEffect(() => (
+        setMounted(true)
+    ), []);
 
     return (
         <Image
