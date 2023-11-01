@@ -1,4 +1,5 @@
-import Image, { StaticImageData } from 'next/image';
+import { StaticImageData } from 'next/image';
+import ExportedImage from "next-image-export-optimizer";
 import {
     RenderSlideProps,
     isImageFitCover,
@@ -31,7 +32,7 @@ export default function NextImageRenderer({ slide, rect } : Pick<RenderSlideProp
 
     return (
         <div style={{ position: "relative", width, height }}>
-            <Image
+            <ExportedImage
                 fill
                 alt=""
                 src={slide}

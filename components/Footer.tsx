@@ -1,4 +1,4 @@
-import Image from 'next/image';
+import ExportedImage from 'next-image-export-optimizer';
 import Link from 'next/link';
 import {
     IoLogoInstagram as Instagram,
@@ -69,7 +69,7 @@ function FooterDPSG() {
         <div className='md:flex-shrink-0 m-4 mb-0'>
             <h1 className='font-semibold text-lg mb-2'>DPSG</h1>
             <Link href="https://www.dpsg.de" target='_blank'>
-                <Image
+                <ExportedImage
                     src={dpsgLogo}
                     alt="DPSG Logo"
                     width="224"

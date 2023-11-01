@@ -9,7 +9,8 @@ import {
 import Link from "next/link";
 import ToggleThemeButton from "./ToggleThemeButton";
 import { navigationLinks } from "@/lib/config";
-import Image from "next/image";
+import ExportedImage from "next-image-export-optimizer";
+import logo from "@/public/images/logo.png";
 
 
 export default function Navbar({sidebarOpened, toggleSidebar} : {sidebarOpened: boolean, toggleSidebar: () => void}) {
@@ -75,7 +76,7 @@ export default function Navbar({sidebarOpened, toggleSidebar} : {sidebarOpened: 
                     />
                     <Link href="/">
                         <div className="flex flex-row items-center">
-                            <Image width={50} height={50} src="/images/logo.png" alt="Logo" />
+                            <ExportedImage width={50} height={50} src={logo} alt="Logo" />
                             <h1 className="font-bold text-lg ml-2 collapse w-0 xs:w-auto xs:visible">Pfadfinder Wehr</h1>
                         </div>
                     </Link>
