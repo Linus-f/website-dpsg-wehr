@@ -19,7 +19,17 @@ const getPostMetadata = (): PostMetadata[] => {
             subtitle: matterResult.data.subtitle,
             author: matterResult.data.author,
             slug: dir,
+            image: matterResult.data.image,
+            desc: matterResult.data.desc,
         }
+    });
+
+    posts.sort((a, b) => {
+
+        const dateA = new Date(a.date);
+        const dateB = new Date(b.date);
+
+        return dateB.getTime() - dateA.getTime();
     });
 
     return posts;

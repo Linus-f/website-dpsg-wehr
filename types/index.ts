@@ -4,6 +4,8 @@ export interface PostMetadata {
     subtitle: string;
     author: string;
     slug: string;
+    image: string;
+    desc: string;
 }
 
 export interface ArcostData {
