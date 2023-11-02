@@ -4,19 +4,22 @@ import PhotoAlbum from "react-photo-album"
 import NextPhotoRenderer from "./NextPhotoRenderer"
 import { PhotoPlus } from "@/types"
 import type { Photo } from "react-photo-album"
-import { useContext, useEffect } from "react";
+import { useContext, useEffect, useState } from "react";
 import { LightboxContext } from "@/lib/LightboxContext";
 
 export default function PhotoAlbumWrapper({ photos } : { photos: Photo[] }) {
     const { setSlides } = useContext(LightboxContext);
+    const [mounted, setMounted] = useState(false);
 
     useEffect(() => {
+        if (!mounted) return setMounted(true);
+
         setSlides(photos.map((photo: Photo) => ({
             src: photo.src,
             alt: photo.alt,
             title: photo.alt,
         })));
-    }, []);
+    }, [mounted]);
 
 
     return (
