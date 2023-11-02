@@ -13,17 +13,17 @@ function getImageDimensions(src: string) {
 }
 
 const photoInfo: {src: string, alt: string, tags: string[]}[] = [
-    { src: "/images/jurtenaktion16/jurtenaktion_2016_01.png", alt: "", tags: [] },
-    { src: "/images/jurtenaktion16/jurtenaktion_2016_02.png", alt: "", tags: [] },
-    { src: "/images/jurtenaktion16/jurtenaktion_2016_03.png", alt: "", tags: [] },
-    { src: "/images/jurtenaktion16/jurtenaktion_2016_04.png", alt: "", tags: [] },
-    { src: "/images/jurtenaktion16/jurtenaktion_2016_05.png", alt: "", tags: [] },
-    { src: "/images/jurtenaktion16/jurtenaktion_2016_06.png", alt: "", tags: [] },
-    { src: "/images/jurtenaktion16/jurtenaktion_2016_07.png", alt: "", tags: [] },
-    { src: "/images/jurtenaktion16/jurtenaktion_2016_08.png", alt: "", tags: [] },
-    { src: "/images/jurtenaktion16/jurtenaktion_2016_09.png", alt: "", tags: [] },
-    { src: "/images/jurtenaktion16/jurtenaktion_2016_10.png", alt: "", tags: [] },
-    { src: "/images/jurtenaktion16/jurtenaktion_2016_11.png", alt: "", tags: [] }
+    { src: "/images/jurtenaktion16/jurtenaktion_2016_01.png", alt: "", tags: ["1"] },
+    { src: "/images/jurtenaktion16/jurtenaktion_2016_02.png", alt: "", tags: ["1"] },
+    { src: "/images/jurtenaktion16/jurtenaktion_2016_03.png", alt: "", tags: ["1"] },
+    { src: "/images/jurtenaktion16/jurtenaktion_2016_04.png", alt: "", tags: ["1"] },
+    { src: "/images/jurtenaktion16/jurtenaktion_2016_05.png", alt: "", tags: ["2"] },
+    { src: "/images/jurtenaktion16/jurtenaktion_2016_06.png", alt: "", tags: ["1", "2"] },
+    { src: "/images/jurtenaktion16/jurtenaktion_2016_07.png", alt: "", tags: ["3"] },
+    { src: "/images/jurtenaktion16/jurtenaktion_2016_08.png", alt: "", tags: ["3"] },
+    { src: "/images/jurtenaktion16/jurtenaktion_2016_09.png", alt: "", tags: ["3"] },
+    { src: "/images/jurtenaktion16/jurtenaktion_2016_10.png", alt: "", tags: ["3"] },
+    { src: "/images/jurtenaktion16/jurtenaktion_2016_11.png", alt: "", tags: ["3"] }
 ]
 
 
@@ -40,6 +40,7 @@ export async function getPhotos() {
             height: dimensions.height,
             alt: info.alt,
             srcSet: getSrcSet(info.src, dimensions.width, dimensions.height),   
+            tags: info.tags,
         }
     }).filter((photo) => photo !== undefined) as PhotoPlus[];
 

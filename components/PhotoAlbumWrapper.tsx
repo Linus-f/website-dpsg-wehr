@@ -6,25 +6,30 @@ import { PhotoPlus } from "@/types"
 import { useContext, useEffect, useState } from "react";
 import { LightboxContext } from "@/lib/LightboxContext";
 
-export default function PhotoAlbumWrapper({ photos } : { photos: PhotoPlus[] }) {
+export default function PhotoAlbumWrapper({ photos, tags } : { photos: PhotoPlus[], tags: string[] }) {
     const { setSlides } = useContext(LightboxContext);
     const [mounted, setMounted] = useState(false);
+    const [fileredPhotos, setFilteredPhotos] = useState<PhotoPlus[]>([]);
 
     useEffect(() => {
         if (!mounted) return setMounted(true);
 
-        setSlides(photos.map((photo: PhotoPlus) => ({
+        const filtered = photos.filter((photo: PhotoPlus) => (tags.length === 0 || (photo.tags && tags.every((tag: string) => photo.tags!.includes(tag)))));
+        setFilteredPhotos(filtered);
+
+        setSlides(filtered.map((photo: PhotoPlus) => ({
             src: photo.src,
             alt: photo.alt,
             title: photo.alt,
+            width: photo.width,
+            height: photo.height,
             //srcSet: photo.srcSet,
         })));
-    }, [mounted]);
-
+    }, [mounted, tags]);
 
     return (
         <PhotoAlbum
-            photos={photos}
+            photos={fileredPhotos}
             layout="rows"
             renderPhoto={NextPhotoRenderer}
             sizes={{
