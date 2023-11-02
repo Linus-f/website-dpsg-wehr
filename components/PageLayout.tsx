@@ -8,7 +8,7 @@ import Lightbox, { SlideImage } from 'yet-another-react-lightbox';
 import Fullscreen from "yet-another-react-lightbox/plugins/fullscreen";
 import Captions from "yet-another-react-lightbox/plugins/captions";
 import { LightboxContext } from '@/lib/LightboxContext';
-import NextImageRenderer from '@/components/NextImageRenderer';
+import NextLightboxRenderer from '@/components/NextLightboxRenderer';
 import  { usePathname } from 'next/navigation';
 import { useTheme } from 'next-themes';
 
@@ -55,13 +55,14 @@ export default function PageLayout({children}: {children: React.ReactNode}) {
                     setOpen: openLightbox,
                     slides: slides,
                     addSlide: addSlide,
+                    setSlides: setSlides,
                 }}
             >
                 <div>
                     <Navbar sidebarOpened={open} toggleSidebar={toggleOpen} />
                     <div className="flex flex-col h-[calc(100vh-56px)] overflow-auto justify-between">
                         <Sidebar isOpen={open} toggle={toggleOpen} />
-                        <div className="md:mx-auto md:max-w-4xl px-6 my-8 relative">
+                        <div className={`${dynamicRoute == "/gallerie" ? "" : "max-w-4xl md:mx-auto"} px-2 s:px-4 my-8 relative`}>
                             {children}
                         </div>
                         <Footer />
@@ -70,7 +71,7 @@ export default function PageLayout({children}: {children: React.ReactNode}) {
                             open={lightBoxOpen}
                             close={() => setLightboxOpen(false)}
                             slides={slides}
-                            render={{ slide: NextImageRenderer }}
+                            render={{ slide: NextLightboxRenderer }}
                             index={index}
                             plugins={[Fullscreen, Captions]}
                         />

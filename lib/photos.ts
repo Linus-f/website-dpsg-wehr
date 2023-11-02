@@ -1,0 +1,46 @@
+import type { Photo } from "react-photo-album"
+import type { PhotoPlus } from "@/types"
+import sizeOf from "image-size"
+import path from "path"
+
+const breakpoints = [1080, 640, 384, 256, 128, 96, 64, 48];
+
+function getImageDimensions(src: string) {
+    try {
+        const dimensions = sizeOf(`public/${src}`);
+        return dimensions;
+    } catch (error) {
+        return null;
+    }
+}
+
+const photoInfo: {src: string, alt: string, tags: string[]}[] = [
+    { src: "/images/jurtenaktion16/jurtenaktion_2016_01.png", alt: "", tags: [] },
+    { src: "/images/jurtenaktion16/jurtenaktion_2016_02.png", alt: "", tags: [] },
+    { src: "/images/jurtenaktion16/jurtenaktion_2016_03.png", alt: "", tags: [] },
+    { src: "/images/jurtenaktion16/jurtenaktion_2016_04.png", alt: "", tags: [] },
+    { src: "/images/jurtenaktion16/jurtenaktion_2016_05.png", alt: "", tags: [] },
+    { src: "/images/jurtenaktion16/jurtenaktion_2016_06.png", alt: "", tags: [] },
+    { src: "/images/jurtenaktion16/jurtenaktion_2016_07.png", alt: "", tags: [] },
+    { src: "/images/jurtenaktion16/jurtenaktion_2016_08.png", alt: "", tags: [] },
+    { src: "/images/jurtenaktion16/jurtenaktion_2016_09.png", alt: "", tags: [] },
+    { src: "/images/jurtenaktion16/jurtenaktion_2016_10.png", alt: "", tags: [] },
+    { src: "/images/jurtenaktion16/jurtenaktion_2016_11.png", alt: "", tags: [] }
+]
+
+export async function getPhotos() {
+    
+    const photos = photoInfo.map((info) => {
+        const dimensions = getImageDimensions(info.src);
+        if (dimensions === null || dimensions.width == undefined || dimensions.height == undefined) return;
+
+        return {
+            src: info.src,
+            width: dimensions.width,
+            height: dimensions.height,
+            alt: info.alt,
+        }
+    }).filter((photo) => photo !== undefined) as PhotoPlus[];
+
+    return photos;
+}

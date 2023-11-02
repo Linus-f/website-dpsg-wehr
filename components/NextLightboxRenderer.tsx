@@ -16,7 +16,7 @@ function isNextJsImage(slide: Slide): slide is StaticImageData {
     )
 }
 
-export default function NextImageRenderer({ slide, rect } : Pick<RenderSlideProps, "slide" | "rect">) {
+export default function NextLightboxRenderer({ slide, rect } : Pick<RenderSlideProps, "slide" | "rect">) {
     const { imageFit } = useLightboxProps().carousel;
     const cover = isImageSlide(slide) && isImageFitCover(slide, imageFit);
 
