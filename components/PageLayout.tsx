@@ -7,8 +7,8 @@ import { useEffect, useState } from 'react';
 import Lightbox, { SlideImage } from 'yet-another-react-lightbox';
 import Fullscreen from "yet-another-react-lightbox/plugins/fullscreen";
 import Captions from "yet-another-react-lightbox/plugins/captions";
+import Zoom from "yet-another-react-lightbox/plugins/zoom";
 import { LightboxContext } from '@/lib/LightboxContext';
-import NextLightboxRenderer from '@/components/NextLightboxRenderer';
 import  { usePathname } from 'next/navigation';
 import { useTheme } from 'next-themes';
 
@@ -18,7 +18,7 @@ import { MantineProvider } from '@mantine/core';
 
 export default function PageLayout({children}: {children: React.ReactNode}) {
     const [open, setOpen] = useState(false);
-    const [slides, setSlides] = useState<SlideImage[]>([]); // [{ src: "/images/gruppenbild.png" }
+    const [slides, setSlides] = useState<SlideImage[]>([]);
     const [lightBoxOpen, setLightboxOpen] = useState(false);
     const [index, setIndex] = useState(0);
 
@@ -37,7 +37,7 @@ export default function PageLayout({children}: {children: React.ReactNode}) {
             setSlides([slide, ...slides]);
         }
     }
-
+   
     const openLightbox = (src: string) => {
         slides.forEach((slide, i) => {
             if (slide.src == src) {
@@ -45,12 +45,14 @@ export default function PageLayout({children}: {children: React.ReactNode}) {
             }
         });
 
+        
         setLightboxOpen(true);
     }
 
     return (
-        <MantineProvider forceColorScheme={theme as 'light' | 'dark' | undefined}>
-            <LightboxContext.Provider value={{
+        <MantineProvider forceColorScheme={theme as "light" | "dark" | undefined}>
+            <LightboxContext.Provider
+                value={{
                     open: lightBoxOpen,
                     setOpen: openLightbox,
                     slides: slides,
@@ -62,7 +64,13 @@ export default function PageLayout({children}: {children: React.ReactNode}) {
                     <Navbar sidebarOpened={open} toggleSidebar={toggleOpen} />
                     <div className="flex flex-col h-[calc(100vh-56px)] overflow-auto justify-between">
                         <Sidebar isOpen={open} toggle={toggleOpen} />
-                        <div className={`${dynamicRoute == "/gallerie" ? "" : "max-w-4xl md:mx-auto"} px-2 s:px-4 my-8 relative`}>
+                        <div
+                            className={`${
+                                dynamicRoute == "/gallerie"
+                                    ? ""
+                                    : "max-w-4xl md:mx-auto"
+                            } px-2 s:px-4 my-8 relative`}
+                        >
                             {children}
                         </div>
                         <Footer />
@@ -71,9 +79,10 @@ export default function PageLayout({children}: {children: React.ReactNode}) {
                             open={lightBoxOpen}
                             close={() => setLightboxOpen(false)}
                             slides={slides}
-                            render={{ slide: NextLightboxRenderer }}
+                            /*render={{ slide: NextLightboxRenderer }}*/
                             index={index}
-                            plugins={[Fullscreen, Captions]}
+                            plugins={[Fullscreen, Captions, Zoom]}
+                           
                         />
                     </div>
                 </div>

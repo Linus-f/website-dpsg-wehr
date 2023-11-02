@@ -25,6 +25,7 @@
     "react-dom": "^18.2.0",
     "react-icons": "^4.11.0",
     "react-photo-album": "^2.3.0",
+    "rehype-img-size": "^1.0.1",
     "remark-frontmatter": "^5.0.0",
     "remark-gfm": "^4.0.0",
     "sharp": "^0.32.6",

@@ -18,4 +18,5 @@ export interface ArcostData {
 
 export interface PhotoPlus extends Photo {
     tags?: string[];
+    optimizedSrc?: string;
 }

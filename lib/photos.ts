@@ -1,9 +1,7 @@
-import type { Photo } from "react-photo-album"
 import type { PhotoPlus } from "@/types"
 import sizeOf from "image-size"
-import path from "path"
+import { getOptimizedUrl, getSrcSet } from "./photoSrc"
 
-const breakpoints = [1080, 640, 384, 256, 128, 96, 64, 48];
 
 function getImageDimensions(src: string) {
     try {
@@ -28,6 +26,7 @@ const photoInfo: {src: string, alt: string, tags: string[]}[] = [
     { src: "/images/jurtenaktion16/jurtenaktion_2016_11.png", alt: "", tags: [] }
 ]
 
+
 export async function getPhotos() {
     
     const photos = photoInfo.map((info) => {
@@ -36,9 +35,11 @@ export async function getPhotos() {
 
         return {
             src: info.src,
+            optimizedSrc: getOptimizedUrl(info.src, dimensions.width),
             width: dimensions.width,
             height: dimensions.height,
             alt: info.alt,
+            srcSet: getSrcSet(info.src, dimensions.width, dimensions.height),   
         }
     }).filter((photo) => photo !== undefined) as PhotoPlus[];
 

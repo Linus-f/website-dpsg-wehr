@@ -3,6 +3,7 @@
 import { DetailedHTMLProps, ImgHTMLAttributes, useContext, useEffect, useState } from "react";
 import ExportedImage from "next-image-export-optimizer";
 import { LightboxContext } from "@/lib/LightboxContext";
+import { getSrcSet } from "@/lib/photoSrc";
 
 export default function MDXImage(props:  DetailedHTMLProps<ImgHTMLAttributes<HTMLImageElement>, HTMLImageElement>) {
     const { setOpen, addSlide, slides } = useContext(LightboxContext);
@@ -22,6 +23,7 @@ export default function MDXImage(props:  DetailedHTMLProps<ImgHTMLAttributes<HTM
             src: props.src as string, 
             alt: props.alt as string,
             title: props.alt as string,
+            srcSet: getSrcSet(props.src as string, props.width as number, props.height as number)
         });
     }, [slides]);
 
@@ -33,8 +35,8 @@ export default function MDXImage(props:  DetailedHTMLProps<ImgHTMLAttributes<HTM
         <ExportedImage
             src={props.src as string}
             alt={props.alt as string}
-            width={870}
-            height={1160}
+            width={props.width as number}
+            height={props.height as number}
             id={props.src as string}
             onClick={() => setOpen(props.src as string)}
             className="object-contain h-auto max-w-full transition duration-300 drop-shadow-xl hover:drop-shadow-2xl hover:scale-105 cursor-pointer"
