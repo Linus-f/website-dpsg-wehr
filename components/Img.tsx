@@ -1,3 +1,5 @@
+"use client";
+
 import ExportedImage, { ExportedImageProps } from "next-image-export-optimizer";
 import { HTMLProps, useState } from "react";
 

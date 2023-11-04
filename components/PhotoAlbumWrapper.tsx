@@ -62,8 +62,9 @@ export default function PhotoAlbumWrapper({ photos } : { photos: PhotoPlus[] }) 
                 layout="rows"
                 renderPhoto={NextPhotoRenderer}
                 sizes={{
-                    size: "calc(100vw - 32px)",
+                    size: "896px",
                     sizes: [
+                        { viewport: "(max-width: 896px)", size: "calc(100vw - 32px)" },
                         { viewport: "(max-width: 559px)", size: "calc(100vw - 16px)" },
                     ]
                 }}
