@@ -20,3 +20,9 @@ export interface PhotoPlus extends Photo {
     tags?: string[];
     optimizedSrc?: string;
 }
+
+export interface TagGroup {
+    name: string;
+    tags: string[];
+    selectedTags: string[];
+}
