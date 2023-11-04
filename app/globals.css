@@ -91,3 +91,20 @@
 button.mantine-Menu-item {
     background-color: transparent !important;
 }
+
+.img-blur {
+    filter: blur(5px);
+}
+
+.unblur {
+    animation: unblur 0.5s linear;
+}
+
+@keyframes unblur {
+    from {
+        filter: blur(5px);
+    }
+    to {
+        filter: blur(0px);
+    }
+}

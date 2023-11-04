@@ -4,6 +4,7 @@ import { DetailedHTMLProps, ImgHTMLAttributes, useContext, useEffect, useState }
 import ExportedImage from "next-image-export-optimizer";
 import { LightboxContext } from "@/lib/LightboxContext";
 import { getSrcSet } from "@/lib/photoSrc";
+import Img from "./Img";
 
 export default function MDXImage(props:  DetailedHTMLProps<ImgHTMLAttributes<HTMLImageElement>, HTMLImageElement>) {
     const { setOpen, addSlide, slides } = useContext(LightboxContext);
@@ -32,7 +33,7 @@ export default function MDXImage(props:  DetailedHTMLProps<ImgHTMLAttributes<HTM
     ), []);
 
     return (
-        <ExportedImage
+        <Img
             src={props.src as string}
             alt={props.alt as string}
             width={props.width as number}

@@ -2,6 +2,7 @@ import ExportedImage from "next-image-export-optimizer";
 import type { RenderPhotoProps } from "react-photo-album";
 import { useContext } from "react";
 import { LightboxContext } from "@/lib/LightboxContext";
+import Img from "./Img";
 
 export default function NextPhotoRenderer({ 
     photo, 
@@ -12,8 +13,7 @@ export default function NextPhotoRenderer({
 
     return (
         <div style={{ ...wrapperStyle, position: "relative" }} className="cursor-pointer">
-            <ExportedImage
-                fill
+            <Img
                 src={photo}
                 onClick={() => setOpen(photo.src)}
                 placeholder={"blurDataURL" in photo ? "blur" : undefined}
