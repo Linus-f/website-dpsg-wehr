@@ -1,7 +1,8 @@
 import { ArcostData } from "@/types";
 import {
     IoNewspaper,
-    IoPeople
+    IoPeople,
+    IoImage
 } from "react-icons/io5"
 
 export interface NavigationLinkGroup {
@@ -24,7 +25,8 @@ export const navigationLinks: Array<NavigationLinkGroup> = [
         { label: "Pfadfinder", link: "/pages/gruppen/pfadfinder" },
         { label: "Rover", link: "/pages/gruppen/rover" },
         { label: "Leiterrunde", link: "/pages/gruppen/leiter" }
-    ]}
+    ]},
+    { label: "Gallerie", link: "/gallerie", Icon: IoImage },
 ]
 
 export const acrostData: ArcostData[] = [

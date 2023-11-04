@@ -35,6 +35,5 @@ yarn-error.log*
 next-env.d.ts
 
 # next image optimizer
-/public/nextImageExportOptimizer
-/public/images/nextImageExportOptimizer
+**/nextImageExportOptimizer/
 /public/images/next-image-export-optimizer-hashes.json

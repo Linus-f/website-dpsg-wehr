@@ -6,6 +6,7 @@ export const LightboxContext = createContext({
     setOpen: (src: string) => {},
     slides: [] as SlideImage[],
     addSlide: (slide: SlideImage) => {},
+    setSlides : (slides: SlideImage[]) => {},
 });
 
 
