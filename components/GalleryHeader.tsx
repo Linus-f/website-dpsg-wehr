@@ -1,5 +1,6 @@
 import { TagGroup } from "@/types";
 import SelectWrapper from "./SelectWrapper";
+import Collapsible from "./Collapsible";
 
 
 export default function GalleryHeader({tags, setTags}: {tags: TagGroup[], setTags: (tags: TagGroup[]) => void}) {
@@ -13,9 +14,11 @@ export default function GalleryHeader({tags, setTags}: {tags: TagGroup[], setTag
     ));
 
     return (
-        <div className="mb-4 flex flex-row place-content-between gap-4">
-            {dropdowns}
-        </div>
+        <Collapsible label="Filter">
+            <div className="mb-4 flex flex-col md:flex-row place-content-between gap-4">
+                {dropdowns}
+            </div>
+        </Collapsible>
     );
 }
 

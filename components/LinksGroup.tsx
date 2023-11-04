@@ -43,7 +43,7 @@ export function LinksGroup({ navigationLinks, toggleSidebar }: { navigationLinks
           </div>
           {hasLinks && (
             <div className={`text-gray-600 dark:text-white ${opened ? '' : 'transform -rotate-90'}`}>
-            <ChevronDown/>
+              <ChevronDown/>
             </div>
           )}
         </div>
