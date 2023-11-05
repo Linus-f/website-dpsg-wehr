@@ -3,7 +3,8 @@ import {
     IoNewspaper,
     IoPeople,
     IoImage,
-    IoCalendarOutline as CalendarIcon
+    IoCalendarOutline as CalendarIcon,
+    IoHelpCircle as QuestionIcon,
 } from "react-icons/io5"
 
 export interface NavigationLinkGroup {
@@ -29,6 +30,7 @@ export const navigationLinks: Array<NavigationLinkGroup> = [
     ]},
     { label: "Fotos", link: "/gallerie", Icon: IoImage },
     { label: "Termine", link: "/pages/termine", Icon: CalendarIcon },
+    { label: "FAQ", link: "/pages/faq", Icon: QuestionIcon },
 ]
 
 export const acrostData: ArcostData[] = [

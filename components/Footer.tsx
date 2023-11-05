@@ -47,9 +47,9 @@ function SocialMedia() {
     );
 }
 
-function FooterLink({ url, text } : {url: string, text: string}) {
+function FooterLink({ url, text, external = true } : {url: string, text: string, external?: boolean }) {
     return (
-        <Link href={url} target="_blank" className='text-green-50 hover:underline text-sm mb-1'>
+        <Link href={url} target={external ? "_blank" : ""} className='text-green-50 hover:underline text-sm mb-1'>
             {text}
         </Link>
     )
@@ -90,8 +90,8 @@ function FooterMain() {
                     <FooterLink url="http://www.pfadfinderhaus-noeggenschwiel.de/" text="Pfadfinderhaus Nöggenschwiel" />
                 </FooterLinkColumn>
                 <FooterLinkColumn title="Sonstiges">
-                    <FooterLink url="/" text="Impressum" />
-                    <FooterLink url="/" text="Datenschutz" />
+                    <FooterLink url="/pages/impressum" text="Impressum" external={false} />
+                    <FooterLink url="/pages/datenschutz" text="Datenschutz" external={false} />
                     <FooterLink url="https://github.com/Linus-f/website-dpsg-wehr" text="Quellcode" />
                 </FooterLinkColumn>
             </div>
