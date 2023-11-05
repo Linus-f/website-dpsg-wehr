@@ -20,7 +20,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             <head>
                 
             </head>
-            <body className={inter.className}>
+            <body className={`${inter.className} antialiased`}>
                 <Providers>
                     <PageLayout>
                         {children}
