@@ -1,6 +1,7 @@
 import getPostMetadata  from '@/lib/PostMetadata';
 import PostPreview from '@/components/PostPreview';
 import { formatPostDate } from '@/lib/date';
+import Calendar from '@/components/Calendar';
 
 export default function Aktuelles() {
     const postMetadata = getPostMetadata();

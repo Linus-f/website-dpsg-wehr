@@ -2,7 +2,8 @@ import { ArcostData } from "@/types";
 import {
     IoNewspaper,
     IoPeople,
-    IoImage
+    IoImage,
+    IoCalendarOutline as CalendarIcon
 } from "react-icons/io5"
 
 export interface NavigationLinkGroup {
@@ -26,7 +27,8 @@ export const navigationLinks: Array<NavigationLinkGroup> = [
         { label: "Rover", link: "/pages/gruppen/rover" },
         { label: "Leiterrunde", link: "/pages/gruppen/leiter" }
     ]},
-    { label: "Gallerie", link: "/gallerie", Icon: IoImage },
+    { label: "Fotos", link: "/gallerie", Icon: IoImage },
+    { label: "Termine", link: "/pages/termine", Icon: CalendarIcon },
 ]
 
 export const acrostData: ArcostData[] = [
