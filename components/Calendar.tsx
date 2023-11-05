@@ -60,7 +60,7 @@ const events: EventSourceInput[] = [
 
 export default function Calendar() {
     return (
-        <div className="not-prose text-sm break-all">
+        <div className="not-prose text-sm break-all m-6">
         <FullCalendar
             height={670}
             aspectRatio={1}
