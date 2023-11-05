@@ -1,6 +1,6 @@
 # Docker image to use for building
-image: ianwalter/pnpm:latest
+image: gplane/pnpm:latest
 # Build command
-command: pnpm install && pnpm run export
+command: pnpm fetch && pnpm run export
 # Public directory
 public: out
