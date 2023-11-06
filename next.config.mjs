@@ -15,6 +15,7 @@ const withMDX = nextMDX({
 const nextConfig = {
     // Configure `pageExtensions` to include MDX files
     pageExtensions: ['js', 'jsx', 'ts', 'tsx', 'md', 'mdx'],
+    trailingSlash: true,
     images: {
         loader: "custom",
         imageSizes: [16, 32, 48, 64, 96, 128, 256, 384],
