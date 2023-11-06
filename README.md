@@ -1,36 +1,31 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Website der DPSG Wehr
+[![statichost.eu status](https://builder.statichost.eu/dpsg-wehr/status.svg)](https://builder.statichost.eu/dpsg-wehr/)
 
-## Getting Started
+Hier findet ihr den Quellcode zu unserer Homepage. Die Website wurde mit [Next.js](https://nextjs.org) entwickelt und wird komplett statisch generiert. Die fertig generierte Website liegt in einem anderen [Repository](https://github.com/Linus-f/website-dpsg-wehr-static).
 
-First, run the development server:
+## Generieren der Website
+Zum generieren der Website werden [git](https://git-scm.com/) und [pnpm](https://pnpm.io/installation) benötigt. Sie kann mit den folgenden Befehlen erstellt werden.
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+# Repository klonen
+git clone https://github.com/Linus-f/website-dpsg-wehr.git
+
+# In Ordnder wechseln
+cd website-dpsg-wehr
+
+# Abhängigkeiten installieren
+pnpm install
+
+# Website generieren
+pnpm export
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Die generierte Website wird im Ordner `out` gespeichert. Zur Entwicklung kann ein lokaler server gestartet werden: 
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```bash
+pnpm dev
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+Die Website ist dann unter [http://localhost:3000](http://localhost:3000) verfügbar.
 
-## Learn More
 
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
