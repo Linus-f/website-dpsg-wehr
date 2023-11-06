@@ -20,7 +20,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             <head>
                 
             </head>
-            <body className={`${inter.className} antialiased`}>
+            <body className={`${inter.className} antialiased prose-headings:break-words prose-headings:hyphens-auto`}>
                 <Providers>
                     <PageLayout>
                         {children}
