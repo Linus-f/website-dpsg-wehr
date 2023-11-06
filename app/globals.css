@@ -88,6 +88,11 @@
 
   :root {
     --fc-neutral-bg-color: rgb(243, 244, 246);
+    --burger-color: rgb(0, 0, 0);
+
+    /* mantine colors aren't available after running export for some reason */
+    --mantine-color-blue-light: rgba(34, 139, 230, .15);
+    --mantine-color-blue-light-color: #74c0fc;
   }
 
   .dark {
@@ -95,7 +100,6 @@
     --fc-neutral-bg-color: rgb(31 41 55);
     --fc-list-event-hover-bg-color: rgb(107 114 128);
 
-    /* TODO */
     --fc-button-bg-color: rgb(12, 74, 110);
     --fc-button-hover-bg-color: rgb(7, 89, 133);
     --fc-button-hover-border-color: rgb(7, 89, 133);
@@ -105,6 +109,9 @@
 
     --fc-neutral-bg-color: rgb(75, 85, 99);
     --fc-neutral-text-color: rgb(255 255 255 / 80%);
+
+    /* mantine colors aren't available after running export for some reason */
+    --burger-color: rgb(255, 255, 255);
   }
 
   .dark .fc-theme-standard .fc-list-day-cushion {
