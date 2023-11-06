@@ -17,7 +17,7 @@
     }
 
     .my-react-select-container .my-react-select__control {
-      @apply bg-gray-100 dark:bg-gray-600 border-none;
+      @apply bg-gray-200 dark:bg-gray-600 border-none;
     }
   
     .my-react-select-container .my-react-select__control--is-focused {
