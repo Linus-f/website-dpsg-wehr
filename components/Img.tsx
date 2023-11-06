@@ -9,7 +9,7 @@ export default function Img(props: ExportedImageProps) {
     return (
         <ExportedImage
             {...(props as ExportedImageProps)}
-            className={blur ? "filter blur-sm" : "animate-unblur"}
+            className={`${props.className} ${blur ? "filter blur-sm" : "animate-unblur"}`}
             onLoadingComplete={() => setBlur(false)}
         />
     )
