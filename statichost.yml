@@ -1,6 +1,6 @@
 # Docker image to use for building
-image: gplane/pnpm:latest
+
 # Build command
-command: pnpm setup && pnpm install next -g && pnpm fetch && pnpm run export
+
 # Public directory
 public: out
