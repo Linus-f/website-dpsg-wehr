@@ -6,6 +6,7 @@ import {
     IoCalendarOutline as CalendarIcon,
     IoHelpCircle as QuestionIcon,
 } from "react-icons/io5"
+import { Icons } from "@/lib/icons";
 
 export interface NavigationLinkGroup {
     label: string;
@@ -17,16 +18,18 @@ export interface NavigationLinkGroup {
 export interface NavigationLink {
     label: string;
     link: string;
+    Icon: Icons;
+    color?: string;
 }
 
 export const navigationLinks: Array<NavigationLinkGroup> = [
     { label: "Aktuelles", link: "/aktuelles", Icon: IoNewspaper },
     { label: "Gruppen", link: "", Icon: IoPeople, links: [
-        { label: "Wölflinge", link: "/pages/gruppen/woelflinge" },
-        { label: "Jungpfadfinder", link: "/pages/gruppen/jungpfadfinder" },
-        { label: "Pfadfinder", link: "/pages/gruppen/pfadfinder" },
-        { label: "Rover", link: "/pages/gruppen/rover" },
-        { label: "Leiterrunde", link: "/pages/gruppen/leiter" }
+        { label: "Wölflinge", link: "/pages/gruppen/woelflinge", Icon:  "Lilie", color: "#ec661a"},
+        { label: "Jungpfadfinder", link: "/pages/gruppen/jungpfadfinder", Icon: "Lilie", color: "#2d54a1" },
+        { label: "Pfadfinder", link: "/pages/gruppen/pfadfinder", Icon: "Lilie", color: "#08833c" },
+        { label: "Rover", link: "/pages/gruppen/rover", Icon: "Lilie", color: "#cc1e2f" },
+        { label: "Leiterrunde", link: "/pages/gruppen/leiter", Icon: "Lilie", color: "#FFC107" }
     ]},
     { label: "Fotos", link: "/gallerie", Icon: IoImage },
     { label: "Termine", link: "/pages/termine", Icon: CalendarIcon },
