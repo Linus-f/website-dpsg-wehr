@@ -26,3 +26,4 @@ jobs:
           BRANCH: main
           FOLDER: out
           SSH_PRIVATE_KEY: ${{ secrets.DEPLOY_PRIVATE_KEY }}
+          TARGET_DIR: out
