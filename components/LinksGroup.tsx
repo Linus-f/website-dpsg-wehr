@@ -6,17 +6,21 @@ import {
     IoChevronDownOutline as ChevronDown,
 } from "react-icons/io5";
 import Link from 'next/link';
+import { getIconFromname } from '@/lib/icons';
 
 export function LinksGroup({ navigationLinks, toggleSidebar }: { navigationLinks: NavigationLinkGroup, toggleSidebar: () => void}) {
   const { label, Icon, link, links } = navigationLinks;
   const hasLinks = Array.isArray(links);
   const [opened, setOpened] = useState(false);
   const items = (hasLinks ? links : []).map((link) => (
-        <Link className='font-medium block px-4 py-3 ml-4 border-l border-solid border-gray-200 dark:border-gray-500 text-sm text-gray-800 dark:text-gray-200 hover:bg-gray-200 dark:hover:bg-gray-600'
+        <Link className='font-medium flex flex-row items-center px-4 py-3 ml-4 border-l border-solid border-gray-200 dark:border-gray-500 text-sm text-gray-800 dark:text-gray-200 hover:bg-gray-200 dark:hover:bg-gray-600'
             href={link.link}
             key={link.link}
             onClick={toggleSidebar}>
-            {link.label}
+              <div className='w-4 h-4 mr-2'>
+                {getIconFromname(link.Icon, link.color)}
+              </div>
+              {link.label}
         </Link>
   ));
 
@@ -49,7 +53,7 @@ export function LinksGroup({ navigationLinks, toggleSidebar }: { navigationLinks
         </div>
         </div>
       </Link>
-      {hasLinks ? <Collapse in={opened}>{items}</Collapse> : null}
+      {hasLinks ? <Collapse in={opened} className="mb-2">{items}</Collapse> : null}
     </>
   );
 }

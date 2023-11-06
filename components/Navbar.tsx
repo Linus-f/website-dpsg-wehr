@@ -1,9 +1,8 @@
 "use client";
 
-import { Autocomplete, Group, Burger, Menu, Center } from "@mantine/core";
+import { Group, Burger, Menu, Center } from "@mantine/core";
 
 import {
-    IoSearchOutline as SearchIcon,
     IoChevronDownOutline as ChevronDown,
 } from "react-icons/io5";
 import Link from "next/link";
@@ -11,21 +10,28 @@ import ToggleThemeButton from "./ToggleThemeButton";
 import { navigationLinks } from "@/lib/config";
 import ExportedImage from "next-image-export-optimizer";
 import logo from "@/public/images/logo.png";
-
+import { getIconFromname } from "@/lib/icons";
 
 export default function Navbar({sidebarOpened, toggleSidebar} : {sidebarOpened: boolean, toggleSidebar: () => void}) {
 
     const items = navigationLinks.map((link) => {
-        const menuItems = link.links?.map((item) => (
+        const menuItems = link.links?.map((item) => {
+            const Icon = getIconFromname(item.Icon, item.color);
+
+            return (
             <Menu.Item key={item.link}>
                 <Link
                     href={item.link}
-                    className="block leading-none py-2 px-3 font-light hover:bg-gray-100 dark:hover:bg-gray-500 rounded dark:text-white"
+                    className="leading-none py-2 px-3 font-light hover:bg-gray-100 dark:hover:bg-gray-500 rounded dark:text-white flex flex-row items-center"
                 >
+                    <div className="w-5 h-5 mr-2">
+                        {Icon}
+                    </div>
                     {item.label}
                 </Link>
             </Menu.Item>
-        ));
+            );
+        });
 
         if (menuItems) {
             return (
@@ -87,12 +93,6 @@ export default function Navbar({sidebarOpened, toggleSidebar} : {sidebarOpened: 
                         {items}
                     </Group>
 					<ToggleThemeButton />
-                    {/*<Autocomplete
-            placeholder="Search"
-            leftSection={<div className='text-gray-400'><SearchIcon/></div>}
-            data={['React', 'Angular', 'Vue', 'Next.js', 'Riot.js', 'Svelte', 'Blitz.js']}
-            visibleFrom="xs"
-          />*/}
                 </Group>
             </div>
         </header>
