@@ -3,7 +3,7 @@
 import { PostMetadata } from "@/types";
 import { usePathname } from 'next/navigation';
 import FloatingImage from "./FloatingImage";
-import imageSize from "image-size";
+import { formatPostDate } from "@/lib/date";
 
 function getSlug(path: string) {
     const trimmedPath = path.replace(/\/$/, ''); // Remove any trailing slashes
@@ -20,6 +20,12 @@ export default function Post({ postMetadata, children }: { postMetadata: PostMet
     return (
         <div>
             <FloatingImage src={metadata.image.src} alt={metadata.title} width={metadata.image.width} height={metadata.image.height}/>
+            <div className="mb-8">
+                <h1 className="text-center text-4xl font-bold">{metadata.title}</h1>
+                <h2 className="text-center text-xl font-light">{metadata.subtitle}</h2>
+            </div>
+            <p className="text-center font-light text-gray-700 dark:text-gray-300">{formatPostDate(metadata.date)}</p>
+            <hr className="mt-3 mb-12"></hr>
             <article className="prose sm:prose-lg dark:prose-invert">
                 {children}
             </article>
