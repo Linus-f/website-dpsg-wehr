@@ -6,7 +6,11 @@ export interface PostMetadata {
     subtitle: string;
     author: string;
     slug: string;
-    image: string;
+    image: {
+        src: string;
+        width: number;
+        height: number;
+    }
     desc: string;
 }
 

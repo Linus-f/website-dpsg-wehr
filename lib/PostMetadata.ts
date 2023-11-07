@@ -1,8 +1,9 @@
 import fs from "fs";
 import matter from "gray-matter";
 import { PostMetadata } from "@/types";
+import imageSize from "image-size";
 
-const getPostMetadata = (): PostMetadata[] => {
+export default function getPostMetadata(): PostMetadata[] {
     const folder = "app/posts/";
 
     const dirs = fs.readdirSync(folder, { withFileTypes: true })
@@ -12,6 +13,7 @@ const getPostMetadata = (): PostMetadata[] => {
     const posts = dirs.map(dir => {
         const fileContents = fs.readFileSync(`app/posts/${dir}/page.mdx`, "utf8");
         const matterResult = matter(fileContents);
+        const imgSize = matterResult.data.image ? imageSize(`public/${matterResult.data.image}`) : undefined;
         
         return {
             title: matterResult.data.title,
@@ -19,7 +21,11 @@ const getPostMetadata = (): PostMetadata[] => {
             subtitle: matterResult.data.subtitle,
             author: matterResult.data.author,
             slug: dir,
-            image: matterResult.data.image,
+            image: {
+                src: matterResult.data.image,
+                width: imgSize?.width ? imgSize.width : 0,
+                height: imgSize?.height ? imgSize.height : 0,
+            },
             desc: matterResult.data.desc,
         }
     });
@@ -34,5 +40,3 @@ const getPostMetadata = (): PostMetadata[] => {
 
     return posts;
 }
-
-export default getPostMetadata;
