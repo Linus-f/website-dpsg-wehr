@@ -9,7 +9,7 @@ export default function FloatingImage({ src, alt, width, height } : { src: strin
                 alt={alt}
                 width={width}
                 height={height}
-                className="object-cover w-screen md:mx-0 md:w-full max-h-[20rem] md:rounded-2xl md:shadow-md md:shadow-black"
+                className="object-cover w-screen md:mx-0 md:w-full max-h-[20rem] md:rounded-2xl shadow-sm shadow-black md:shadow-md md:shadow-black"
         />
         </div>
     );
