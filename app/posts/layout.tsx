@@ -6,6 +6,8 @@ export default function PostLayout({ children } : { children: React.ReactNode })
     const postMetadata = getPostMetadata();
 
     return (
-        <Post postMetadata={postMetadata} children={children} />
+        <Post postMetadata={postMetadata}>
+            {children}
+        </Post>
     );
 }
