@@ -36,8 +36,7 @@ const photoInfo: {src: string, alt: string, tags: string[]}[] = [
     { src: "/images/jurtenaktion16/jurtenaktion_2016_09.png", alt: "", tags: ["Jurtenaktion", "2016"] },
     { src: "/images/jurtenaktion16/jurtenaktion_2016_10.png", alt: "", tags: ["Jurtenaktion", "2016"] },
     { src: "/images/jurtenaktion16/jurtenaktion_2016_11.png", alt: "", tags: ["Jurtenaktion", "2016"] },
-]
-
+];
 
 export async function getPhotos() {
     

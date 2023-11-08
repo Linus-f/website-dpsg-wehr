@@ -1,6 +1,6 @@
 "use client";
 
-import { Group, Burger, Menu, Center } from "@mantine/core";
+import { Group, Burger, Menu } from "@mantine/core";
 
 import {
     IoChevronDownOutline as ChevronDown,
@@ -70,8 +70,8 @@ export default function Navbar({sidebarOpened, toggleSidebar} : {sidebarOpened: 
     });
 
     return (
-        <header className="h-14 px-4 shadow-md sticky top-0 z-50 dark:bg-gray-700 bg-gray-50">
-            <div className="h-14 flex justify-between items-center max-w-4xl mx-auto">
+        <header className="h-[72px] px-4 shadow-md sticky top-0 z-50 dark:bg-gray-700 bg-gray-50">
+            <div className="h-full flex justify-between items-center max-w-4xl mx-auto">
                 <Group>
                     <Burger
                         opened={sidebarOpened}
@@ -81,7 +81,7 @@ export default function Navbar({sidebarOpened, toggleSidebar} : {sidebarOpened: 
                     />
                     <Link href="/">
                         <div className="flex flex-row items-center">
-                            <ExportedImage priority width={50} height={50} src={logo} alt="Logo" />
+                            <ExportedImage priority width={60} height={60} src={logo} alt="Logo" />
                             <h1 className="font-bold text-lg ml-2 collapse w-0 xs:w-auto xs:visible">Pfadfinder Wehr</h1>
                         </div>
                     </Link>
