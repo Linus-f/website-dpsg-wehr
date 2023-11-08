@@ -20,7 +20,7 @@ const tagsInit: TagGroup[] = [
     },
     {
         name: "Gruppe",
-        tags: ["Wölflinge", "Jungpfadfinder", "Pfadfinder", "Rover", "Leiter"],
+        tags: ["Wölflinge", "Jupfis", "Pfadis", "Rover", "Leiter"],
         selectedTags: [],
     }
 ];

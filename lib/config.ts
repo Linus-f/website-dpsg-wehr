@@ -23,7 +23,7 @@ export interface NavigationLink {
 }
 
 export const navigationLinks: Array<NavigationLinkGroup> = [
-    { label: "Aktuelles", link: "/aktuelles", Icon: IoNewspaper },
+    { label: "News", link: "/news", Icon: IoNewspaper },
     { label: "Gruppen", link: "", Icon: IoPeople, links: [
         { label: "Wölflinge", link: "/pages/gruppen/woelflinge", Icon:  "Lilie", color: "#ec661a"},
         { label: "Jungpfadfinder", link: "/pages/gruppen/jungpfadfinder", Icon: "Lilie", color: "#2d54a1" },
@@ -46,6 +46,6 @@ export const acrostData: ArcostData[] = [
     { left: "mit G", middle: "R", right: "uppenkindern"},
     { left: "", middle: "U", right: "nterwegs"},
     { left: "Gemei", middle: "N", right: "schaftlich"},
-    { left: "", middle: "D", right: ""},
+    { left: "un", middle: "D", right: ""},
     { left: "ein bissch", middle: "E", right: "n verrückt"},
 ]
