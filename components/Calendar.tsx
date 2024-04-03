@@ -12,47 +12,52 @@ const events: EventSourceInput[] = [
     {
         events: [
             {
-                title: "Kornettausbildung",
-                start: "2023-03-24",
-                end: "2023-03-26",
-            },
-            {
-                title: "Palmen bauen",
-                start: "2023-04-01",
+                title: "Christbaumsammelaktion",
+                start: "2024-01-05",
             },
             {
                 title: "Palmsonntag",
-                start: "2023-04-02",
+                start: "2024-03-24",
             },
             {
                 title: "Hütteneinsatz",
-                start: "2023-04-29",
+                start: "2024-04-13",
             },
             {
-                title: "Stafette X-trem",
-                start: "2023-06-17",
-                end: "2023-06-18",
+                title: "Kornettausbildung",
+                start: "2024-05-03",
+                end: "2024-05-05",
             },
             {
-                title: "Sommerlager",
-                start: "2023-08-05",
-                end: "2023-08-19",
+                title: "Pfingstlager",
+                start: "2024-05-18",
+                end: "2024-05-25",
+            },
+            {
+                title: "Stafette Extrem",
+                start: "2024-06-21",
+                end: "2023-06-23",
+            },
+            {
+                title: "Pfadihoffest mit Jugendgottesdienst",
+                start: "2024-06-30",
+            },
+            {
+                title: "Jubiläumswochenende",
+                start: "2024-09-06",
+                end: "2024-09-08",
+            },
+            {
+                title: "Hütteneinsatz",
+                start: "2024-10-19",
             },
             {
                 title: "Übergabe",
-                start: "2023-10-18",
-            },
-            {
-                title: "Hütteneinsatz",
-                start: "2023-10-21",
-            },
-            {
-                title: "Schlössle in Flammen",
-                start: "2023-11-18",
+                start: "2024-10-23",
             },
             {
                 title: "Adventsnachmittag",
-                start: "2023-12-03",
+                start: "2024-12-01",
             }
         ],
     }
