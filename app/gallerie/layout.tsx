@@ -28,7 +28,7 @@ export default async function GalleryLayout({children}: {children: React.ReactNo
                     <p>pfadfinder_wehr</p>
                         <Link href="https://www.instagram.com/pfadfinder_wehr/" target="_blank" className="bg-blue-500 hover:bg-blue-400 text-white m-4 p-2 rounded-md flex flex-row items-center place-content-between">
                         <p className="ml-2">
-                            Folg uns 
+                            Instagram 
                         </p>
                         <div className="text-2xl">
                             <Instagram />

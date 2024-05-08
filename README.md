@@ -26,6 +26,6 @@ Die generierte Website wird im Ordner `out` gespeichert. Zur Entwicklung kann ei
 pnpm dev
 ```
 
-Die Website ist dann unter [http://localhost:3000](http://localhost:3000) verfügbar.
+Die Website ist dann unter [http://localhost:3000](http://localhost:3000) verfügbar. Falls einige Bilder nicht geladen werden können, müssen die optimierten Versionen erst mit `pnpm export` generiert werden.
 
 

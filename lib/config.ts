@@ -6,6 +6,9 @@ import {
     IoCalendarOutline as CalendarIcon,
     IoHelpCircle as QuestionIcon,
 } from "react-icons/io5"
+
+import { FaHouseChimney } from "react-icons/fa6"
+
 import { Icons } from "@/lib/icons";
 
 export interface NavigationLinkGroup {
@@ -33,6 +36,10 @@ export const navigationLinks: Array<NavigationLinkGroup> = [
     ]},
     { label: "Fotos", link: "/gallerie", Icon: IoImage },
     { label: "Termine", link: "/pages/termine", Icon: CalendarIcon },
+    { label: "Hütten", link: "", Icon: FaHouseChimney, links: [
+        { label: "St. Raphael", link: "https://www.pfadfinderheim-st-raphael.de/", Icon: "None" },
+        { label: "Pfadfinderhaus Nöggenschwiel", link: "http://www.pfadfinderhaus-noeggenschwiel.de/", Icon: "None" },
+    ]},
     { label: "FAQ", link: "/pages/faq", Icon: QuestionIcon },
 ]
 

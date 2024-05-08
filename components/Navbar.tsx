@@ -77,18 +77,18 @@ export default function Navbar({sidebarOpened, toggleSidebar} : {sidebarOpened: 
                         opened={sidebarOpened}
                         onClick={toggleSidebar}
                         size="sm"
-                        hiddenFrom="sm"
+                        hiddenFrom="md"
                     />
                     <Link href="/">
                         <div className="flex flex-row items-center">
                             <ExportedImage priority width={60} height={60} src={logo} alt="Logo" />
-                            <h1 className="font-bold text-lg ml-2 collapse w-0 xs:w-auto xs:visible">Pfadfinder Wehr</h1>
+                            <h1 className="font-bold text-lg ml-2 collapse w-0 xs:w-auto xs:visible overflow-auto">Pfadfinder Wehr</h1>
                         </div>
                     </Link>
                 </Group>
 
-                <Group>
-                    <Group ml={50} gap={5} visibleFrom="sm">
+                <Group className="flex" style={{'--group-wrap': 'nowrap'}}>
+                    <Group ml={30} gap={5} visibleFrom="md" className="flex" style={{'--group-wrap': 'nowrap'}}>
                         {items}
                     </Group>
 					<ToggleThemeButton />

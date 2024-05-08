@@ -23,7 +23,7 @@ jobs:
         uses: s0/git-publish-subdir-action@develop
         env:
           REPO: git@github.com:Linus-f/website-dpsg-wehr-static.git
-          BRANCH: main
+          BRANCH: test
           FOLDER: out
           SSH_PRIVATE_KEY: ${{ secrets.DEPLOY_PRIVATE_KEY }}
           TARGET_DIR: out
