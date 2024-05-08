@@ -8,6 +8,7 @@ import timeGridPlugin from "@fullcalendar/timegrid";
 import listPlugin from "@fullcalendar/list";
 import { EventSourceInput } from "@fullcalendar/core/index.js";
 
+// end date is exclusive
 const events: EventSourceInput[] = [
     {
         events: [
@@ -26,17 +27,17 @@ const events: EventSourceInput[] = [
             {
                 title: "Kornettausbildung",
                 start: "2024-05-03",
-                end: "2024-05-05",
+                end: "2024-05-06",
             },
             {
                 title: "Pfingstlager",
                 start: "2024-05-18",
-                end: "2024-05-25",
+                end: "2024-05-26",
             },
             {
                 title: "Stafette Extrem",
                 start: "2024-06-21",
-                end: "2023-06-23",
+                end: "2023-06-24",
             },
             {
                 title: "Pfadihoffest mit Jugendgottesdienst",
@@ -45,7 +46,7 @@ const events: EventSourceInput[] = [
             {
                 title: "Jubiläumswochenende",
                 start: "2024-09-06",
-                end: "2024-09-08",
+                end: "2024-09-09",
             },
             {
                 title: "Hütteneinsatz",
