@@ -1,4 +1,4 @@
-name: CD
+name: Generate Static Files
 
 on: 
   push:
@@ -9,14 +9,19 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
         
       - name: install pnpm
         uses: pnpm/action-setup@v2
         with:
           version: 8
 
-      - run: pnpm install
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'pnpm'
+
+      - run: pnpm install --frozen-lockfile
       - run: pnpm run export
 
       - name: Deploy
@@ -26,4 +31,3 @@ jobs:
           BRANCH: test
           FOLDER: out
           SSH_PRIVATE_KEY: ${{ secrets.DEPLOY_PRIVATE_KEY }}
-          TARGET_DIR: out
