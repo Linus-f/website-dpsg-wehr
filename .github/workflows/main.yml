@@ -19,6 +19,12 @@ jobs:
       - run: pnpm install --frozen-lockfile
       - run: pnpm run export
 
+      - name: copy statichost.yml
+        run: cp statichost.yml out/
+
+      - name: copy .nojekyll
+        run: cp .nojekyll out/
+
       - name: Deploy
         uses: s0/git-publish-subdir-action@develop
         env:
