@@ -62,7 +62,7 @@ export default function PageLayout({children}: {children: React.ReactNode}) {
             >
                 <div>
                     <Navbar sidebarOpened={open} toggleSidebar={toggleOpen} />
-                    <div className="flex flex-col h-[calc(100vh-56px)] overflow-auto justify-between">
+                    <div className="flex flex-col h-[calc(100vh-56px)] justify-between">
                         <Sidebar isOpen={open} toggle={toggleOpen} />
                         <div className="max-w-4xl mx-0 px-2 sm:px-4 md:mx-auto my-12 md:my-20 relative flex-1">
                             {children}

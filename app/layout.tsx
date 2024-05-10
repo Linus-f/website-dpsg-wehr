@@ -13,12 +13,11 @@ export const metadata: Metadata = {
 }
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
- 
 
     return (
         <html lang="de" suppressHydrationWarning>
             <head>
-                
+                <title>DPSG Wehr</title>
             </head>
             <body className={`${inter.className} antialiased prose-headings:break-words prose-headings:hyphens-auto`}>
                 <Providers>

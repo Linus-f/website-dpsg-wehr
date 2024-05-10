@@ -1,7 +1,7 @@
 "use client";
 
 import ExportedImage, { ExportedImageProps } from "next-image-export-optimizer";
-import { HTMLProps, useState } from "react";
+import { useState } from "react";
 
 export default function Img(props: ExportedImageProps) {
     const [blur, setBlur] = useState(true);
@@ -10,7 +10,7 @@ export default function Img(props: ExportedImageProps) {
         <ExportedImage
             {...(props as ExportedImageProps)}
             className={`${props.className} ${blur ? "filter blur-sm" : "animate-unblur"}`}
-            onLoadingComplete={() => setBlur(false)}
+            onLoad={() => setBlur(false)}
         />
     )
 } 

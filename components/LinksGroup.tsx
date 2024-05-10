@@ -15,7 +15,7 @@ export function LinksGroup({ navigationLinks, toggleSidebar }: { navigationLinks
   const items = (hasLinks ? links : []).map((link) => (
         <Link className='font-medium flex flex-row items-center px-4 py-3 ml-4 border-l border-solid border-gray-200 dark:border-gray-500 text-sm text-gray-800 dark:text-gray-200 hover:bg-gray-200 dark:hover:bg-gray-600'
             href={link.link}
-            key={link.link}
+            key={link.label}
             onClick={toggleSidebar}>
               <div className='w-4 h-4 mr-2'>
                 {getIconFromname(link.Icon, link.color)}
@@ -61,7 +61,7 @@ export function LinksGroup({ navigationLinks, toggleSidebar }: { navigationLinks
 export function NavbarLinksGroup({ toggleSidebar }: { toggleSidebar: () => void}) {
   const groups = navigationLinks.map((group) => {
     return (
-        <div key={group.link}>
+        <div key={group.label}>
             <LinksGroup navigationLinks={group} toggleSidebar={toggleSidebar} />
         </div>
   )});

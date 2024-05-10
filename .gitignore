@@ -37,3 +37,5 @@ next-env.d.ts
 # next image optimizer
 **/nextImageExportOptimizer/
 /public/images/next-image-export-optimizer-hashes.json
+
+.idea
