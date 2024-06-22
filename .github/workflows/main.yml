@@ -27,6 +27,7 @@ jobs:
           mkdir -p ./out/.github/workflows/
           cp -r ./out_files/* ./out/
           cp ./out_files/.github/workflows/static.yml ./out/.github/workflows/
+          cp ./out_files/.github/workflows/ftp.yml ./out/.github/workflows/
 
       - name: Create .nojekyll
         run: touch ./out/.nojekyll
