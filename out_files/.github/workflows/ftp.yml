@@ -21,4 +21,4 @@ jobs:
           remote-path: "/home/www/"
           remote-user: ${{ secrets.FTP_USERNAME }}
           remote-password: ${{ secrets.FTP_PASSWORD }}
-          sync: "full"
+          sync: "delta"
