@@ -24,7 +24,7 @@ jobs:
 
       - name: copy files for deploying production
         run: |
-          mkdir -p./out/.github/workflows/
+          mkdir -p ./out/.github/workflows/
           cp -r ./out_files/* ./out/
           cp ./out_files/.github/workflows/static.yml ./out/.github/workflows/
 
