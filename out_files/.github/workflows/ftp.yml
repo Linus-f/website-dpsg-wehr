@@ -10,13 +10,15 @@ jobs:
     steps:
       - name: 🚚 Get latest code
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
 
       - name: 📂 Sync files
-        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
+        uses: milanmk/actions-file-deployer@master
         with:
-          server: xc1.serverdomain.org
-          protocol: sftp
-          port: 22
-          server-dir: /home/www/
-          username: ${{ secrets.FTP_USERNAME }}
-          password: ${{ secrets.FTP_PASSWORD }}
+          remote-host: "xc1.serverdomain.org"
+          remote-protocol: "sftp"
+          remote-path: "/home/www/"
+          remote-user: ${{ secrets.FTP_USERNAME }}
+          remote-password: ${{ secrets.FTP_PASSWORD }}
+          sync: "full"
