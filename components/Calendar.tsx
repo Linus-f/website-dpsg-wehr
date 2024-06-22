@@ -36,11 +36,11 @@ const events: EventSourceInput[] = [
             },
             {
                 title: "Stafette Extrem",
-                start: "2024-06-21",
-                end: "2023-06-24",
+                start: "2024-07-06",
+                end: "2024-07-08",
             },
             {
-                title: "Pfadihoffest mit Jugendgottesdienst",
+                title: "Pfadihoffest",
                 start: "2024-06-30",
             },
             {
