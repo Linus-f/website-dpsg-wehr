@@ -2,7 +2,20 @@
 title: "Startseite"
 author: "Linus Fischer"
 date: "2023-10-25"
----
+--- 
+
+import Img from "@/components/Img";
+import LogoScoutfactory from '@/public/images/logoScoutfactory.png';
+import Link from "next/link";
+import RecentPosts from "@/components/RecentPosts";
+
+<Link href="/posts/scoutfactory">
+  <Img
+    src={LogoScoutfactory}
+    alt="Logo Scoutfactory: 70 Jahre Pfadfinder Wehr"
+    width={350}
+    className="mx-auto"/>
+</Link>
 
 # Willkommen!
 Unser Pfadfinderstamm Sankt Bernhard Wehr, mit derzeit über 100 Mitgliedern besteht seit über 60 Jahren (seit 1954).
@@ -13,4 +26,6 @@ Wir zeichen uns besonders durch unsere urige Lebensweise und die großen, besond
 Wir wollen uns auf den folgenden Seiten vorstellen und euch über aktuelle Aktionen und Termine auf dem Laufenden halten!
 
 Gut Pfad 
+
+<RecentPosts/>
 
