@@ -47,7 +47,7 @@ runs:
       if: ${{ inputs.enable-corepack == 'false' }}
       with:
         run_install: false
-        version: 8
+        version: 9
 
     - name: Expose pnpm config(s) through "$GITHUB_OUTPUT"
       id: pnpm-config
