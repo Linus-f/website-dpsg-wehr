@@ -53,7 +53,7 @@ export default function Navbar({sidebarOpened, toggleSidebar} : {sidebarOpened: 
 
                         </Link>
                     </Menu.Target>
-                <Menu.Dropdown className="dark:bg-gray-700 dark:border-slate-800">{menuItems}</Menu.Dropdown>
+                <Menu.Dropdown className="dark:bg-gray-700 dark:border-slate-600">{menuItems}</Menu.Dropdown>
                 </Menu>
             );
         }

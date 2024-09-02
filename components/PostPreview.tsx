@@ -12,7 +12,7 @@ export default function PostPreview(props: PostMetadata) {
             </Link>
         </div>*/
         <article className="mt-4 border shadow-sm hover:shadow-lg rounded-md dark:border-gray-600 max-w-md" key={props.slug}>
-            <Link href={`/posts/${props.slug}`} className='flex flex-col h-full w-full'>
+            <Link href={`/posts/${props.slug}`} className='flex flex-col h-full w-full no-underline'>
                 <div className='relative flex-1'>
                     {props.image.src == "" || props.image.src == undefined
                         ? <div className="w-full h-48 rounded-t-md bg-gray-100 text-gray-100 dark:bg-gray-600 dark:text-gray-600 object-cover" />

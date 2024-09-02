@@ -13,7 +13,7 @@ export default function RecentPosts() {
     const latestPreviews = postPreviews.slice(0, 1);
 
     return (
-      <div className="grid grid-cols-1 gap-4 max-w-md mx-auto sm:max-w-max no-underline">
+      <div className="grid grid-cols-1 gap-4 max-w-md mx-auto sm:max-w-max no-underline" >
         {latestPreviews}
       </div>
     );
