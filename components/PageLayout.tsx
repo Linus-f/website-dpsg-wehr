@@ -23,8 +23,13 @@ export default function PageLayout({children}: {children: React.ReactNode}) {
     const [index, setIndex] = useState(0);
 
     const { theme } = useTheme();
+    const [mounted, setMounted] = useState(false);
 
     const dynamicRoute = usePathname();
+
+    useEffect(() => {
+        setMounted(true);
+    }, []);
 
     useEffect(() => setSlides([]), [dynamicRoute]);
 
@@ -50,7 +55,7 @@ export default function PageLayout({children}: {children: React.ReactNode}) {
     }
 
     return (
-        <MantineProvider forceColorScheme={theme as "light" | "dark" | undefined}>
+        <MantineProvider forceColorScheme={mounted ? (theme as "light" | "dark" | undefined) : undefined}>
             <LightboxContext.Provider
                 value={{
                     open: lightBoxOpen,
