@@ -62,6 +62,11 @@ The project uses `pnpm` for script management.
     pnpm lint
     ```
 
+*   **GitHub Issues:**
+    Use the `gh` CLI to interact with GitHub issues.
+    *   View an issue: `gh issue view <issue-number>`
+    *   List issues: `gh issue list`
+
 ## Development Conventions
 
 *   **Images:** 
