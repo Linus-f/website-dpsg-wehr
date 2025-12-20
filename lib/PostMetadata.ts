@@ -13,7 +13,15 @@ export default function getPostMetadata(): PostMetadata[] {
     const posts = dirs.map(dir => {
         const fileContents = fs.readFileSync(`app/posts/${dir}/page.mdx`, "utf8");
         const matterResult = matter(fileContents);
-        const imgSize = matterResult.data.image ? imageSize(`public/${matterResult.data.image}`) : undefined;
+        let imgSize = undefined;
+        if (matterResult.data.image) {
+            try {
+                const buffer = fs.readFileSync(`public/${matterResult.data.image}`);
+                imgSize = imageSize(buffer);
+            } catch (e) {
+                // Ignore error if image not found
+            }
+        }
         
         return {
             title: matterResult.data.title,

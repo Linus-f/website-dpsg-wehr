@@ -1,11 +1,13 @@
 import type { PhotoPlus } from "@/types"
 import sizeOf from "image-size"
 import { getOptimizedUrl, getSrcSet } from "./photoSrc"
+import fs from "fs"
 
 
 function getImageDimensions(src: string) {
     try {
-        const dimensions = sizeOf(`public/${src}`);
+        const buffer = fs.readFileSync(`public/${src}`);
+        const dimensions = sizeOf(buffer);
         return dimensions;
     } catch (error) {
         return null;

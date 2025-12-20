@@ -60,7 +60,7 @@ export default function PhotoAlbumWrapper({ photos } : { photos: PhotoPlus[] }) 
             <PhotoAlbum
                 photos={fileredPhotos}
                 layout="rows"
-                renderPhoto={NextPhotoRenderer}
+                render={{ image: NextPhotoRenderer }}
                 sizes={{
                     size: "896px",
                     sizes: [

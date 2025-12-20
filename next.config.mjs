@@ -1,13 +1,10 @@
 import nextMDX from '@next/mdx'
-import remarkFrontmatter from 'remark-frontmatter'
-import remarkGfm from 'remark-gfm'
-import rehypeImageSize from 'rehype-img-size'
 
 const withMDX = nextMDX({
     extension: /\.mdx?$/,
     options: {
-        remarkPlugins: [remarkFrontmatter, remarkGfm],
-        rehypePlugins: [[rehypeImageSize, { dir: 'public' }]],
+        remarkPlugins: ['remark-frontmatter', 'remark-gfm'],
+        rehypePlugins: [['rehype-img-size', { dir: 'public' }]],
     },
 })
 

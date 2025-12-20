@@ -1,7 +1,8 @@
 import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
-import './globals.css'
 import '@mantine/core/styles.css'
+import 'react-photo-album/styles.css'
+import './globals.css'
 import Providers from './providers'
 import PageLayout from '@/components/PageLayout'
 
