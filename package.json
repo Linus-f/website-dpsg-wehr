@@ -40,6 +40,9 @@
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3.3.3",
+    "@semantic-release/changelog": "^6.0.3",
+    "@semantic-release/exec": "^7.1.0",
+    "@semantic-release/git": "^10.0.1",
     "@tailwindcss/postcss": "^4.1.18",
     "@tailwindcss/typography": "^0.5.19",
     "@types/chroma-js": "^3.1.2",
@@ -50,6 +53,7 @@
     "eslint": "^9.39.2",
     "eslint-config-next": "16.1.0",
     "postcss": "^8.5.6",
+    "semantic-release": "^25.0.2",
     "tailwindcss": "^4.1.18",
     "typescript": "^5.9.3"
   }

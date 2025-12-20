@@ -66,6 +66,20 @@ The project uses `pnpm` for script management.
     *   View an issue: `gh issue view <issue-number>`
     *   List issues: `gh issue list`
 
+## Release Workflow
+
+The project uses **Semantic Release** to automate versioning and changelog generation.
+
+1.  **Release Workflow (`release.yml`):**
+    *   Triggered on push to `main`.
+    *   Analyzes commit messages to determine the next version (e.g., `fix:` -> patch, `feat:` -> minor).
+    *   Updates `package.json`, generates `CHANGELOG.md`, creates a GitHub Release, and pushes a Git Tag (e.g., `v1.1.0`).
+
+2.  **Docker Build Workflow (`docker.yml`):**
+    *   Triggered when a new Git Tag (`v*`) is pushed.
+    *   Builds the application and optimizes images.
+    *   Pushes the Docker image to GitHub Container Registry (GHCR) tagged with the version (e.g., `:v1.1.0`, `:v1.1`, `:latest`).
+
 ## Development Conventions
 
 *   **Images:** 
