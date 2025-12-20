@@ -1,41 +1,71 @@
-name: Generate Static Files
+name: Build and Push Docker Image
 
-on: 
+on:
   push:
     branches: [ main ]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  packages: write
 
 jobs:
-  build:
+  build-and-push:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout
+      - name: 📥 Checkout
         uses: actions/checkout@v4
+        with:
+          lfs: true
+          fetch-depth: 0
 
-      - name: Use Node.js ${{ matrix.node-version }}
+      - name: 🟢 Use Node.js 20
         uses: actions/setup-node@v4
         with:
-          node-version: ${{ matrix.node-version }}
+          node-version: 20
+          cache: 'pnpm'
 
-      - name: 📥 Monorepo install
-        uses: ./.github/actions/pnpm-install
+      - name: 📦 Install pnpm
+        uses: pnpm/action-setup@v2
+        with:
+          version: 8
 
-      - run: pnpm run export
-        name: Generate static website
+      - name: 🧩 Install dependencies
+        run: pnpm install --frozen-lockfile
 
-      - name: copy files for deploying production
+      - name: 💾 Restore Image Cache
+        id: image-cache
+        uses: actions/cache@v4
+        with:
+          path: |
+            .next/cache
+            .image-cache
+            public/images/next-image-export-optimizer-hashes.json
+          key: ${{ runner.os }}-next-images-${{ hashFiles('public/images/**/*') }}
+          restore-keys: |
+            ${{ runner.os }}-next-images-
+
+      - name: 🏗️ Build & Optimize
         run: |
-          mkdir -p ./out/.github/workflows/
-          cp -r ./out_files/* ./out/
-          cp ./out_files/.github/workflows/static.yml ./out/.github/workflows/
-          cp ./out_files/.github/workflows/ftp.yml ./out/.github/workflows/
+          pnpm next build
+          mkdir -p out/nextImageExportOptimizer
+          if [ -d ".image-cache" ]; then
+            cp -r .image-cache/* out/nextImageExportOptimizer/ || true
+          fi
+          pnpm next-image-export-optimizer
+          mkdir -p .image-cache
+          cp -r out/nextImageExportOptimizer/* .image-cache/
 
-      - name: Create .nojekyll
-        run: touch ./out/.nojekyll
+      - name: 🔐 Log in to GHCR
+        uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Deploy
-        uses: s0/git-publish-subdir-action@develop
-        env:
-          REPO: git@github.com:Linus-f/website-dpsg-wehr-static.git
-          BRANCH: test
-          FOLDER: out
-          SSH_PRIVATE_KEY: ${{ secrets.DEPLOY_PRIVATE_KEY }}
+      - name: 🐳 Build and Push
+        uses: docker/build-push-action@v5
+        with:
+          context: .
+          push: true
+          tags: ghcr.io/${{ github.repository }}:latest
