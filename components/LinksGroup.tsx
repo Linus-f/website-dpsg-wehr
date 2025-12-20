@@ -1,5 +1,4 @@
 import { useState } from 'react';
-import { Collapse, ThemeIcon } from '@mantine/core';
 import { navigationLinks, NavigationLinkGroup } from '@/lib/config';
 
 import {
@@ -40,20 +39,28 @@ export function LinksGroup({ navigationLinks, toggleSidebar }: { navigationLinks
         <div className='font-medium block w-full hover:bg-gray-200 dark:hover:bg-gray-600 p-2 rounded mb-2'>
         <div className='flex flex-row justify-between gap-0 items-center'>
           <div className='flex items-center'>
-            <ThemeIcon variant="light" size={30}>
+            <div className='flex items-center justify-center w-[30px] h-[30px] rounded bg-blue-100 dark:bg-blue-900/30 text-blue-600 dark:text-blue-300'>
                 {hasIcon && <Icon className='w-5 h-5' />}
-            </ThemeIcon>
+            </div>
             <div className='ml-4 text-lg'>{label}</div>
           </div>
           {hasLinks && (
-            <div className={`text-gray-600 dark:text-white ${opened ? '' : 'transform -rotate-90'}`}>
+            <div className={`text-gray-600 dark:text-white transition-transform duration-200 ${opened ? '' : 'transform -rotate-90'}`}>
               <ChevronDown/>
             </div>
           )}
         </div>
         </div>
       </Link>
-      {hasLinks ? <Collapse in={opened} className="mb-2">{items}</Collapse> : null}
+      {hasLinks ? (
+        <div 
+            className={`grid transition-all duration-200 ease-in-out ${opened ? 'grid-rows-[1fr] opacity-100 mb-2' : 'grid-rows-[0fr] opacity-0'}`}
+        >
+            <div className="overflow-hidden">
+                {items}
+            </div>
+        </div>
+      ) : null}
     </>
   );
 }

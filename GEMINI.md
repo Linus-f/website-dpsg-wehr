@@ -8,7 +8,7 @@ This is the source code for the "DPSG Wehr" website, built with **Next.js 14** (
 *   **Static Site Generation (SSG):** Optimized for performance and simple hosting.
 *   **MDX Content:** Most content pages are written in MDX, allowing for a mix of Markdown and React components.
 *   **Image Optimization:** Uses `next-image-export-optimizer` to handle image optimization at build time, compatible with static export.
-*   **UI Frameworks:** Combines **Tailwind CSS** for custom styling and **Mantine UI** for accessible components.
+*   **UI Frameworks:** Uses **Tailwind CSS** for all styling and components.
 
 ## Tech Stack
 
@@ -16,7 +16,6 @@ This is the source code for the "DPSG Wehr" website, built with **Next.js 14** (
 *   **Language:** [TypeScript](https://www.typescriptlang.org)
 *   **Styling:** 
     *   [Tailwind CSS](https://tailwindcss.com)
-    *   [Mantine UI](https://mantine.dev)
     *   [React Icons](https://react-icons.github.io/react-icons/)
 *   **Content:** 
     *   MDX (`@next/mdx`, `mdx-components.tsx`)
@@ -62,6 +61,25 @@ The project uses `pnpm` for script management.
     pnpm lint
     ```
 
+*   **GitHub Issues:**
+    Use the `gh` CLI to interact with GitHub issues.
+    *   View an issue: `gh issue view <issue-number>`
+    *   List issues: `gh issue list`
+
+## Release Workflow
+
+The project uses **Semantic Release** to automate versioning and changelog generation.
+
+1.  **Release Workflow (`release.yml`):**
+    *   Triggered on push to `main`.
+    *   Analyzes commit messages to determine the next version (e.g., `fix:` -> patch, `feat:` -> minor).
+    *   Updates `package.json`, generates `CHANGELOG.md`, creates a GitHub Release, and pushes a Git Tag (e.g., `v1.1.0`).
+
+2.  **Docker Build Workflow (`docker.yml`):**
+    *   Triggered when a new Git Tag (`v*`) is pushed.
+    *   Builds the application and optimizes images.
+    *   Pushes the Docker image to GitHub Container Registry (GHCR) tagged with the version (e.g., `:v1.1.0`, `:v1.1`, `:latest`).
+
 ## Development Conventions
 
 *   **Images:** 
@@ -69,5 +87,5 @@ The project uses `pnpm` for script management.
     *   Use `ExportedImage` from `next-image-export-optimizer` in TSX files.
     *   In MDX files, standard markdown image syntax `![alt](src)` is mapped to a custom component (`MDXImage`) which handles optimization.
 *   **Navigation:** Navigation links are defined in `lib/config.ts`.
-*   **Styling:** Prefer Tailwind CSS for layout and spacing. Use Mantine components for complex interactive elements (modals, menus).
-*   **Theme:** The site supports dark/light mode, managed via `next-themes` and Mantine's theme system.
+*   **Styling:** Prefer Tailwind CSS for layout, spacing, and all UI components.
+*   **Theme:** The site supports dark/light mode, managed via `next-themes`.

@@ -10,11 +10,10 @@ import Captions from "yet-another-react-lightbox/plugins/captions";
 import Zoom from "yet-another-react-lightbox/plugins/zoom";
 import { LightboxContext } from '@/lib/LightboxContext';
 import  { usePathname } from 'next/navigation';
-import { useTheme } from 'next-themes';
 
 import "yet-another-react-lightbox/styles.css";
 import "yet-another-react-lightbox/plugins/captions.css"
-import { MantineProvider } from '@mantine/core';
+
 
 export default function PageLayout({children}: {children: React.ReactNode}) {
     const [open, setOpen] = useState(false);
@@ -22,14 +21,7 @@ export default function PageLayout({children}: {children: React.ReactNode}) {
     const [lightBoxOpen, setLightboxOpen] = useState(false);
     const [index, setIndex] = useState(0);
 
-    const { theme } = useTheme();
-    const [mounted, setMounted] = useState(false);
-
     const dynamicRoute = usePathname();
-
-    useEffect(() => {
-        setMounted(true);
-    }, []);
 
     useEffect(() => setSlides([]), [dynamicRoute]);
 
@@ -55,7 +47,7 @@ export default function PageLayout({children}: {children: React.ReactNode}) {
     }
 
     return (
-        <MantineProvider forceColorScheme={mounted ? (theme as "light" | "dark" | undefined) : undefined}>
+        
             <LightboxContext.Provider
                 value={{
                     open: lightBoxOpen,
@@ -86,6 +78,6 @@ export default function PageLayout({children}: {children: React.ReactNode}) {
                     </div>
                 </div>
             </LightboxContext.Provider>
-        </MantineProvider>
+        
     );
 }
