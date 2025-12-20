@@ -80,6 +80,21 @@ The project uses **Semantic Release** to automate versioning and changelog gener
     *   Builds the application and optimizes images.
     *   Pushes the Docker image to GitHub Container Registry (GHCR) tagged with the version (e.g., `:v1.1.0`, `:v1.1`, `:latest`).
 
+## Workflow & Branching
+
+*   **Main Branch (`main`):** Production-only. Merging to `main` triggers **Semantic Release** and **Docker deployment**.
+*   **Development Branch (`dev`):** The primary integration branch. All features and fixes should be merged here first.
+*   **Feature Branches:** Create from `dev` (e.g., `feat/...`, `fix/...`). Merge back to `dev` via Pull Request.
+*   **Release Process:** When ready for a release, merge `dev` into `main`.
+
+## Review & Quality Policy
+
+*   **Pre-Commit Review:** Before committing (especially for user-made changes), the AI agent should:
+    1.  Run `git status` and `git diff` to analyze the changes.
+    2.  Check for potential bugs, styling inconsistencies, or deviations from project conventions.
+    3.  Provide a concise summary and feedback.
+*   **Build Verification:** Always ensure `pnpm build` passes before merging into `dev` or `main`.
+
 ## Development Conventions
 
 *   **Images:** 
