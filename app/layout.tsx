@@ -1,7 +1,5 @@
 import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
-import { ColorSchemeScript } from '@mantine/core'
-import '@mantine/core/styles.css'
 import 'react-photo-album/styles.css'
 import './globals.css'
 import Providers from './providers'
@@ -22,7 +20,6 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     return (
         <html lang="de" suppressHydrationWarning>
             <head>
-                <ColorSchemeScript />
             </head>
             <body className={`${inter.className} antialiased prose-headings:break-words prose-headings:hyphens-auto`}>
                 <Providers>

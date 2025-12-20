@@ -1,65 +1,50 @@
-# Simplified Workflow & Image Handling Plan (Updated)
+# Mantine Migration Plan
 
-## 1. Goals
-*   **Simplify Deployment:** Move to a single-repository workflow, removing the need for a separate "static" repo.
-*   **Optimize Images:** Solve the "repository bloat" and "slow build" issues associated with large image collections.
-*   **Future-Proofing:** Prepare the application for migration from FTP hosting to a VPS with Docker.
+## 1. Goal
+Remove the `@mantine/core` and `@mantine/hooks` dependencies to reduce bundle size and simplify the tech stack, while maintaining or improving the current UI quality using Tailwind CSS and React.
 
-## 2. Image Handling Strategy
+## 2. Component Replacements
 
-### A. Storage: Git LFS (Large File Storage)
-*   **Problem:** Storing binary images directly in git slows down cloning and bloats history.
-*   **Solution:** Initialize Git LFS for the `public/images` directory.
-    *   *Effect:* Git tracks pointers (text files), while the actual image data is stored on a specialized storage server.
-    *   *Benefit:* Fast clones, efficient versioning of binaries.
+### A. Sidebar (`components/LinksGroup.tsx`)
+*   **Current State:** Uses Mantine's `<Collapse>` and `<ThemeIcon>`.
+*   **Target:**
+    *   Replace `<ThemeIcon>` with a simple Tailwind `div` wrapper (already mocked in my analysis).
+    *   Replace `<Collapse>` with a custom `Collapsible` logic or a lightweight library if animation is complex (CSS transition on `max-height` is usually sufficient).
+    *   Ensure the "rotate chevron" animation remains smooth.
 
-### B. Build Process: Intelligent Caching
-*   **Problem:** `next-image-export-optimizer` re-processes every image on every CI build, wasting time.
-*   **Solution:** Configure GitHub Actions to **cache the optimization artifacts**.
-    *   We will cache the `nextImageExportOptimizer` output folders based on a hash of the source images.
-    *   If source images haven't changed, the build reuses the cached optimized versions instantly.
+### B. Navbar (`components/Navbar.tsx`)
+*   **Current State:** Uses `<Group>`, `<Burger>`, and `<Menu>`.
+*   **Target:**
+    *   **`<Group>`:** Replace with standard Flexbox (`flex flex-row gap-x`).
+    *   **`<Burger>`:** Replace with a button containing `<IoMenu>` (closed) / `<IoClose>` (open) from `react-icons/io5`.
+    *   **`<Menu>`:** Create a custom `Dropdown` component using:
+        *   `useState` for hover/click state.
+        *   Absolute positioning for the dropdown list.
+        *   `useEffect` to handle "click outside" (if we go with click) or simple CSS hover groups (if strictly hover). *Recommendation: Simple CSS hover for desktop is easiest and robust.*
+        *   Ensure dark mode colors match exactly (`dark:bg-gray-700`).
 
-### C. Serving: Immutable Caching
-*   **Problem:** Browsers redownload images unnecessarily.
-*   **Solution:**
-    *   **Current (FTP):** Attempt to add `.htaccess` rules (if supported) for long-term caching.
-    *   **Future (VPS/Nginx):** Configure Nginx to serve files in `nextImageExportOptimizer` with `Cache-Control: public, max-age=31536000, immutable`.
-    *   *Why it works:* The optimizer puts hashes in filenames (e.g., `img.H28s.webp`). If the content changes, the filename changes, so "forever" caching is safe.
+### C. Layout & Providers (`app/layout.tsx`, `components/PageLayout.tsx`)
+*   Remove `<MantineProvider>`.
+*   Remove `<ColorSchemeScript>`.
+*   Ensure `next-themes` handles the `dark` class exclusively (already does, but we need to ensure no "fouc" or flickering without Mantine's script). *Note: `next-themes` handles this well on its own.*
 
-## 3. Deployment Workflow (The "Single Repo" Approach)
+## 3. Step-by-Step Execution
 
-### Phase 1: Local Development
-1.  **Develop:** `pnpm dev`.
-2.  **Verify:** Run `pnpm run export` and `pnpm run serve` to check the exact production build locally.
-3.  **Commit:** `git add .`, `git commit`.
+1.  **Sidebar Migration:** Refactor `LinksGroup.tsx`.
+    *   Create a simple "Collapse" transition using Tailwind (e.g., `grid-[0fr]` to `grid-[1fr]` trick or max-height).
+2.  **Navbar Migration:** Refactor `Navbar.tsx`.
+    *   Replace `Group` with `div.flex`.
+    *   Replace `Burger` with `button > IoMenu`.
+    *   Replace `Menu` with custom `Dropdown` logic.
+3.  **Global Cleanup:**
+    *   Remove providers from `PageLayout.tsx` and `layout.tsx`.
+    *   Remove imports from `_app` or globals if any.
+4.  **Dependency Removal:**
+    *   `pnpm remove @mantine/core @mantine/hooks postcss-preset-mantine`.
+    *   Clean up `postcss.config.js` and `tailwind.config.js` (remove unblur hack if related, though that looks custom).
 
-### Phase 2: CI/CD Pipeline (GitHub Actions)
-Triggered on push to `main`.
-1.  **Checkout:** Fetch code (and LFS objects).
-2.  **Restore Cache:**
-    *   `node_modules` (for faster install).
-    *   `**/.next/cache` (Next.js build cache).
-    *   `**/nextImageExportOptimizer` (Optimized images).
-3.  **Build:** `pnpm run export`.
-    *   *Note:* The optimizer will skip images found in the restored cache.
-4.  **Deploy:**
-    *   Use `milanmk/actions-file-deployer` (or similar) to sync the `out/` folder to your FTP server.
-    *   Sync method: `delta` (only upload changed files).
-
-## 4. Execution Steps
-
-1.  **Cleanup:** Remove local untracked `nextImageExportOptimizer` folders to avoid confusion.
-2.  **Git LFS Setup:**
-    *   Install/Initialize Git LFS.
-    *   Track extensions: `git lfs track "*.jpg" "*.png" "*.jpeg"`.
-    *   Migrate existing images (if necessary/desired, or just apply to new ones).
-3.  **Workflow Rewrite:**
-    *   Replace `.github/workflows/main.yml`.
-    *   Remove the "push to other repo" logic.
-    *   Add the Caching and FTP Deployment steps.
-4.  **Future VPS Prep:**
-    *   Create `Dockerfile` (Nginx + Static Content).
-    *   Create `nginx.conf` (Gzip + Caching Headers).
-
-## 5. Next Action
-Awaiting approval to begin **Step 1 (Cleanup)** and **Step 3 (Workflow Rewrite)**.
+## 4. Verification
+*   Check Mobile Sidebar (open/close, nested links).
+*   Check Desktop Navbar (hover menus, responsiveness).
+*   Check Dark Mode toggling (ensure no regressions).
+*   Check build (`pnpm build`) for type errors.

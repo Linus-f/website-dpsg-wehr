@@ -1,9 +1,9 @@
 "use client";
 
-import { Group, Burger, Menu } from "@mantine/core";
-
 import {
     IoChevronDownOutline as ChevronDown,
+    IoMenuOutline as IoMenu,
+    IoCloseOutline as IoClose,
 } from "react-icons/io5";
 import Link from "next/link";
 import ToggleThemeButton from "./ToggleThemeButton";
@@ -19,42 +19,38 @@ export default function Navbar({sidebarOpened, toggleSidebar} : {sidebarOpened: 
             const Icon = getIconFromname(item.Icon, item.color);
 
             return (
-            <Menu.Item key={item.link}>
                 <Link
+                    key={item.link}
                     href={item.link}
-                    className="leading-none py-2 px-2 font-light hover:bg-gray-200 dark:hover:bg-gray-500 rounded dark:text-white flex flex-row items-center"
+                    className="leading-none py-2 px-2 font-light hover:bg-gray-200 dark:hover:bg-gray-600 rounded dark:text-white flex flex-row items-center whitespace-nowrap"
                 >
-                    <div className="w-5 h-5 mr-2">
+                    <div className="w-5 h-5 mr-2 flex items-center justify-center">
                         {Icon}
                     </div>
                     {item.label}
                 </Link>
-            </Menu.Item>
             );
         });
 
         if (menuItems) {
             return (
-                <Menu
-                    key={link.label}
-                    trigger="hover"
-                    transitionProps={{ exitDuration: 0 }}
-                    withinPortal
-                >
-                    <Menu.Target>
-                        <Link
-                            href={link.link}
-                            className="leading-none py-2 px-3 font-light hover:bg-gray-200 dark:hover:bg-gray-500 rounded flex flex-row items-center"
-                        >
-                                <span className="mr-1">{link.label}</span>
-                                <div className="mt-1 text-gray-600 dark:text-white">
-                                    <ChevronDown />
-                                </div>
-
-                        </Link>
-                    </Menu.Target>
-                <Menu.Dropdown className="dark:bg-gray-700 dark:border-slate-600">{menuItems}</Menu.Dropdown>
-                </Menu>
+                <div key={link.label} className="relative group">
+                    <Link
+                        href={link.link}
+                        className="leading-none py-2 px-3 font-light hover:bg-gray-200 dark:hover:bg-gray-600 rounded flex flex-row items-center"
+                    >
+                        <span className="mr-1">{link.label}</span>
+                        <div className="mt-1 text-gray-600 dark:text-white">
+                            <ChevronDown />
+                        </div>
+                    </Link>
+                    {/* Dropdown Menu */}
+                    <div className="absolute left-0 pt-2 hidden group-hover:block w-auto min-w-[200px] z-50">
+                         <div className="bg-white dark:bg-gray-700 shadow-lg border border-gray-100 dark:border-gray-600 rounded p-1 flex flex-col gap-1">
+                            {menuItems}
+                         </div>
+                    </div>
+                </div>
             );
         }
 
@@ -62,7 +58,7 @@ export default function Navbar({sidebarOpened, toggleSidebar} : {sidebarOpened: 
             <Link
                 key={link.label}
                 href={link.link}
-                className="block leading-none py-2 px-3 font-light rounded hover:bg-gray-200 dark:hover:bg-gray-500"
+                className="block leading-none py-2 px-3 font-light rounded hover:bg-gray-200 dark:hover:bg-gray-600"
             >
                 {link.label}
             </Link>
@@ -72,27 +68,28 @@ export default function Navbar({sidebarOpened, toggleSidebar} : {sidebarOpened: 
     return (
         <header className="h-[72px] px-4 shadow-md sticky top-0 z-50 dark:bg-gray-700 bg-gray-50">
             <div className="h-full flex justify-between items-center max-w-4xl mx-auto">
-                <Group>
-                    <Burger
-                        opened={sidebarOpened}
+                <div className="flex items-center gap-4">
+                    <button
                         onClick={toggleSidebar}
-                        size="sm"
-                        hiddenFrom="md"
-                    />
+                        className="md:hidden p-1 rounded hover:bg-gray-200 dark:hover:bg-gray-600 text-gray-700 dark:text-gray-200"
+                        aria-label="Toggle navigation"
+                    >
+                        {sidebarOpened ? <IoClose size={24} /> : <IoMenu size={24} />}
+                    </button>
                     <Link href="/">
                         <div className="flex flex-row items-center">
                             <ExportedImage priority width={60} height={60} src={logo} alt="Logo" />
                             <h1 className="font-bold text-lg ml-2 collapse w-0 xs:w-auto xs:visible overflow-auto">Pfadfinder Wehr</h1>
                         </div>
                     </Link>
-                </Group>
+                </div>
 
-                <Group className="flex" style={{'--group-wrap': 'nowrap'}}>
-                    <Group ml={30} gap={5} visibleFrom="md" className="flex" style={{'--group-wrap': 'nowrap'}}>
+                <div className="flex items-center gap-4">
+                    <div className="hidden md:flex flex-row gap-1 items-center">
                         {items}
-                    </Group>
+                    </div>
 					<ToggleThemeButton />
-                </Group>
+                </div>
             </div>
         </header>
     );
