@@ -10,6 +10,8 @@ export default function ToggleThemeButton() {
     const currentTheme = theme === "system" ? systemTheme : theme;
 
     useEffect(() => {
+        // We use this to prevent hydration mismatch for theme-dependent icons.
+        // eslint-disable-next-line react-hooks/set-state-in-effect
         setHasMounted(true);
     }, []);
 

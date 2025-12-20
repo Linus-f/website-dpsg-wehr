@@ -9,7 +9,7 @@ function getImageDimensions(src: string) {
         const buffer = fs.readFileSync(`public/${src}`);
         const dimensions = sizeOf(buffer);
         return dimensions;
-    } catch (error) {
+    } catch {
         return null;
     }
 }

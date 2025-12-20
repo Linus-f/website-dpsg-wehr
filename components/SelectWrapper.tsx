@@ -1,6 +1,6 @@
 import { TagGroup } from "@/types";
 import { useId } from "react";
-import Select, { ActionMeta, OnChangeValue } from "react-select";
+import Select, { OnChangeValue } from "react-select";
 
 interface Option {
     value: string;
@@ -9,8 +9,7 @@ interface Option {
 
 export default function SelectWrapper({ options, tags, setTags }: { options: TagGroup, tags: TagGroup[], setTags: (tags: TagGroup[]) => void}) {
     const handleChange = (
-        newValue: OnChangeValue<Option, true>,
-        actionMeta: ActionMeta<Option>
+        newValue: OnChangeValue<Option, true>
     ) => {
         const newTags = tags.map((tagGroup: TagGroup) => {
             if (tagGroup.name == options.name) {

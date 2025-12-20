@@ -1,7 +1,6 @@
 "use client"
 
 import { DetailedHTMLProps, ImgHTMLAttributes, useContext, useEffect, useState } from "react";
-import ExportedImage from "next-image-export-optimizer";
 import { LightboxContext } from "@/lib/LightboxContext";
 import { getSrcSet } from "@/lib/photoSrc";
 import Img from "./Img";
@@ -26,11 +25,11 @@ export default function MDXImage(props:  DetailedHTMLProps<ImgHTMLAttributes<HTM
             title: props.alt as string,
             srcSet: getSrcSet(props.src as string, props.width as number, props.height as number)
         });
-    }, [slides]);
+    }, [slides, mounted, addSlide, props.src, props.alt, props.width, props.height]);
 
-    useEffect(() => (
-        setMounted(true)
-    ), []);
+    useEffect(() => {
+        setMounted(true);
+    }, []);
 
     return (
         <Img

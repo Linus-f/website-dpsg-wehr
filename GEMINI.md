@@ -93,6 +93,7 @@ The project uses **Semantic Release** to automate versioning and changelog gener
     1.  Run `git status` and `git diff` to analyze the changes.
     2.  Check for potential bugs, styling inconsistencies, or deviations from project conventions.
     3.  Provide a concise summary and feedback.
+*   **Linting Policy:** If a linting rule must be disabled (e.g., `eslint-disable`), always provide a clear comment explaining *why* it was necessary.
 *   **Build Verification:** Always ensure `pnpm build` passes before merging into `dev` or `main`.
 
 ## Development Conventions

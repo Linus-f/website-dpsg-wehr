@@ -18,7 +18,7 @@ export default function getPostMetadata(): PostMetadata[] {
             try {
                 const buffer = fs.readFileSync(`public/${matterResult.data.image}`);
                 imgSize = imageSize(buffer);
-            } catch (e) {
+            } catch {
                 // Ignore error if image not found
             }
         }

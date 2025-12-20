@@ -21,12 +21,13 @@ export default function PageLayout({children}: {children: React.ReactNode}) {
     const [lightBoxOpen, setLightboxOpen] = useState(false);
     const [index, setIndex] = useState(0);
 
-    const dynamicRoute = usePathname();
-
-    useEffect(() => setSlides([]), [dynamicRoute]);
-
-    const toggleOpen = () => setOpen(!open);
-    const addSlide = (slide: SlideImage) => {
+        const dynamicRoute = usePathname();
+     
+        // We reset the lightbox slides when the route changes. This is a side effect of navigation.
+        // eslint-disable-next-line react-hooks/set-state-in-effect
+        useEffect(() => setSlides([]), [dynamicRoute]);
+     
+        const toggleOpen = () => setOpen(!open);    const addSlide = (slide: SlideImage) => {
     
         if (!slides) {
             setSlides([slide]);

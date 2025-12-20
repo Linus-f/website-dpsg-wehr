@@ -1,4 +1,3 @@
-import ExportedImage from "next-image-export-optimizer";
 import type { RenderImageContext, RenderImageProps } from "react-photo-album";
 import { useContext } from "react";
 import { LightboxContext } from "@/lib/LightboxContext";
