@@ -4,6 +4,7 @@ import LayoutBody from '@/components/LayoutBody'
 import Navbar from '@/components/Navbar'
 import Footer from '@/components/Footer'
 import Providers from '@/components/Providers'
+import SVGSymbols from '@/components/SVGSymbols'
 
 export const metadata: Metadata = {
     title: 'DPSG Wehr',
@@ -20,6 +21,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             <head>
             </head>
             <body className={`antialiased prose-headings:break-words prose-headings:hyphens-auto`}>
+                <SVGSymbols />
                 <Providers>
                     <div className="flex flex-col min-h-screen">
                         <Navbar />
