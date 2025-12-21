@@ -1,3 +1,15 @@
+## [1.2.1](https://github.com/Linus-f/website-dpsg-wehr/compare/v1.2.0...v1.2.1) (2025-12-21)
+
+
+### Bug Fixes
+
+* repair lint script and resolve linting errors ([c9e8041](https://github.com/Linus-f/website-dpsg-wehr/commit/c9e80410541164391090c667ae5d8d6408d8b35e))
+
+
+### Performance Improvements
+
+* optimize critical path and refactor layout for 14kb target ([5bc1332](https://github.com/Linus-f/website-dpsg-wehr/commit/5bc13324aa0529ff40a26938f40ba1f94a3c63dd))
+
 # [1.2.0](https://github.com/Linus-f/website-dpsg-wehr/compare/v1.1.3...v1.2.0) (2025-12-21)
 
 
