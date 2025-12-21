@@ -12,7 +12,7 @@ export default function NotFound() {
                     width={220}
                     className='-ml-8'
                 />
-                <div className='prose dark:prose-invert mt-4 text-center'>
+                <div className='prose dark:prose-invert mt-4 text-center max-w-none'>
                     <h1 className="">Fehler 404 - Pfad nicht gefunden</h1>
                     <p>Oh nein! Wir haben nicht gefunden wonach du gesucht hast. Machmal passiert das selbst uns. Möglicherweise ist der Link falsch oder die Seite wurde entfernt. Bitte überprüfe die URL und versuch es erneut. Vielen Dank!</p>
                     <Link href="/">Hier gehts zurück zur Startseite</Link>

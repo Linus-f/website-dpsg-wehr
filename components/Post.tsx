@@ -26,7 +26,7 @@ export default function Post({ postMetadata, children }: { postMetadata: PostMet
             </div>
             <p className="text-center font-light text-gray-800 dark:text-gray-200">{formatPostDate(metadata.date)}</p>
             <hr className="mt-3 mb-12"></hr>
-            <article className="prose sm:prose-lg dark:prose-invert">
+            <article className="prose sm:prose-lg dark:prose-invert max-w-none">
                 {children}
             </article>
         </div>
