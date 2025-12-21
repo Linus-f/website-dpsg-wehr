@@ -1,3 +1,23 @@
+# [1.1.0](https://github.com/Linus-f/website-dpsg-wehr/compare/v1.0.0...v1.1.0) (2025-12-21)
+
+
+### Bug Fixes
+
+* **ci:** aggressively delete GITHUB_ env vars in release script ([e57c419](https://github.com/Linus-f/website-dpsg-wehr/commit/e57c419dcc25ecd075ecacccfd646a9d9ec28938))
+* **ci:** checkout head ref to match semantic-release branch config ([b309995](https://github.com/Linus-f/website-dpsg-wehr/commit/b309995eff94ccdd3bad8f90d020cfd8d8d5c0c8))
+* **ci:** grant contents:write permission for semantic-release verification ([72ad765](https://github.com/Linus-f/website-dpsg-wehr/commit/72ad765b6e68993fe2f4eb98329f5627c4c7847a))
+* **ci:** unset GITHUB_ env vars to force semantic-release dry-run in PR ([69df09b](https://github.com/Linus-f/website-dpsg-wehr/commit/69df09b301050481a5683ebdde15c1b359f541de))
+* **ci:** upgrade node to v22 for semantic-release compatibility ([dae961f](https://github.com/Linus-f/website-dpsg-wehr/commit/dae961f06750f31237463b214c2079285fa969a2))
+* **ci:** use manual semantic-release execution for PR preview ([9016a0c](https://github.com/Linus-f/website-dpsg-wehr/commit/9016a0cb6e4d0d457e855c6d6a6d474b948c86c9))
+* resolve all linting errors and update GEMINI.md policy ([d6af80a](https://github.com/Linus-f/website-dpsg-wehr/commit/d6af80a02ed7db50de536c9fe28cf26b4939075d))
+* resolve theme toggle first-click bug and add pointer cursor ([3bcb651](https://github.com/Linus-f/website-dpsg-wehr/commit/3bcb651c7b55a3a2faf0fd41cd27dc792a86e0c2))
+
+
+### Features
+
+* **ci:** implement robust release preview script using semantic-release API ([df593fc](https://github.com/Linus-f/website-dpsg-wehr/commit/df593fc9e6a3ff480a0e64c00031bc252b4532b7))
+* implement dual-calendar subscription (public & internal) ([#58](https://github.com/Linus-f/website-dpsg-wehr/issues/58)) ([4cf2b94](https://github.com/Linus-f/website-dpsg-wehr/commit/4cf2b941a22c53a73cadc57ddcb2118bc90d4dd8))
+
 # 1.0.0 (2025-12-20)
 
 
