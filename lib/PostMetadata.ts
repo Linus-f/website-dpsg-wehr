@@ -4,14 +4,14 @@ import { PostMetadata } from "@/types";
 import imageSize from "image-size";
 
 export default function getPostMetadata(): PostMetadata[] {
-    const folder = "app/posts/";
+    const folder = "content/posts/";
 
-    const dirs = fs.readdirSync(folder, { withFileTypes: true })
-        .filter(file => file.isDirectory())
-        .map(dir => dir.name);
+    const files = fs.readdirSync(folder)
+        .filter(file => file.endsWith('.mdx'));
 
-    const posts = dirs.map(dir => {
-        const fileContents = fs.readFileSync(`app/posts/${dir}/page.mdx`, "utf8");
+    const posts = files.map(filename => {
+        const slug = filename.replace('.mdx', '');
+        const fileContents = fs.readFileSync(`content/posts/${filename}`, "utf8");
         const matterResult = matter(fileContents);
         let imgSize = undefined;
         if (matterResult.data.image) {
@@ -28,7 +28,7 @@ export default function getPostMetadata(): PostMetadata[] {
             date: matterResult.data.date,
             subtitle: matterResult.data.subtitle,
             author: matterResult.data.author,
-            slug: dir,
+            slug: slug,
             image: {
                 src: matterResult.data.image,
                 width: imgSize?.width ? imgSize.width : 0,
