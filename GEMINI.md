@@ -105,3 +105,24 @@ The project uses **Semantic Release** to automate versioning and changelog gener
 *   **Navigation:** Navigation links are defined in `lib/config.ts`.
 *   **Styling:** Prefer Tailwind CSS for layout, spacing, and all UI components.
 *   **Theme:** The site supports dark/light mode, managed via `next-themes`.
+
+## Agent Workflows
+
+### Extract Events from PDF
+
+When asked to "extract events from [PDF]" or "update calendar from [PDF]":
+
+1.  **Read the PDF:** Use the `read_file` tool to process the specified PDF file content.
+2.  **Identify Mode:** 
+    *   If the PDF is described as containing **"Public Events"** (or just "Jahresplan"):
+        *   Target file: `lib/events.public.ts`.
+        *   Strategy: Append all extracted events.
+    *   If the PDF is described as containing **"Internal Events"**:
+        *   Target file: `lib/events.internal.ts`.
+        *   Strategy: The PDF likely contains *all* events (public + internal). You must first read `lib/events.public.ts`. Filter out any extracted events that already exist in the public list (matching by title/date). Append only the *unique* (internal) events to `lib/events.internal.ts`.
+3.  **Process:**
+    *   Parse the text to find Event Title, Start Date, and End Date (if a range).
+    *   Format as `AppEvent` objects.
+    *   Verify dates are in `YYYY-MM-DD` format.
+4.  **Update Files:** Write the new events to the target file.
+5.  **Verify:** Run `pnpm build` to ensure the ICS files are generated correctly and there are no syntax errors.
