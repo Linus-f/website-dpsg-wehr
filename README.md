@@ -3,6 +3,14 @@
 
 Hier findet ihr den Quellcode zu unserer Homepage. Die Website wurde mit [Next.js](https://nextjs.org) entwickelt und wird komplett statisch generiert. Die fertig generierte Website liegt in einem anderen [Repository](https://github.com/Linus-f/website-dpsg-wehr-static).
 
+## Entwicklung
+
+### Tools verwalten mit mise
+
+Dieses Projekt verwendet [mise](https://mise.jdx.sh/) zur Verwaltung von Entwicklungs-Tools (Node.js, pnpm). Wenn mise installiert ist, werden die richtigen Versionen automatisch beim Öffnen des Verzeichnisses aktiviert (oder können mise `mise install` installiert werden).
+
+Die Nutzung von mise muss ggf. mit `mise trust` erlaubt werden.
+
 ## Generieren der Website
 Zum generieren der Website werden [git](https://git-scm.com/) und [pnpm](https://pnpm.io/installation) benötigt. Sie kann mit den folgenden Befehlen erstellt werden.
 
@@ -28,4 +36,28 @@ pnpm dev
 
 Die Website ist dann unter [http://localhost:3000](http://localhost:3000) verfügbar. Falls einige Bilder nicht geladen werden können, müssen die optimierten Versionen erst mit `pnpm export` generiert werden.
 
+## Kalender & ICS Generierung
 
+Die Website generiert automatisch ICS-Kalenderdateien für Termine.
+
+*   **Öffentliche Termine**: Werden in `lib/events.public.ts` gepflegt und sind im Repository enthalten.
+*   **Interne Termine**: Können in einer lokalen Datei `lib/events.internal.ts` definiert werden. Diese Datei wird von Git ignoriert (`.gitignore`).
+
+**Format für `lib/events.internal.ts`:**
+```typescript
+import { AppEvent } from "../types";
+
+export const internalEvents: AppEvent[] = [
+    {
+        title: "Leiterrunde",
+        start: "2024-01-01",
+        //optional: end: "2024-01-01"
+    }
+];
+```
+
+Die Kalender werden automatisch vor dem Build (`pnpm build`) generiert:
+1.  `public/events.ics`: Enthält nur öffentliche Termine.
+2.  `public/internal-events.ics`: Enthält öffentliche und interne Termine (falls `events.internal.ts` existiert).
+
+Beide generierten `.ics` Dateien sind ebenfalls in `.gitignore` und werden nicht committed.

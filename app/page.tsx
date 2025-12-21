@@ -1,5 +1,4 @@
 import Content from './pages/startseite/page.mdx'
-import PhotoAlbumWrapper from '../components/PhotoAlbumWrapper'
 
 export default function Home() {
     return (

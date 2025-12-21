@@ -39,3 +39,10 @@ next-env.d.ts
 /public/images/next-image-export-optimizer-hashes.json
 
 .idea
+
+# generated calendars
+public/events.ics
+public/internal-events.ics
+
+# internal events
+lib/events.internal.ts

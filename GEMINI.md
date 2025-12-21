@@ -80,6 +80,22 @@ The project uses **Semantic Release** to automate versioning and changelog gener
     *   Builds the application and optimizes images.
     *   Pushes the Docker image to GitHub Container Registry (GHCR) tagged with the version (e.g., `:v1.1.0`, `:v1.1`, `:latest`).
 
+## Workflow & Branching
+
+*   **Main Branch (`main`):** Production-only. Merging to `main` triggers **Semantic Release** and **Docker deployment**.
+*   **Development Branch (`dev`):** The primary integration branch. All features and fixes should be merged here first.
+*   **Feature Branches:** Create from `dev` (e.g., `feat/...`, `fix/...`). Merge back to `dev` via Pull Request.
+*   **Release Process:** When ready for a release, merge `dev` into `main`.
+
+## Review & Quality Policy
+
+*   **Pre-Commit Review:** Before committing (especially for user-made changes), the AI agent should:
+    1.  Run `git status` and `git diff` to analyze the changes.
+    2.  Check for potential bugs, styling inconsistencies, or deviations from project conventions.
+    3.  Provide a concise summary and feedback.
+*   **Linting Policy:** If a linting rule must be disabled (e.g., `eslint-disable`), always provide a clear comment explaining *why* it was necessary.
+*   **Build Verification:** Always ensure `pnpm build` passes before merging into `dev` or `main`.
+
 ## Development Conventions
 
 *   **Images:** 
@@ -89,3 +105,32 @@ The project uses **Semantic Release** to automate versioning and changelog gener
 *   **Navigation:** Navigation links are defined in `lib/config.ts`.
 *   **Styling:** Prefer Tailwind CSS for layout, spacing, and all UI components.
 *   **Theme:** The site supports dark/light mode, managed via `next-themes`.
+
+## Agent Workflows
+
+### Extract Events from PDF
+
+When asked to "extract events from [PDF]" or "update calendar from [PDF]":
+
+1.  **Read the PDF:** Use the `read_file` tool to process the specified PDF file content.
+2.  **Identify Mode:** 
+    *   If the PDF is described as containing **"Public Events"** (or just "Jahresplan"):
+        *   Target file: `lib/events.public.ts`.
+        *   Strategy: Append all extracted events.
+    *   If the PDF is described as containing **"Internal Events"**:
+        *   Target file: `lib/events.internal.ts`.
+        *   Strategy: The PDF likely contains *all* events (public + internal). You must first read `lib/events.public.ts`. Filter out any extracted events that already exist in the public list (matching by title/date). Append only the *unique* (internal) events to `lib/events.internal.ts`.
+3.  **Process:**
+    *   Parse the text to find Event Title, Start Date, and End Date (if a range).
+    *   Format as `AppEvent` objects.
+    *   Verify dates are in `YYYY-MM-DD` format.
+4.  **Update Files:** Write the new events to the target file.
+5.  **Verify:** Run `pnpm build` to ensure the ICS files are generated correctly and there are no syntax errors.
+
+### Dry Run Semantic Versioning
+
+When asked to "dry run release", "check next version", or "dry run semantic versioning":
+
+1.  **Run Command:** Execute `npx semantic-release --dry-run --no-ci --branches $(git branch --show-current) --plugins @semantic-release/commit-analyzer`.
+2.  **Analyze Output:** Identify the "next release version" and the commits that triggered the change (e.g., `feat` for minor, `fix` for patch).
+3.  **Report:** Share the determined next version and a brief list of the contributing commits.

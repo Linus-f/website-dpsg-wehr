@@ -1,10 +1,6 @@
 import { ArcostData } from "@/types";
 
 export default function Acrostichon({ data } : { data: ArcostData[] }) {
-    const left = data.map((item) => { return <p key={item.left}>{item.left == "" ? <br/> : item.left}</p> });
-    const middle = data.map((item) => { return <p className="my-5" key={item.middle}>{item.middle == "" ? <br/> : item.middle}</p> });
-    const right = data.map((item) => { return <p key={item.right}>{item.right == "" ? <br/> : item.right}</p> });
-
     const rows = data.map((item, i) => {
         return (
             <div key={i} className="flex justify-center align-middle items-center">

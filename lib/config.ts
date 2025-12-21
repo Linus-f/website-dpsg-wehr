@@ -14,7 +14,7 @@ import { Icons } from "@/lib/icons";
 export interface NavigationLinkGroup {
     label: string;
     link: string;
-    Icon?: React.FC<any>;
+    Icon?: React.ComponentType<{ className?: string }>;
     links?: Array<NavigationLink>;
 }
 

@@ -32,7 +32,12 @@ export default function PhotoAlbumWrapper({ photos } : { photos: PhotoPlus[] }) 
     const [tags, setTags] = useState<TagGroup[]>(tagsInit);
 
     useEffect(() => {
-        if (!mounted) return setMounted(true);
+        if (!mounted) {
+            // We use this to prevent hydration mismatch by ensuring the component is mounted on the client.
+            // eslint-disable-next-line react-hooks/set-state-in-effect
+            setMounted(true);
+            return;
+        }
 
         const filtered = photos.filter((photo: PhotoPlus) => (
             tags.every((group: TagGroup) => (
@@ -52,7 +57,7 @@ export default function PhotoAlbumWrapper({ photos } : { photos: PhotoPlus[] }) 
             height: photo.height,
             //srcSet: photo.srcSet,
         })));
-    }, [mounted, tags]);
+    }, [mounted, tags, photos, setSlides]);
 
     return (
         <div>

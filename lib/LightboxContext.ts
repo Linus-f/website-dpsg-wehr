@@ -3,10 +3,10 @@ import { SlideImage } from "yet-another-react-lightbox";
 
 export const LightboxContext = createContext({
     open: false, 
-    setOpen: (src: string) => {},
+    setOpen: (_src: string) => {},
     slides: [] as SlideImage[],
-    addSlide: (slide: SlideImage) => {},
-    setSlides : (slides: SlideImage[]) => {},
+    addSlide: (_slide: SlideImage) => {},
+    setSlides : (_slides: SlideImage[]) => {},
 });
 
 
