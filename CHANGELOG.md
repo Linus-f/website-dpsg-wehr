@@ -1,3 +1,10 @@
+## [1.1.1](https://github.com/Linus-f/website-dpsg-wehr/compare/v1.1.0...v1.1.1) (2025-12-21)
+
+
+### Bug Fixes
+
+* **ci:** ensure 'latest' tag is updated on version releases ([8dbebd2](https://github.com/Linus-f/website-dpsg-wehr/commit/8dbebd22b9e6b8c3e489249dd1e0a8edccb4945c))
+
 # [1.1.0](https://github.com/Linus-f/website-dpsg-wehr/compare/v1.0.0...v1.1.0) (2025-12-21)
 
 
