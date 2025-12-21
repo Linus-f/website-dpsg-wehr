@@ -7,6 +7,11 @@ const OUT_DIR = 'out';
 // This script inlines the main CSS bundle into all HTML files in the out directory
 // to achieve the 14KB rule and eliminate render-blocking requests.
 
+function escapeRegExp(string) {
+    // Escape all characters with special meaning in regular expressions
+    return string.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+}
+
 function getAllHtmlFiles(dirPath, arrayOfFiles) {
     const files = fs.readdirSync(dirPath);
 
@@ -63,7 +68,7 @@ async function inlineCss() {
                     content = content.replace(full, `<style>${cssContent}</style>`);
                     
                     // Also remove preloads for this CSS
-                    const escapedHref = href.replace(/\//g, '\\/').replace(/\./g, '\\.');
+                    const escapedHref = escapeRegExp(href);
                     const preloadRegex = new RegExp(`<link [^>]*rel="preload" [^>]*as="style" [^>]*href="${escapedHref}"[^>]*>`, 'g');
                     content = content.replace(preloadRegex, '');
 
