@@ -1,3 +1,15 @@
+## [1.2.2](https://github.com/Linus-f/website-dpsg-wehr/compare/v1.2.1...v1.2.2) (2025-12-21)
+
+
+### Bug Fixes
+
+* center main layout and allow prose content to fill container width ([e6f9223](https://github.com/Linus-f/website-dpsg-wehr/commit/e6f9223d902bd08de7a0d68f19b8c225bc945e0b))
+
+
+### Performance Improvements
+
+* lazy load heavy components and target modern browsers ([9afff96](https://github.com/Linus-f/website-dpsg-wehr/commit/9afff962d1397e9d05d9776f55c8d58b4a24e0bf))
+
 ## [1.2.1](https://github.com/Linus-f/website-dpsg-wehr/compare/v1.2.0...v1.2.1) (2025-12-21)
 
 
