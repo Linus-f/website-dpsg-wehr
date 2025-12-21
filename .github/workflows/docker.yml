@@ -4,6 +4,10 @@ on:
   push:
     tags:
       - 'v*'
+  workflow_run:
+    workflows: ["Release"]
+    types:
+      - completed
 
 permissions:
   contents: read
@@ -11,6 +15,7 @@ permissions:
 
 jobs:
   build-and-push:
+    if: ${{ github.event_name == 'push' || github.event.workflow_run.conclusion == 'success' }}
     runs-on: ubuntu-latest
     steps:
       - name: 📥 Checkout
@@ -18,22 +23,53 @@ jobs:
         with:
           lfs: true
           fetch-depth: 0
+          ref: ${{ github.event_name == 'workflow_run' && 'main' || '' }}
+
+      - name: 🏷️ Detect Release Tag
+        id: check
+        run: |
+          if [ "${{ github.event_name }}" == "workflow_run" ]; then
+            # Check if the current commit (HEAD of main) is tagged
+            if TAG=$(git describe --tags --exact-match 2>/dev/null); then
+              echo "Found release tag: $TAG"
+              echo "TAG=$TAG" >> $GITHUB_ENV
+              
+              # Parse semver parts (assuming vX.Y.Z format)
+              VERSION=${TAG#v}
+              echo "VERSION=$VERSION" >> $GITHUB_ENV
+              
+              MAJOR_MINOR=$(echo "$VERSION" | cut -d. -f1-2)
+              echo "MAJOR_MINOR=$MAJOR_MINOR" >> $GITHUB_ENV
+              
+              echo "is_release=true" >> $GITHUB_OUTPUT
+            else
+              echo "No tag found on HEAD. Skipping release build."
+              echo "is_release=false" >> $GITHUB_OUTPUT
+            fi
+          else
+            # For direct tag pushes, we proceed as normal
+            echo "is_release=true" >> $GITHUB_OUTPUT
+          fi
 
       - name: 📦 Install pnpm
+        if: steps.check.outputs.is_release == 'true'
         uses: pnpm/action-setup@v4
         with:
           version: 10
 
       - name: 🟢 Use Node.js 22
+        if: steps.check.outputs.is_release == 'true'
         uses: actions/setup-node@v4
         with:
           node-version: 22
           cache: 'pnpm'
 
       - name: 🧩 Install dependencies
+        if: steps.check.outputs.is_release == 'true'
         run: pnpm install --frozen-lockfile
 
       - name: 💾 Restore Image Cache
+        if: steps.check.outputs.is_release == 'true'
         id: image-cache
         uses: actions/cache@v4
         with:
@@ -46,6 +82,7 @@ jobs:
             ${{ runner.os }}-next-images-
 
       - name: 🏗️ Build & Optimize
+        if: steps.check.outputs.is_release == 'true'
         run: |
           pnpm next build
           mkdir -p out/nextImageExportOptimizer
@@ -57,6 +94,7 @@ jobs:
           cp -r out/nextImageExportOptimizer/* .image-cache/
 
       - name: 🔐 Log in to GHCR
+        if: steps.check.outputs.is_release == 'true'
         uses: docker/login-action@v3
         with:
           registry: ghcr.io
@@ -64,9 +102,11 @@ jobs:
           password: ${{ secrets.GITHUB_TOKEN }}
 
       - name: 🔡 Lowercase Repo Name
+        if: steps.check.outputs.is_release == 'true'
         run: echo "IMAGE_NAME=ghcr.io/$(echo ${{ github.repository }} | tr '[:upper:]' '[:lower:]')" >> $GITHUB_ENV
       
       - name: 🏷️ Extract Metadata
+        if: steps.check.outputs.is_release == 'true'
         id: meta
         uses: docker/metadata-action@v5
         with:
@@ -75,8 +115,12 @@ jobs:
             type=semver,pattern={{version}}
             type=semver,pattern={{major}}.{{minor}}
             type=raw,value=latest
+            type=raw,value=${{ env.TAG }},enable=${{ github.event_name == 'workflow_run' }}
+            type=raw,value=${{ env.VERSION }},enable=${{ github.event_name == 'workflow_run' }}
+            type=raw,value=${{ env.MAJOR_MINOR }},enable=${{ github.event_name == 'workflow_run' }}
 
       - name: 🐳 Build and Push
+        if: steps.check.outputs.is_release == 'true'
         uses: docker/build-push-action@v6
         with:
           context: .
