@@ -49,6 +49,9 @@ pnpm test
 # E2E-Tests (Playwright)
 pnpm test:e2e
 
+# E2E-Tests im interaktiven UI-Modus
+pnpm test:e2e:ui
+
 # Alle Tests einmalig ausführen
 pnpm test:all
 ```

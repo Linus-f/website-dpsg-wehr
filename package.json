@@ -16,6 +16,7 @@
     "serve": "npx serve@latest out",
     "test": "vitest",
     "test:e2e": "playwright test",
+    "test:e2e:ui": "playwright test --ui",
     "test:all": "pnpm test --run && pnpm test:e2e",
     "test:report": "npx serve test-results"
   },
