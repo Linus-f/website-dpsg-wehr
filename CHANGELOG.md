@@ -1,3 +1,10 @@
+## [1.1.3](https://github.com/Linus-f/website-dpsg-wehr/compare/v1.1.2...v1.1.3) (2025-12-21)
+
+
+### Bug Fixes
+
+* remove ics download for now ([2d21d78](https://github.com/Linus-f/website-dpsg-wehr/commit/2d21d78e4f8d8fa32d9c28feba80c3f010c84da2))
+
 ## [1.1.2](https://github.com/Linus-f/website-dpsg-wehr/compare/v1.1.1...v1.1.2) (2025-12-21)
 
 
