@@ -15,11 +15,11 @@ export default function ToggleThemeButton() {
         setHasMounted(true);
     }, []);
 
-    const onToggleTheme = () => theme == "dark" ? setTheme("light") : setTheme("dark");
+    const onToggleTheme = () => currentTheme === "dark" ? setTheme("light") : setTheme("dark");
     
     return (
         <div onClick={onToggleTheme}
-            className={` hover:bg-gray-100 dark:hover:bg-gray-500 transition-all duration-100 dark:text-white text-gray-800 py-2 px-3 rounded text-xl ${!hasMounted && "hidden"}`}>
+            className={`cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-500 transition-all duration-100 dark:text-white text-gray-800 py-2 px-3 rounded text-xl ${!hasMounted && "hidden"}`}>
             {hasMounted && currentTheme == "dark" ? <IoMdBonfire /> : <IoSunny />}            
         </div>
     )
