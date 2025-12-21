@@ -12,12 +12,21 @@ test.describe('Group Pages', () => {
 
             await expect(page.getByRole('heading', { name: group.label, level: 2})).toBeVisible();
 
-            // Verify that there is at least one image
+            // 5. Verify images are present and loading
             const images = page.locator('img');
             await expect(images.first()).toBeVisible();
 
-            // Ensure the image actually loads
-            const isLoaded = await images.first().evaluate((node: HTMLImageElement) => node.complete && node.naturalWidth > 0);
+            // Ensure the image actually loads and decodes
+            const isLoaded = await images.first().evaluate(async (img: HTMLImageElement) => {
+                if (img.complete) {
+                    return img.naturalWidth > 0;
+                }
+                await new Promise((resolve) => {
+                    img.onload = () => resolve(img.naturalWidth > 0);
+                    img.onerror = () => resolve(false);
+                });
+                return img.naturalWidth > 0;
+            });
             expect(isLoaded).toBe(true);
         });
     }

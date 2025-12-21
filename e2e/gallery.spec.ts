@@ -21,6 +21,11 @@ test.describe('Photo Gallery', () => {
 
     test('should open the lightbox when an image is clicked', async ({ page }) => {
         const firstImage = page.locator('.react-photo-album img').first();
+        
+        // Ensure image is visible and loaded
+        await expect(firstImage).toBeVisible();
+        await firstImage.scrollIntoViewIfNeeded();
+
         await firstImage.click();
 
         // Check if the lightbox is visible
