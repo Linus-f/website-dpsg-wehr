@@ -1,3 +1,18 @@
+## [1.2.4](https://github.com/Linus-f/website-dpsg-wehr/compare/v1.2.3...v1.2.4) (2025-12-21)
+
+
+### Bug Fixes
+
+* add setup-buildx-action to support GHA cache backend ([e33358a](https://github.com/Linus-f/website-dpsg-wehr/commit/e33358a8891d8dfafa032359881087363920de1f))
+* ensure back-merge fetches latest main after release ([9334f9a](https://github.com/Linus-f/website-dpsg-wehr/commit/9334f9a1f663acc1bb5c32aa1c8136af37c09e13))
+* restore original icon appearances and fix Lilie rendering ([82c1a48](https://github.com/Linus-f/website-dpsg-wehr/commit/82c1a48526e3afa5e97906914d00b65334881fbe))
+
+
+### Performance Improvements
+
+* optimize critical path and refactor layout for 14kb target ([1800a33](https://github.com/Linus-f/website-dpsg-wehr/commit/1800a3344aeae725b3477e389dcb52a5820a8d2c))
+* optimize docker build and image caching ([cb3c8d1](https://github.com/Linus-f/website-dpsg-wehr/commit/cb3c8d14327f9e965d2c702f927651bcf1359862))
+
 ## [1.2.3](https://github.com/Linus-f/website-dpsg-wehr/compare/v1.2.2...v1.2.3) (2025-12-21)
 
 
