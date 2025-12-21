@@ -35,19 +35,40 @@ test.describe('Photo Gallery', () => {
     });
 
     test('should filter images by tags', async ({ page }) => {
-        // This is a more complex test, we check if the gallery header filters work
-        // Find a tag (e.g., 'Lager') and click it
-        const lagerTag = page.getByRole('button', { name: 'Lager' });
-        if (await lagerTag.isVisible()) {
-            const initialCount = await page.locator('.react-photo-album img').count();
-            await lagerTag.click();
-            
-            // Wait for potential filtering
-            await page.waitForTimeout(500);
-            
-            const filteredCount = await page.locator('.react-photo-album img').count();
-            // We expect the count to be different or at least the gallery still functional
-            expect(filteredCount).toBeLessThanOrEqual(initialCount);
-        }
+        // 1. Wait for gallery to be mounted
+        const album = page.locator('.react-photo-album');
+        await expect(album).toBeVisible();
+        
+        const initialCount = await album.locator('img').count();
+        expect(initialCount).toBeGreaterThan(0);
+
+        // 2. Open the Filter section (Collapsible)
+        await page.getByText('Filter').click();
+
+        // 3. Interact with the "Jahr" react-select dropdown
+        // React-select usually has a placeholder or we can find it by its container
+        const yearSelect = page.locator('.my-react-select-container').filter({ hasText: 'Jahr' });
+        await yearSelect.click();
+
+        // 4. Select "2018" from the dropdown options
+        await page.getByText('2018', { exact: true }).click();
+        
+        // 5. Wait for the gallery to update (filtering happens in a useEffect)
+        // We wait for the count to be different from the initial count
+        await expect(async () => {
+            const currentCount = await page.locator('.react-photo-album img').count();
+            expect(currentCount).not.toBe(initialCount);
+        }).toPass();
+
+        const filteredCount = await page.locator('.react-photo-album img').count();
+        expect(filteredCount).toBeLessThan(initialCount);
+        expect(filteredCount).toBeGreaterThan(0);
+
+        // 6. Clear the filter by clicking the clear button (the 'x' in react-select)
+        // or just clicking the selected tag's remove button
+        await page.locator('.my-react-select__multi-value__remove').click();
+
+        // 7. Verify count returns to initial
+        await expect(page.locator('.react-photo-album img')).toHaveCount(initialCount);
     });
 });
