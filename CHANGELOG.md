@@ -1,3 +1,10 @@
+# [1.2.0](https://github.com/Linus-f/website-dpsg-wehr/compare/v1.1.3...v1.2.0) (2025-12-21)
+
+
+### Features
+
+* optimize performance, accessibility, and security ([27ac0f1](https://github.com/Linus-f/website-dpsg-wehr/commit/27ac0f184a2e1b45b26088743582ff1bfed6716a))
+
 ## [1.1.3](https://github.com/Linus-f/website-dpsg-wehr/compare/v1.1.2...v1.1.3) (2025-12-21)
 
 
