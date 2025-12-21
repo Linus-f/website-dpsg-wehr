@@ -44,9 +44,17 @@ async function inlineCss() {
         
         // Find all CSS links that point to Next.js static assets
         // Supporting both /_next/static/css/ and /_next/static/chunks/
-        const cssRegex = /<link [^>]*rel="stylesheet" [^>]*href="(\/_next\/static\/(?:css|chunks)\/[^"]+\.css)"[^>]*>/g;
+        const cssRegex = /<link\s+[^>]*href="(\/_next\/static\/(?:css|chunks)\/[^"]+\.css)"[^>]*>/g;
         let match;
         const matches = [];
+        // Helper to parse attributes from a tag string
+        const getAttr = (tag, attr) => {
+            const re = new RegExp(`${attr}="([^"]*)"`);
+            const m = re.exec(tag);
+            return m ? m[1] : null;
+        };
+
+        // Find all CSS-like links first based on href
         while ((match = cssRegex.exec(content)) !== null) {
             matches.push({ full: match[0], href: match[1] });
         }
@@ -55,39 +63,29 @@ async function inlineCss() {
 
         let modified = false;
         for (const { full, href } of matches) {
-            // href is something like /_next/static/chunks/86711316ae5d5551.css
-            // We need to map it to the file system path
+            const rel = getAttr(full, 'rel');
+            const asAttr = getAttr(full, 'as');
+
+            // We only care about stylesheets or preloads of style
+            if (rel !== 'stylesheet' && !(rel === 'preload' && asAttr === 'style')) {
+                continue;
+            }
+
             const filename = href.replace(/^\/_next\/static\//, '');
             const cssPath = path.join(OUT_DIR, '_next/static', filename);
             
             if (fs.existsSync(cssPath)) {
                 const cssContent = fs.readFileSync(cssPath, 'utf8');
-                // Only inline if it's relatively small (e.g., < 100KB)
                 if (cssContent.length < 100000) {
-                    console.log(`Inlining ${href} into ${path.relative(OUT_DIR, htmlFile)}`);
-                    content = content.replace(full, `<style>${cssContent}</style>`);
-                    
-                    // Also remove preloads for this CSS
-                    const escapedHref = escapeRegExp(href);
-                    const preloadRegex = new RegExp(`<link [^>]*rel="preload" [^>]*as="style" [^>]*href="${escapedHref}"[^>]*>`, 'g');
-                    content = content.replace(preloadRegex, '');
-
-                    // Remove Next.js Hint Load hints from scripts
-                    // They can look like :HL["/path.css","style"] or :HL[\"/path.css\",\"style\"]
-                    // WARNING: Removing these can break the syntax of the hydration scripts (e.g. leaving double commas)
-                    // causing "Connection closed" errors. Disabling for now.
-                    /*
-                    const hints = [
-                        `:HL["${href}","style"]`,
-                        `:HL[\\"${href}\\",\\"style\\"]`,
-                        `:HL[\\\\\\"${href}\\\\\\",\\\\\\"style\\\\\\"]`
-                    ];
-                    hints.forEach(hint => {
-                        content = content.split(hint).join('');
-                    });
-                    */
-                    
-                    modified = true;
+                    if (rel === 'stylesheet') {
+                        console.log(`Inlining ${href} into ${path.relative(OUT_DIR, htmlFile)}`);
+                        content = content.replace(full, `<style>${cssContent}</style>`);
+                        modified = true;
+                    } else if (rel === 'preload') {
+                        console.log(`Removing preload ${href} from ${path.relative(OUT_DIR, htmlFile)}`);
+                        content = content.replace(full, '');
+                        modified = true;
+                    }
                 } else {
                     console.log(`Skipping ${href} (too large: ${cssContent.length} bytes)`);
                 }
