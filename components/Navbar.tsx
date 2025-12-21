@@ -1,9 +1,5 @@
-"use client";
-
 import {
     IoChevronDownOutline as ChevronDown,
-    IoMenuOutline as IoMenu,
-    IoCloseOutline as IoClose,
 } from "react-icons/io5";
 import Link from "next/link";
 import ToggleThemeButton from "./ToggleThemeButton";
@@ -11,8 +7,9 @@ import { navigationLinks } from "@/lib/config";
 import ExportedImage from "next-image-export-optimizer";
 import logo from "@/public/images/logo.png";
 import { getIconFromname } from "@/lib/icons";
+import NavbarClient from "./NavbarClient";
 
-export default function Navbar({sidebarOpened, toggleSidebar} : {sidebarOpened: boolean, toggleSidebar: () => void}) {
+export default function Navbar() {
 
     const items = navigationLinks.map((link) => {
         const menuItems = link.links?.map((item) => {
@@ -69,13 +66,7 @@ export default function Navbar({sidebarOpened, toggleSidebar} : {sidebarOpened: 
         <header className="h-[72px] px-4 shadow-md sticky top-0 z-50 dark:bg-gray-700 bg-gray-50">
             <div className="h-full flex justify-between items-center max-w-4xl mx-auto">
                 <div className="flex items-center gap-4">
-                    <button
-                        onClick={toggleSidebar}
-                        className="md:hidden p-1 rounded hover:bg-gray-200 dark:hover:bg-gray-600 text-gray-700 dark:text-gray-200"
-                        aria-label="Toggle navigation"
-                    >
-                        {sidebarOpened ? <IoClose size={24} /> : <IoMenu size={24} />}
-                    </button>
+                    <NavbarClient />
                     <Link href="/">
                         <div className="flex flex-row items-center">
                             <ExportedImage priority width={60} height={60} src={logo} alt="Logo" />

@@ -1,11 +1,9 @@
 import type { Metadata } from 'next'
-import { Inter } from 'next/font/google'
-import 'react-photo-album/styles.css'
 import './globals.css'
-import Providers from './providers'
-import PageLayout from '@/components/PageLayout'
-
-const inter = Inter({ subsets: ['latin'] })
+import LayoutBody from '@/components/LayoutBody'
+import Navbar from '@/components/Navbar'
+import Footer from '@/components/Footer'
+import Providers from '@/components/Providers'
 
 export const metadata: Metadata = {
     title: 'DPSG Wehr',
@@ -21,11 +19,15 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <html lang="de" suppressHydrationWarning>
             <head>
             </head>
-            <body className={`${inter.className} antialiased prose-headings:break-words prose-headings:hyphens-auto`}>
+            <body className={`antialiased prose-headings:break-words prose-headings:hyphens-auto`}>
                 <Providers>
-                    <PageLayout>
-                        {children}
-                    </PageLayout>
+                    <div className="flex flex-col min-h-screen">
+                        <Navbar />
+                        <LayoutBody>
+                            {children}
+                        </LayoutBody>
+                        <Footer />
+                    </div>
                 </Providers>
             </body>
         </html>

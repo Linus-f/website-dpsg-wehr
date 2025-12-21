@@ -1,4 +1,5 @@
 import { Photo } from "react-photo-album";
+import { Icons } from "@/lib/icons";
 
 export interface PostMetadata {
     title: string;
@@ -35,4 +36,18 @@ export interface AppEvent {
     title: string;
     start: string; // YYYY-MM-DD
     end?: string; // YYYY-MM-DD, exclusive
+}
+
+export interface NavigationLinkGroup {
+    label: string;
+    link: string;
+    Icon?: Icons;
+    links?: Array<NavigationLink>;
+}
+
+export interface NavigationLink {
+    label: string;
+    link: string;
+    Icon: Icons;
+    color?: string;
 }

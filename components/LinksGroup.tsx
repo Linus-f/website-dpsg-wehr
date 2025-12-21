@@ -1,5 +1,6 @@
 import { useState } from 'react';
-import { navigationLinks, NavigationLinkGroup } from '@/lib/config';
+import { navigationLinks } from '@/lib/config';
+import { NavigationLinkGroup } from '@/types';
 
 import {
     IoChevronDownOutline as ChevronDown,
@@ -40,7 +41,7 @@ export function LinksGroup({ navigationLinks, toggleSidebar }: { navigationLinks
         <div className='flex flex-row justify-between gap-0 items-center'>
           <div className='flex items-center'>
             <div className='flex items-center justify-center w-[30px] h-[30px] rounded bg-blue-100 dark:bg-blue-900/30 text-blue-600 dark:text-blue-300'>
-                {hasIcon && <Icon className='w-5 h-5' />}
+                {hasIcon && getIconFromname(Icon)}
             </div>
             <div className='ml-4 text-lg'>{label}</div>
           </div>

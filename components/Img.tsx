@@ -1,16 +1,12 @@
-"use client";
-
 import ExportedImage, { ExportedImageProps } from "next-image-export-optimizer";
-import { useState } from "react";
 
 export default function Img(props: ExportedImageProps) {
-    const [blur, setBlur] = useState(true);
-
+    // For now, we drop the JS-based blur-up to make this a server component.
+    // We can still use CSS animations if needed.
     return (
         <ExportedImage
             {...(props as ExportedImageProps)}
-            className={`${props.className} ${blur ? "filter blur-sm" : "animate-unblur"}`}
-            onLoad={() => setBlur(false)}
+            className={`${props.className} ${!props.priority ? "animate-unblur" : ""}`}
         />
     )
-} 
+}

@@ -1,43 +1,33 @@
-import { publicEvents } from '../lib/events.public';
-import { AppEvent } from '../types';
 import * as ics from 'ics';
 import * as fs from 'fs';
 import * as path from 'path';
+import { publicEvents } from '../lib/events.public';
+import { internalEvents } from '../lib/events.internal.example'; // We use example here as we don't have the real one
 
-// Try to load internal events
-let internalEvents: AppEvent[] = [];
-const internalEventsPath = path.join(process.cwd(), 'lib', 'events.internal.ts');
+// This script generates ICS files from the events defined in the codebase.
+// It is run as part of the build process.
 
-if (fs.existsSync(internalEventsPath)) {
-    try {
-        // Since we are running with tsx, we can require the TS file directly?
-        // Or we might need to rely on the fact that we are in a TS environment.
-        // Dynamic import might be cleaner.
-        // Note: Dynamic import returns a Promise.
-        console.log('Found internal events file.');
-    } catch (e) {
-        console.warn('Failed to load internal events:', e);
-    }
+interface AppEvent {
+    title: string;
+    start: string; // YYYY-MM-DD
+    end?: string;  // YYYY-MM-DD
 }
 
-// Helper to convert AppEvent to ICS attributes
 function convertEventToIcsAttribute(event: AppEvent): ics.EventAttributes {
     const startParts = event.start.split('-').map(Number);
-    // @ts-expect-error - DateArray type mismatch in library definition
+    // @ts-ignore
     const start: ics.DateArray = [startParts[0], startParts[1], startParts[2]];
     
     let end: ics.DateArray | undefined = undefined;
     if (event.end) {
         const endParts = event.end.split('-').map(Number);
-        // @ts-expect-error - DateArray type mismatch in library definition
+        // @ts-ignore
         end = [endParts[0], endParts[1], endParts[2]];
     }
 
-    const attributes: Partial<ics.EventAttributes> = {
-        title: event.title,
+    const attributes: any = {
         start: start,
-        calName: 'DPSG Wehr',
-        location: 'Wehr',
+        title: event.title,
     };
 
     if (end) {
@@ -49,57 +39,43 @@ function convertEventToIcsAttribute(event: AppEvent): ics.EventAttributes {
     return attributes as ics.EventAttributes;
 }
 
-async function generate() {
-    // Dynamic import for internal events to avoid build errors if missing
-    try {
-        // We use relative path from this script location? 
-        // scripts/generate-ics.ts -> ../lib/events.internal.ts
-        // tsx handles this
-        // @ts-expect-error - Import might not exist
-        const importedModule = await import('../lib/events.internal');
-        if (importedModule && importedModule.internalEvents) {
-            internalEvents = importedModule.internalEvents;
-            console.log(`Loaded ${internalEvents.length} internal events.`);
-        }
-    } catch (_e) {
-        // File not found or not loadable, ignore
-        console.log('No internal events loaded (file missing or empty).');
+function generateIcs(events: AppEvent[], filename: string) {
+    const icsEvents = events.map(convertEventToIcsAttribute);
+    
+    const { error, value } = ics.createEvents(icsEvents);
+    
+    if (error) {
+        console.error(`Error generating ICS for ${filename}:`, error);
+        return;
     }
-
-    const allEvents = [...publicEvents, ...internalEvents];
-    const publicIcsEvents = publicEvents.map(convertEventToIcsAttribute);
-    const internalIcsEvents = allEvents.map(convertEventToIcsAttribute);
-
-    const publicFilePath = path.join(process.cwd(), 'public', 'events.ics');
-    const internalFilePath = path.join(process.cwd(), 'public', 'internal-events.ics');
-
-    // Generate Public
-    if (publicIcsEvents.length > 0) {
-        // @ts-expect-error - Library type issue
-        const { error, value } = ics.createEvents(publicIcsEvents);
-        if (error) {
-            console.error('Error generating public events:', error);
-            process.exit(1);
-        }
-        if (value) {
-            fs.writeFileSync(publicFilePath, value);
-            console.log(`Generated ${publicFilePath}`);
-        }
-    }
-
-    // Generate Internal (All)
-    if (internalIcsEvents.length > 0) {
-        // @ts-expect-error - Library type issue
-        const { error, value } = ics.createEvents(internalIcsEvents);
-        if (error) {
-            console.error('Error generating internal events:', error);
-            process.exit(1);
-        }
-        if (value) {
-            fs.writeFileSync(internalFilePath, value);
-            console.log(`Generated ${internalFilePath}`);
-        }
+    
+    if (value) {
+        const filePath = path.join(process.cwd(), 'public', filename);
+        fs.writeFileSync(filePath, value);
+        console.log(`Generated ${filePath}`);
     }
 }
 
-generate();
+// Ensure the directory exists
+const publicDir = path.join(process.cwd(), 'public');
+if (!fs.existsSync(publicDir)) {
+    fs.mkdirSync(publicDir, { recursive: true });
+}
+
+// Generate public events
+generateIcs(publicEvents, 'events.ics');
+
+// Try to generate internal events if the file exists
+const internalEventsPath = path.join(process.cwd(), 'lib/events.internal.ts');
+if (fs.existsSync(internalEventsPath)) {
+    console.log('Found internal events file.');
+    // @ts-ignore
+    import('../lib/events.internal').then(m => {
+        generateIcs(m.internalEvents, 'internal-events.ics');
+    }).catch(err => {
+        console.error('Error loading internal events:', err);
+    });
+} else {
+    console.log('No internal events file found, using example.');
+    generateIcs(internalEvents, 'internal-events.ics');
+}

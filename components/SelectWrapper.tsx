@@ -1,6 +1,7 @@
 import { TagGroup } from "@/types";
 import { useId } from "react";
 import Select, { OnChangeValue } from "react-select";
+import "./SelectWrapper.css";
 
 interface Option {
     value: string;
