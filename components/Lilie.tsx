@@ -1,5 +1,3 @@
-import * as React from "react"
-
 export default function Lilie({ color } : { color?: string}) {
     return (
         <svg

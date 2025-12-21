@@ -36,6 +36,36 @@ pnpm dev
 
 Die Website ist dann unter [http://localhost:3000](http://localhost:3000) verfügbar. Falls einige Bilder nicht geladen werden können, müssen die optimierten Versionen erst mit `pnpm export` generiert werden.
 
+## Testing
+
+Das Projekt verfügt über eine automatisierte Testsuite, die Unit-Tests, Komponenten-Tests und End-to-End (E2E) Tests umfasst.
+
+### Tests ausführen
+
+```bash
+# Unit- & Komponenten-Tests (Vitest) im Watch-Mode
+pnpm test
+
+# E2E-Tests (Playwright)
+pnpm test:e2e
+
+# Alle Tests einmalig ausführen
+pnpm test:all
+```
+
+### Reports & Abdeckung
+
+```bash
+# Testabdeckung (Coverage) anzeigen
+pnpm test --coverage
+
+# Playwright Test-Report öffnen
+npx playwright show-report
+
+# Lokale Test-Ergebnisse (Monocart) im Browser ansehen
+pnpm test:report
+```
+
 ## Kalender & ICS Generierung
 
 Die Website generiert automatisch ICS-Kalenderdateien für Termine.
