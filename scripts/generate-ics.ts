@@ -70,8 +70,9 @@ export function generateAll() {
     const internalEventsPath = path.join(process.cwd(), 'lib/events.internal.ts');
     if (fs.existsSync(internalEventsPath)) {
         console.log('Found internal events file.');
-        // @ts-ignore
-        import('../lib/events.internal').then(m => {
+        // Use a dynamic import with a variable to prevent Vite from trying to resolve it at build time
+        const modulePath = '../lib/events.internal';
+        import(modulePath).then(m => {
             generateIcs(m.internalEvents, 'internal-events.ics');
         }).catch(err => {
             console.error('Error loading internal events:', err);
