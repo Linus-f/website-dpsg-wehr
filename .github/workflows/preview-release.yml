@@ -32,11 +32,15 @@ jobs:
       - name: Semantic Release Dry Run
         id: semantic
         env:
+          # Pass the token, but we need to hide the PR context from semantic-release
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           # Run semantic-release in dry-run mode
-          # We force the branch to be the current one so it thinks it's a valid release branch
-          npx semantic-release --dry-run --no-ci --branches ${{ github.head_ref }} > release-output.txt 2>&1 || true
+          # We unset GITHUB_ variables so semantic-release doesn't think it's in a PR workflow
+          # and refuses to run. We want it to treat the current checkout as the 'dev' branch.
+          
+          env -u GITHUB_EVENT_NAME -u GITHUB_REF -u GITHUB_HEAD_REF -u GITHUB_SHA \
+            npx semantic-release --dry-run --no-ci --branches ${{ github.head_ref }} > release-output.txt 2>&1 || true
           
           # Cat the output for debugging
           cat release-output.txt
