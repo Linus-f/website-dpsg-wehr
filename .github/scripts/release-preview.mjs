@@ -9,6 +9,15 @@ async function run() {
 
     console.log(`Running semantic-release dry-run on branch: ${branch}`);
 
+    // scrub the environment variables that trigger PR detection
+    delete process.env.GITHUB_EVENT_NAME;
+    delete process.env.GITHUB_REF;
+    delete process.env.GITHUB_HEAD_REF;
+    delete process.env.GITHUB_SHA;
+    delete process.env.GITHUB_PULL_REQUEST;
+    delete process.env.CI;
+    delete process.env.GITHUB_ACTIONS;
+
     const result = await semanticRelease({
       dryRun: true,
       branches: [branch], // Treat the current branch as the release branch
@@ -16,15 +25,6 @@ async function run() {
         '@semantic-release/commit-analyzer',
         '@semantic-release/release-notes-generator'
       ]
-    }, {
-        // Override env to prevent CI detection from disabling the release
-        env: {
-            ...process.env,
-            // "noCi" option in config should handle this, but explicit env override is safer
-            // We pretend we are NOT in a PR and NOT in CI to bypass checks
-            CI: 'false', 
-            GITHUB_ACTIONS: 'false'
-        }
     });
 
     if (result && result.nextRelease) {
@@ -43,7 +43,6 @@ async function run() {
       console.log('Next Version:', version);
     } else {
       console.log('No release triggered.');
-      console.log('::set-output name=version::');
     }
   } catch (err) {
     console.error('The automated release failed with:', err);
