@@ -23,17 +23,17 @@ if (fs.existsSync(internalEventsPath)) {
 // Helper to convert AppEvent to ICS attributes
 function convertEventToIcsAttribute(event: AppEvent): ics.EventAttributes {
     const startParts = event.start.split('-').map(Number);
-    // @ts-ignore
+    // @ts-expect-error - DateArray type mismatch in library definition
     const start: ics.DateArray = [startParts[0], startParts[1], startParts[2]];
     
     let end: ics.DateArray | undefined = undefined;
     if (event.end) {
         const endParts = event.end.split('-').map(Number);
-        // @ts-ignore
+        // @ts-expect-error - DateArray type mismatch in library definition
         end = [endParts[0], endParts[1], endParts[2]];
     }
 
-    const attributes: any = {
+    const attributes: Partial<ics.EventAttributes> = {
         title: event.title,
         start: start,
         calName: 'DPSG Wehr',
@@ -55,13 +55,13 @@ async function generate() {
         // We use relative path from this script location? 
         // scripts/generate-ics.ts -> ../lib/events.internal.ts
         // tsx handles this
-        // @ts-ignore
-        const module = await import('../lib/events.internal');
-        if (module && module.internalEvents) {
-            internalEvents = module.internalEvents;
+        // @ts-expect-error - Import might not exist
+        const importedModule = await import('../lib/events.internal');
+        if (importedModule && importedModule.internalEvents) {
+            internalEvents = importedModule.internalEvents;
             console.log(`Loaded ${internalEvents.length} internal events.`);
         }
-    } catch (e) {
+    } catch (_e) {
         // File not found or not loadable, ignore
         console.log('No internal events loaded (file missing or empty).');
     }
@@ -75,7 +75,7 @@ async function generate() {
 
     // Generate Public
     if (publicIcsEvents.length > 0) {
-        // @ts-ignore
+        // @ts-expect-error - Library type issue
         const { error, value } = ics.createEvents(publicIcsEvents);
         if (error) {
             console.error('Error generating public events:', error);
@@ -89,7 +89,7 @@ async function generate() {
 
     // Generate Internal (All)
     if (internalIcsEvents.length > 0) {
-        // @ts-ignore
+        // @ts-expect-error - Library type issue
         const { error, value } = ics.createEvents(internalIcsEvents);
         if (error) {
             console.error('Error generating internal events:', error);
