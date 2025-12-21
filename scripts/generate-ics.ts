@@ -7,13 +7,13 @@ import { internalEvents } from '../lib/events.internal.example'; // We use examp
 // This script generates ICS files from the events defined in the codebase.
 // It is run as part of the build process.
 
-interface AppEvent {
+export interface AppEvent {
     title: string;
     start: string; // YYYY-MM-DD
     end?: string;  // YYYY-MM-DD
 }
 
-function convertEventToIcsAttribute(event: AppEvent): ics.EventAttributes {
+export function convertEventToIcsAttribute(event: AppEvent): ics.EventAttributes {
     const startParts = event.start.split('-').map(Number);
     // @ts-ignore
     const start: ics.DateArray = [startParts[0], startParts[1], startParts[2]];
@@ -56,26 +56,35 @@ function generateIcs(events: AppEvent[], filename: string) {
     }
 }
 
-// Ensure the directory exists
-const publicDir = path.join(process.cwd(), 'public');
-if (!fs.existsSync(publicDir)) {
-    fs.mkdirSync(publicDir, { recursive: true });
+export function generateAll() {
+    // Ensure the directory exists
+    const publicDir = path.join(process.cwd(), 'public');
+    if (!fs.existsSync(publicDir)) {
+        fs.mkdirSync(publicDir, { recursive: true });
+    }
+
+    // Generate public events
+    generateIcs(publicEvents, 'events.ics');
+
+    // Try to generate internal events if the file exists
+    const internalEventsPath = path.join(process.cwd(), 'lib/events.internal.ts');
+    if (fs.existsSync(internalEventsPath)) {
+        console.log('Found internal events file.');
+        // Use a dynamic import with a variable to prevent Vite from trying to resolve it at build time
+        const modulePath = '../lib/events.internal';
+        import(modulePath).then(m => {
+            generateIcs(m.internalEvents, 'internal-events.ics');
+        }).catch(err => {
+            console.error('Error loading internal events:', err);
+        });
+    } else {
+        console.log('No internal events file found, using example.');
+        generateIcs(internalEvents, 'internal-events.ics');
+    }
 }
 
-// Generate public events
-generateIcs(publicEvents, 'events.ics');
-
-// Try to generate internal events if the file exists
-const internalEventsPath = path.join(process.cwd(), 'lib/events.internal.ts');
-if (fs.existsSync(internalEventsPath)) {
-    console.log('Found internal events file.');
-    // @ts-ignore
-    import('../lib/events.internal').then(m => {
-        generateIcs(m.internalEvents, 'internal-events.ics');
-    }).catch(err => {
-        console.error('Error loading internal events:', err);
-    });
-} else {
-    console.log('No internal events file found, using example.');
-    generateIcs(internalEvents, 'internal-events.ics');
+// Only run if the script is executed directly
+const isMain = process.argv[1]?.endsWith('generate-ics.ts');
+if (isMain) {
+    generateAll();
 }

@@ -1,14 +1,12 @@
-name: Release
-
+name: Tests & PR Checks
 on:
   push:
-    branches: [ main ]
-  workflow_dispatch:
+    branches: [ dev ]
+  pull_request:
+    branches: [ main, dev ]
 
 permissions:
-  contents: write
-  issues: write
-  pull-requests: write
+  contents: read
 
 jobs:
   test:
@@ -87,58 +85,60 @@ jobs:
     - name: 🚦 Run tests
       run: pnpm test:all
 
-  release:
-    name: 🚀 Semantic Release
-    needs: test
+    - uses: actions/upload-artifact@v4
+      if: always()
+      with:
+        name: test-results
+        path: test-results/
+        retention-days: 30
+
+  preview-release:
+    name: 🚀 Release Preview
+    if: github.event_name == 'pull_request' && github.base_ref == 'main'
     permissions:
       contents: write
-      issues: write
       pull-requests: write
     runs-on: ubuntu-latest
     steps:
       - name: 📥 Checkout
         uses: actions/checkout@v4
         with:
-          lfs: true
           fetch-depth: 0
+          ref: ${{ github.head_ref }}
+
+      - name: 🟢 Use Node.js 22
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
 
       - name: 📦 Install pnpm
         uses: pnpm/action-setup@v4
         with:
           version: 10
 
-      - name: 🟢 Use Node.js 22
-        uses: actions/setup-node@v4
-        with:
-          node-version: 22
-          cache: 'pnpm'
-
       - name: 🧩 Install dependencies
         run: pnpm install --frozen-lockfile
 
-      - name: 🚀 Semantic Release
+      - name: 🔍 Semantic Release Dry Run
         id: semantic
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          HEAD_REF: ${{ github.head_ref }}
           NEXT_TELEMETRY_DISABLED: 1
-        run: npx semantic-release
+        run: node .github/scripts/release-preview.mjs
 
-      - name: 🔄 Back-merge main into dev
+      - name: 💬 Update PR
+        if: steps.semantic.outputs.version != ''
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          VERSION: ${{ steps.semantic.outputs.version }}
+          NOTES: ${{ steps.semantic.outputs.notes }}
+          PR_NUMBER: ${{ github.event.pull_request.number }}
         run: |
-          git config user.name "github-actions[bot]"
-          git config user.email "github-actions[bot]@users.noreply.github.com"
+          gh pr edit "$PR_NUMBER" \
+            --title "chore(release): v$VERSION" \
+            --body "### 🚀 Release Preview: v$VERSION
           
-          echo "Fetching latest changes..."
-          git fetch origin main dev
+          _This description is automatically generated based on the commits in this Pull Request._
           
-          echo "Switching to dev branch..."
-          git checkout dev
-          
-          echo "Merging main into dev..."
-          git merge origin/main --no-edit || {
-            echo "Conflict detected during back-merge. Manual intervention required."
-            exit 1
-          }
-          
-          echo "Pushing changes to dev..."
-          git push origin dev
+          $NOTES"

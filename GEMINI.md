@@ -2,135 +2,71 @@
 
 ## Project Overview
 
-This is the source code for the "DPSG Wehr" website, built with **Next.js 14** (App Router). The site is designed to be **completely statically generated** (`output: "export"`) and deployed to a static host.
+This is the source code for the "DPSG Wehr" website, built with **Next.js 16** (App Router). The site is designed to be **completely statically generated** (`output: "export"`) and deployed to a static host.
 
 **Key Features:**
 *   **Static Site Generation (SSG):** Optimized for performance and simple hosting.
-*   **MDX Content:** Most content pages are written in MDX, allowing for a mix of Markdown and React components.
-*   **Image Optimization:** Uses `next-image-export-optimizer` to handle image optimization at build time, compatible with static export.
-*   **UI Frameworks:** Uses **Tailwind CSS** for all styling and components.
+*   **Dynamic Routing:** Content is decoupled from logic. MDX files are stored in a central `content/` directory and rendered via dynamic route templates.
+*   **Automated SEO:** Social previews (Open Graph and Twitter Cards) are automatically generated for every page and post using content excerpts.
+*   **Automated Testing:** Comprehensive suite including Unit, Component, and E2E tests with unified reporting.
+*   **Image Optimization:** Uses `next-image-export-optimizer` for build-time optimization compatible with static export.
 
 ## Tech Stack
 
 *   **Framework:** [Next.js](https://nextjs.org) (App Router)
 *   **Language:** [TypeScript](https://www.typescriptlang.org)
-*   **Styling:** 
-    *   [Tailwind CSS](https://tailwindcss.com)
-    *   [React Icons](https://react-icons.github.io/react-icons/)
-*   **Content:** 
-    *   MDX (`@next/mdx`, `mdx-components.tsx`)
-    *   Plugins: `remark-frontmatter`, `remark-gfm`, `rehype-img-size`
+*   **Styling:** [Tailwind CSS](https://tailwindcss.com), [React Icons](https://react-icons.github.io/react-icons/)
+*   **Content:** MDX rendered via `next-mdx-remote`, `gray-matter` for frontmatter.
+*   **Testing:** [Vitest](https://vitest.dev/) (Unit/Component), [Playwright](https://playwright.dev/) (E2E), [Monocart Reporter](https://github.com/cenfun/monocart-reporter).
 *   **Package Manager:** [pnpm](https://pnpm.io)
 
 ## Directory Structure
 
-*   `app/`: Next.js App Router directory. Contains pages (`page.tsx`, `page.mdx`) and layouts (`layout.tsx`).
-    *   `app/globals.css`: Global styles (Tailwind directives).
-    *   `app/pages/`: Content pages (e.g., Impressum, Datenschutz, Group pages) often implemented as `page.mdx`.
+*   `app/`: Next.js App Router directory.
+    *   `app/pages/[slug]/page.tsx`: Dynamic template for general content pages.
+    *   `app/pages/gruppen/[slug]/page.tsx`: Dynamic template for youth group pages.
+    *   `app/posts/[slug]/page.tsx`: Dynamic template for news posts.
+*   `content/`: Raw content managed as MDX files.
+    *   `content/pages/`: General pages (FAQ, Impressum, Startseite).
+    *   `content/gruppen/`: Youth group pages (Wölflinge, Jupfis, etc.).
+    *   `content/posts/`: News and blog articles.
 *   `components/`: Reusable React components.
-    *   `Navbar.tsx`: Main navigation bar.
-    *   `MDXImage.tsx`: Custom image component for MDX files.
-    *   `PageLayout.tsx`: Common layout wrapper.
-*   `lib/`: Utility functions and configuration.
-    *   `config.ts`: Site configuration and navigation links.
-*   `public/`: Static assets (images, fonts, files).
-    *   `public/images/`: Source images for the website.
-*   `mdx-components.tsx`: Defines custom components to be used in MDX files.
-*   `next.config.mjs`: Next.js configuration, including image optimization settings.
+*   `lib/`: Utility functions, configuration, and metadata helpers (`metadata.ts`).
+*   `e2e/`: Playwright end-to-end test specifications.
+*   `public/`: Static assets and source images.
+*   `mdx-components.tsx`: Global mapping of custom components for MDX rendering.
 
-## Development & Building
-
-The project uses `pnpm` for script management.
+## Development & Testing
 
 ### Key Commands
 
-*   **Start Development Server:**
-    ```bash
-    pnpm dev
-    ```
-    Runs the app at `http://localhost:3000`.
-
-*   **Build & Export (Production):**
-    ```bash
-    pnpm export
-    ```
-    This command runs `next build` followed by `next-image-export-optimizer`. The static output is generated in the `out/` directory.
-
-*   **Linting:**
-    ```bash
-    pnpm lint
-    ```
-
-*   **GitHub Issues:**
-    Use the `gh` CLI to interact with GitHub issues.
-    *   View an issue: `gh issue view <issue-number>`
-    *   List issues: `gh issue list`
+*   **Start Development Server:** `pnpm dev` (Runs at `http://localhost:3000`).
+*   **Run Unit Tests:** `pnpm test` (Vitest watch mode).
+*   **Run E2E Tests:** `pnpm test:e2e` (Playwright).
+*   **Open E2E UI:** `pnpm test:e2e:ui` (Interactive Playwright runner).
+*   **Run All Tests:** `pnpm test:all` (Sequential Vitest + Playwright).
+*   **View Test Dashboard:** `pnpm test:report` (Unified Monocart dashboard).
+*   **Build & Export:** `pnpm export` (Generates static output in `out/`).
 
 ## Release Workflow
 
 The project uses **Semantic Release** to automate versioning and changelog generation.
 
-1.  **Release Workflow (`release.yml`):**
-    *   Triggered on push to `main`.
-    *   Analyzes commit messages to determine the next version (e.g., `fix:` -> patch, `feat:` -> minor).
-    *   Updates `package.json`, generates `CHANGELOG.md`, creates a GitHub Release, and pushes a Git Tag (e.g., `v1.1.0`).
-
-2.  **Docker Build Workflow (`docker.yml`):**
-    *   Triggered when a new Git Tag (`v*`) is pushed.
-    *   Builds the application and optimizes images.
-    *   Pushes the Docker image to GitHub Container Registry (GHCR) tagged with the version (e.g., `:v1.1.0`, `:v1.1`, `:latest`).
-
-## Workflow & Branching
-
-*   **Main Branch (`main`):** Production-only. Merging to `main` triggers **Semantic Release** and **Docker deployment**.
-*   **Development Branch (`dev`):** The primary integration branch. All features and fixes should be merged here first.
-*   **Feature Branches:** Create from `dev` (e.g., `feat/...`, `fix/...`). Merge back to `dev` via Pull Request.
-*   **Release Process:** When ready for a release, merge `dev` into `main`.
-
-## Review & Quality Policy
-
-*   **Pre-Commit Review:** Before committing (especially for user-made changes), the AI agent should:
-    1.  Run `git status` and `git diff` to analyze the changes.
-    2.  Check for potential bugs, styling inconsistencies, or deviations from project conventions.
-    3.  Provide a concise summary and feedback.
-*   **Linting Policy:** If a linting rule must be disabled (e.g., `eslint-disable`), always provide a clear comment explaining *why* it was necessary.
-*   **Build Verification:** Always ensure `pnpm build` passes before merging into `dev` or `main`.
+1.  **Release Workflow (`release.yml`):** Triggered on push to `main`. Generates version, CHANGELOG, and GitHub Release.
+2.  **Docker Build Workflow (`docker.yml`):** Triggered on new tags. Builds and pushes optimized images to GHCR.
+3.  **Tests Workflow (`tests.yml`):** Triggered on push/PR to `main` or `dev`. Runs the full test suite with caching.
 
 ## Development Conventions
 
-*   **Images:** 
-    *   Do **not** use the standard `next/image` component directly if it conflicts with the static export requirement for optimization. 
-    *   Use `ExportedImage` from `next-image-export-optimizer` in TSX files.
-    *   In MDX files, standard markdown image syntax `![alt](src)` is mapped to a custom component (`MDXImage`) which handles optimization.
-*   **Navigation:** Navigation links are defined in `lib/config.ts`.
-*   **Styling:** Prefer Tailwind CSS for layout, spacing, and all UI components.
-*   **Theme:** The site supports dark/light mode, managed via `next-themes`.
+*   **Content First:** Always add new pages or posts as MDX files in the `content/` directory. Metadata and routing are handled automatically.
+*   **Images:** Use the standard Markdown syntax `![alt](src)` in MDX. The system handles sizing and optimization automatically via `rehype-img-size`.
+*   **Testing:** New features should include relevant Unit or E2E tests. Ensure `pnpm test:all` passes before pushing.
+*   **Styling:** Use Tailwind CSS and ensure content is wrapped in `prose` classes within templates.
 
 ## Agent Workflows
 
-### Extract Events from PDF
+### Automated SEO Check
+When modifying metadata logic, verify that `<meta>` tags for `og:title`, `og:description`, and `og:image` are correctly rendered using the `e2e/social.spec.ts` test.
 
-When asked to "extract events from [PDF]" or "update calendar from [PDF]":
-
-1.  **Read the PDF:** Use the `read_file` tool to process the specified PDF file content.
-2.  **Identify Mode:** 
-    *   If the PDF is described as containing **"Public Events"** (or just "Jahresplan"):
-        *   Target file: `lib/events.public.ts`.
-        *   Strategy: Append all extracted events.
-    *   If the PDF is described as containing **"Internal Events"**:
-        *   Target file: `lib/events.internal.ts`.
-        *   Strategy: The PDF likely contains *all* events (public + internal). You must first read `lib/events.public.ts`. Filter out any extracted events that already exist in the public list (matching by title/date). Append only the *unique* (internal) events to `lib/events.internal.ts`.
-3.  **Process:**
-    *   Parse the text to find Event Title, Start Date, and End Date (if a range).
-    *   Format as `AppEvent` objects.
-    *   Verify dates are in `YYYY-MM-DD` format.
-4.  **Update Files:** Write the new events to the target file.
-5.  **Verify:** Run `pnpm build` to ensure the ICS files are generated correctly and there are no syntax errors.
-
-### Dry Run Semantic Versioning
-
-When asked to "dry run release", "check next version", or "dry run semantic versioning":
-
-1.  **Run Command:** Execute `npx semantic-release --dry-run --no-ci --branches $(git branch --show-current) --plugins @semantic-release/commit-analyzer`.
-2.  **Analyze Output:** Identify the "next release version" and the commits that triggered the change (e.g., `feat` for minor, `fix` for patch).
-3.  **Report:** Share the determined next version and a brief list of the contributing commits.
+### ICS Generation
+ICS files are generated as part of the build process from `lib/events.public.ts` and `lib/events.internal.ts`. The logic is isolated in `scripts/generate-ics.ts` and verified by `scripts/generate-ics.test.ts`.

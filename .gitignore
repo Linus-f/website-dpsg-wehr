@@ -7,6 +7,10 @@
 
 # testing
 /coverage
+/test-results
+/allure-results
+/allure-report
+/playwright-report
 
 # next.js
 /.next/

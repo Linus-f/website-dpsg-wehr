@@ -15,8 +15,8 @@ const nextConfig = {
     trailingSlash: true,
     images: {
         loader: "custom",
-        imageSizes: [16, 32, 48, 64, 96, 128, 256, 384],
-        deviceSizes: [640, 828, 1080, 1200, 1920, 2048, 3840],
+        imageSizes: [16, 64, 128, 256, 384],
+        deviceSizes: [640, 1080, 1920],
       },
       output: "export",
       transpilePackages: ["next-image-export-optimizer"],
@@ -27,6 +27,8 @@ const nextConfig = {
         nextImageExportOptimizer_quality: "60",
         nextImageExportOptimizer_storePicturesInWEBP: "true",
         nextImageExportOptimizer_generateAndUseBlurImages: "true",
+        nextImageExportOptimizer_imageSizes: "16,64,128,256,384",
+        nextImageExportOptimizer_deviceSizes: "640,1080,1920",
       },
 }
 

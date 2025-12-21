@@ -7,10 +7,32 @@ import Providers from '@/components/Providers'
 import SVGSymbols from '@/components/SVGSymbols'
 
 export const metadata: Metadata = {
+    metadataBase: new URL('https://dpsg-wehr.de'),
     title: 'DPSG Wehr',
     description: 'Website der DPSG Wehr',
     other: {
         'darkreader-lock': 'true',
+    },
+    openGraph: {
+        title: 'DPSG Wehr',
+        description: 'Website der DPSG Wehr',
+        url: '/',
+        siteName: 'DPSG Wehr',
+        images: [
+            {
+                url: '/images/logo.png',
+                width: 800,
+                height: 800,
+            },
+        ],
+        locale: 'de_DE',
+        type: 'website',
+    },
+    twitter: {
+        card: 'summary_large_image',
+        title: 'DPSG Wehr',
+        description: 'Website der DPSG Wehr',
+        images: ['/images/logo.png'],
     },
 }
 

@@ -1,21 +1,13 @@
-"use client";
-
 import { PostMetadata } from "@/types";
-import { usePathname } from 'next/navigation';
 import FloatingImage from "./FloatingImage";
 import { formatPostDate } from "@/lib/date";
 
-function getSlug(path: string) {
-    const trimmedPath = path.replace(/\/$/, ''); // Remove any trailing slashes
-    const parts = trimmedPath.split('/'); // Split the path by '/'
-    const lastPart = parts[parts.length - 1]; // Retrieve the last part
+export default function Post({ postMetadata, children, slug }: { postMetadata: PostMetadata[], children: React.ReactNode, slug?: string}) {
+    const metadata = postMetadata.find((post) => post.slug === slug);
 
-    return lastPart;
-}
-
-export default function Post({ postMetadata, children }: { postMetadata: PostMetadata[], children: React.ReactNode}) {
-    const slug = getSlug(usePathname());
-    const metadata = postMetadata.find((post) => post.slug === slug)!;
+    if (!metadata) {
+        return <article className="prose sm:prose-lg dark:prose-invert max-w-none">{children}</article>;
+    }
 
     return (
         <div>

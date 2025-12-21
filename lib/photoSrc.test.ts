@@ -1,0 +1,33 @@
+import { describe, it, expect } from 'vitest';
+import { getOptimizedUrl, getSrcSet } from './photoSrc';
+
+describe('photoSrc utilities', () => {
+    describe('getOptimizedUrl', () => {
+        it('should generate the correct optimized path for a given image and size', () => {
+            const src = '/images/test/photo.jpg';
+            const size = 640;
+
+            const result = getOptimizedUrl(src, size);
+
+            expect(result).toBe('/images/test/nextImageExportOptimizer/photo-opt-640.WEBP')
+        });
+    });
+
+    describe('getSrcSet', () => {
+        it('should return an array with images sources up to the size of the original image', () => {
+            const src = '/images/test/photo.jpg';
+            const width = 100;
+            const height = 70;
+
+            const result = getSrcSet(src, width, height);
+
+            expect(result).toHaveLength(5);
+
+            expect(result[0].width).toBe(16);
+            expect(result[0].height).toBe(11);
+
+            expect(result[4].width).toBe(96);
+            expect(result[4].height).toBe(67);
+        });
+    });
+});

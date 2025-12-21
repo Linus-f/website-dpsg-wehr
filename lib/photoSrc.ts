@@ -5,10 +5,10 @@ export function getOptimizedUrl(src: string, size: number) {
     const lastSlash = src.lastIndexOf("/");
     const lastDot = src.lastIndexOf(".");
 
-    const paht = src.substring(0, lastSlash);
+    const path = src.substring(0, lastSlash);
     const filename = src.substring(lastSlash + 1, lastDot);
 
-    return `${paht}/nextImageExportOptimizer/${filename}-opt-${size}.WEBP`;
+    return `${path}/nextImageExportOptimizer/${filename}-opt-${size}.WEBP`;
 }
 
 export function getSrcSet(src: string, width: number, height: number) {
