@@ -12,7 +12,7 @@ export default function Aktuelles() {
 
     return (
         <>
-            <div className="prose dark:prose-invert mb-8">
+            <div className="prose dark:prose-invert mb-8 max-w-none">
                 <h1>Aktuelles</h1>
             </div>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 max-w-md mx-auto sm:max-w-max">

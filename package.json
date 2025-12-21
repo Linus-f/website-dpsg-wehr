@@ -2,6 +2,10 @@
   "name": "website-dpsg-wehr",
   "version": "1.2.1",
   "private": true,
+  "browserslist": [
+    "defaults and supports es6-module",
+    "maintained node versions"
+  ],
   "scripts": {
     "dev": "next dev",
     "build": "tsx scripts/generate-ics.ts && next build",
@@ -21,7 +25,6 @@
     "@mdx-js/react": "^3.1.1",
     "@next/mdx": "^16.1.0",
     "@types/mdx": "^2.0.13",
-    "chroma-js": "^3.2.0",
     "gray-matter": "^4.0.3",
     "ics": "^3.8.1",
     "image-size": "^2.0.2",
@@ -49,7 +52,6 @@
     "@semantic-release/git": "^10.0.1",
     "@tailwindcss/postcss": "^4.1.18",
     "@tailwindcss/typography": "^0.5.19",
-    "@types/chroma-js": "^3.1.2",
     "@types/node": "^25.0.3",
     "@types/react": "^19.2.7",
     "@types/react-dom": "^19.2.3",

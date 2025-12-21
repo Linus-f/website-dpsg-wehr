@@ -35,9 +35,6 @@ importers:
       '@types/mdx':
         specifier: ^2.0.13
         version: 2.0.13
-      chroma-js:
-        specifier: ^3.2.0
-        version: 3.2.0
       gray-matter:
         specifier: ^4.0.3
         version: 4.0.3
@@ -114,9 +111,6 @@ importers:
       '@tailwindcss/typography':
         specifier: ^0.5.19
         version: 0.5.19(tailwindcss@4.1.18)
-      '@types/chroma-js':
-        specifier: ^3.1.2
-        version: 3.1.2
       '@types/node':
         specifier: ^25.0.3
         version: 25.0.3
@@ -1142,9 +1136,6 @@ packages:
   '@tybys/wasm-util@0.10.1':
     resolution: {integrity: sha512-9tTaPJLSiejZKx+Bmog4uSubteqTvFrVrURwkmHixBo0G4seD0zUxp98E1DzUBJxLQ3NPwXrGKDiVjwx/DpPsg==}
 
-  '@types/chroma-js@3.1.2':
-    resolution: {integrity: sha512-YBTQqArPN8A0niHXCwrO1z5x++a+6l0mLBykncUpr23oIPW7L4h39s6gokdK/bDrPmSh8+TjMmrhBPnyiaWPmQ==}
-
   '@types/debug@4.1.12':
     resolution: {integrity: sha512-vIChWdVG3LG1SMxEvI/AK+FWJthlrqlTu7fbrlywTkkaONwk/UAGaULXRlf8vkzFBLVm0zkMdCquhL5aOjhXPQ==}
 
@@ -1653,9 +1644,6 @@ packages:
 
   character-reference-invalid@2.0.1:
     resolution: {integrity: sha512-iBZ4F4wRbyORVsu0jPV7gXkOsGYjGHPmAyv+HiHG8gi5PtC9KI2j1+v8/tlibRvjoWX027ypmG/n0HtO5t7unw==}
-
-  chroma-js@3.2.0:
-    resolution: {integrity: sha512-os/OippSlX1RlWWr+QDPcGUZs0uoqr32urfxESG9U93lhUfbnlyckte84Q8P1UQY/qth983AS1JONKmLS4T0nw==}
 
   chrome-trace-event@1.0.4:
     resolution: {integrity: sha512-rNjApaLzuwaOTjCiT8lSDdGN1APCiqkChLMJxJPWLunPAt5fy8xgU9/jNOchV84wfIxrA0lRQB7oCT8jrn/wrQ==}
@@ -5277,8 +5265,6 @@ snapshots:
       tslib: 2.8.1
     optional: true
 
-  '@types/chroma-js@3.1.2': {}
-
   '@types/debug@4.1.12':
     dependencies:
       '@types/ms': 2.1.0
@@ -5822,8 +5808,6 @@ snapshots:
   character-entities@2.0.2: {}
 
   character-reference-invalid@2.0.1: {}
-
-  chroma-js@3.2.0: {}
 
   chrome-trace-event@1.0.4: {}
 
