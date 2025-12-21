@@ -4,7 +4,7 @@ import PhotoAlbum from "react-photo-album"
 import "react-photo-album/styles.css"
 import { PhotoPlus, TagGroup } from "@/types";
 import { useEffect, useState } from "react";
-import GalleryHeader from "@/components/GalleryHeader";
+import DynamicGalleryHeader from "@/components/DynamicGalleryHeader";
 import NextPhotoRenderer from "./NextPhotoRenderer";
 
 const tagsInit: TagGroup[] = [
@@ -51,7 +51,7 @@ export default function PhotoAlbumWrapper({ photos } : { photos: PhotoPlus[] }) 
 
     return (
         <div>
-            <GalleryHeader tags={tags} setTags={setTags}/>
+            <DynamicGalleryHeader tags={tags} setTags={setTags}/>
             <PhotoAlbum
                 photos={fileredPhotos}
                 layout="rows"
