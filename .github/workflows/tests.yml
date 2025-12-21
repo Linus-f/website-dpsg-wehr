@@ -5,9 +5,14 @@ on:
   pull_request:
     branches: [ main, dev ]
 
+permissions:
+  contents: read
+
 jobs:
   test:
     name: 🧪 Run Tests
+    permissions:
+      contents: read
     timeout-minutes: 15
     runs-on: ubuntu-latest
     steps:
@@ -90,6 +95,9 @@ jobs:
   preview-release:
     name: 🚀 Release Preview
     if: github.event_name == 'pull_request' && github.base_ref == 'main'
+    permissions:
+      contents: write
+      pull-requests: write
     runs-on: ubuntu-latest
     steps:
       - name: 📥 Checkout

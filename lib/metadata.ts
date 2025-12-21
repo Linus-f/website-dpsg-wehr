@@ -1,3 +1,17 @@
+function stripHtmlTags(input: string): string {
+    let previous: string;
+    let current = input;
+    // Iteratively remove tags to handle nested or malicious structures like <scr<iframe>ipt>
+    const tagPattern = /<[^>]*>/g;
+
+    do {
+        previous = current;
+        current = current.replace(tagPattern, '');
+    } while (current !== previous);
+
+    return current;
+}
+
 export function getExcerpt(content: string, length = 160): string {
     // 1. Remove entire lines that are headings or images
     let lines = content.split('\n');
@@ -10,7 +24,7 @@ export function getExcerpt(content: string, length = 160): string {
     let plainText = lines.join(' ');
 
     // 2. Remove JSX tags (e.g., <Component ... />)
-    plainText = plainText.replace(/<[^>]+>/g, '');
+    plainText = stripHtmlTags(plainText);
 
     // 3. Remove Markdown symbols
     plainText = plainText
