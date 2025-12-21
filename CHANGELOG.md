@@ -1,3 +1,20 @@
+## [1.2.5](https://github.com/Linus-f/website-dpsg-wehr/compare/v1.2.4...v1.2.5) (2025-12-21)
+
+
+### Bug Fixes
+
+* address security finding by using proper regex escaping ([f6a4b43](https://github.com/Linus-f/website-dpsg-wehr/commit/f6a4b43f356c01034c49ec6459c458b3adf99803))
+* correct malformed SVG path data in SVGSymbols ([578acfc](https://github.com/Linus-f/website-dpsg-wehr/commit/578acfc8fc84218e90eb563ccfa0b02275b6fde1))
+* disable removal of Next.js hydration hints to prevent runtime errors ([07a0aac](https://github.com/Linus-f/website-dpsg-wehr/commit/07a0aacf80056c382e05d3f165b39cd0196725ef))
+* improve container healthcheck and nginx routing ([2153a52](https://github.com/Linus-f/website-dpsg-wehr/commit/2153a525edacd0cab6f861340eae5c8351dadc12))
+* optimize Cache-Control headers for bfcache support ([f679111](https://github.com/Linus-f/website-dpsg-wehr/commit/f679111ff60cdb166283fc20f5fba9b3d4d3161c))
+* restore correct lilie SVG path data ([c54754e](https://github.com/Linus-f/website-dpsg-wehr/commit/c54754e1c4e08afbe565f4c681e4ab5e48934716))
+
+
+### Performance Improvements
+
+* eliminate render-blocking CSS and reduce HTML size via SVG symbols ([ef47f8a](https://github.com/Linus-f/website-dpsg-wehr/commit/ef47f8a9960cb24dbe8cb82cc213600d1f8e8c28))
+
 ## [1.2.4](https://github.com/Linus-f/website-dpsg-wehr/compare/v1.2.3...v1.2.4) (2025-12-21)
 
 
