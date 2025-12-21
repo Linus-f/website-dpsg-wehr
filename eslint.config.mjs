@@ -65,4 +65,15 @@ export default [
       "no-console": "warn",
     },
   },
+  {
+    files: [".github/scripts/**/*.mjs", "scripts/**/*.ts"],
+    languageOptions: {
+      globals: {
+        ...globals.node,
+      },
+    },
+    rules: {
+      "no-console": "off",
+    },
+  },
 ];

@@ -45,8 +45,8 @@ export default function MDXImage(props:  DetailedHTMLProps<ImgHTMLAttributes<HTM
         <Img
             src={props.src as string}
             alt={(props.alt || props.title || "") as string}
-            width={props.width as any}
-            height={props.height as any}
+            width={typeof props.width === 'string' ? parseInt(props.width) : props.width}
+            height={typeof props.height === 'string' ? parseInt(props.height) : props.height}
             id={props.src as string}
             onClick={() => setOpen(props.src as string)}
             className="object-contain h-auto max-w-full transition duration-300 drop-shadow-xl hover:drop-shadow-[0_15px_15px_rgba(0,0,0,0.35)] cursor-pointer"
