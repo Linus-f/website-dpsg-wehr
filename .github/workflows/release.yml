@@ -47,14 +47,13 @@ jobs:
           git config user.email "github-actions[bot]@users.noreply.github.com"
           
           echo "Fetching latest changes..."
-          git fetch origin dev
+          git fetch origin main dev
           
           echo "Switching to dev branch..."
           git checkout dev
           
           echo "Merging main into dev..."
-          # Use --ff to avoid a merge commit if dev hasn't diverged.
-          # If it has diverged, a merge commit is created automatically.
+          # Fetching again ensures we see the commit pushed by semantic-release
           git merge origin/main --no-edit || {
             echo "Conflict detected during back-merge. Manual intervention required."
             exit 1
