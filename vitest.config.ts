@@ -8,9 +8,8 @@ export default defineConfig({
     environment: 'jsdom',
     setupFiles: ['./vitest-setup.ts'],
     exclude: ['**/node_modules/**', '**/e2e/**', '**/dist/**'],
-    reporters: ['default', ['monocart-reporter', {
-        name: 'Vitest Report',
-        outputFile: './test-results/vitest/index.html'
+    reporters: ['default', ['html', {
+        outputFile: './test-results/unit/index.html'
     }]],
   },
   resolve: {

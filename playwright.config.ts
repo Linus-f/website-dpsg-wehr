@@ -10,7 +10,7 @@ export default defineConfig({
     ['list'],
     ['monocart-reporter', {
         name: 'Playwright Report',
-        outputFile: './test-results/playwright/index.html'
+        outputFile: './test-results/e2e/index.html'
     }]
   ],
   use: {
