@@ -7,9 +7,9 @@ import {
 
 import dpsgLogo from '@/public/dpsg.svg'
 
-function SocialLink({children, url, hoverColor} : {children: React.ReactNode, url: string, hoverColor: string}) {
+function SocialLink({children, url, hoverColor, label} : {children: React.ReactNode, url: string, hoverColor: string, label: string}) {
     return (
-        <Link href={url} target='_blank'>
+        <Link href={url} target='_blank' aria-label={label}>
             <div className={`text-white ${hoverColor} text-2xl ml-4`}>
                 {children}
             </div>
@@ -19,7 +19,7 @@ function SocialLink({children, url, hoverColor} : {children: React.ReactNode, ur
 
 function FacebookLink() {
     return (
-        <SocialLink url="https://de-de.facebook.com/dpsgwehr/" hoverColor="hover:text-blue-600">
+        <SocialLink url="https://de-de.facebook.com/dpsgwehr/" hoverColor="hover:text-blue-600" label="Facebook">
             <Facebook />
         </SocialLink>
     )
@@ -27,7 +27,7 @@ function FacebookLink() {
 
 function InstagramLink() {
     return (
-        <SocialLink url="https://www.instagram.com/pfadfinder_wehr/" hoverColor='hover:text-pink-600'>
+        <SocialLink url="https://www.instagram.com/pfadfinder_wehr/" hoverColor='hover:text-pink-600' label="Instagram">
             <Instagram />
         </SocialLink>
     )

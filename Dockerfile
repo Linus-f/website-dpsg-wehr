@@ -4,6 +4,8 @@ FROM node:20-alpine AS builder
 # Install pnpm
 RUN npm install -g pnpm
 
+ENV NEXT_TELEMETRY_DISABLED=1
+
 WORKDIR /app
 
 # Copy dependencies first for caching

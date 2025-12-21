@@ -24,7 +24,7 @@ export default function Post({ postMetadata, children }: { postMetadata: PostMet
                 <h1 className="text-center text-4xl font-bold">{metadata.title}</h1>
                 <h2 className="text-center text-xl font-light">{metadata.subtitle}</h2>
             </div>
-            <p className="text-center font-light text-gray-700 dark:text-gray-300">{formatPostDate(metadata.date)}</p>
+            <p className="text-center font-light text-gray-800 dark:text-gray-200">{formatPostDate(metadata.date)}</p>
             <hr className="mt-3 mb-12"></hr>
             <article className="prose sm:prose-lg dark:prose-invert">
                 {children}
