@@ -126,3 +126,11 @@ When asked to "extract events from [PDF]" or "update calendar from [PDF]":
     *   Verify dates are in `YYYY-MM-DD` format.
 4.  **Update Files:** Write the new events to the target file.
 5.  **Verify:** Run `pnpm build` to ensure the ICS files are generated correctly and there are no syntax errors.
+
+### Dry Run Semantic Versioning
+
+When asked to "dry run release", "check next version", or "dry run semantic versioning":
+
+1.  **Run Command:** Execute `npx semantic-release --dry-run --no-ci --branches $(git branch --show-current) --plugins @semantic-release/commit-analyzer`.
+2.  **Analyze Output:** Identify the "next release version" and the commits that triggered the change (e.g., `feat` for minor, `fix` for patch).
+3.  **Report:** Share the determined next version and a brief list of the contributing commits.
