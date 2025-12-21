@@ -69,6 +69,9 @@ async function inlineCss() {
 
                     // Remove Next.js Hint Load hints from scripts
                     // They can look like :HL["/path.css","style"] or :HL[\"/path.css\",\"style\"]
+                    // WARNING: Removing these can break the syntax of the hydration scripts (e.g. leaving double commas)
+                    // causing "Connection closed" errors. Disabling for now.
+                    /*
                     const hints = [
                         `:HL["${href}","style"]`,
                         `:HL[\\"${href}\\",\\"style\\"]`,
@@ -77,6 +80,7 @@ async function inlineCss() {
                     hints.forEach(hint => {
                         content = content.split(hint).join('');
                     });
+                    */
                     
                     modified = true;
                 } else {
