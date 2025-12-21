@@ -1,3 +1,16 @@
+## [1.2.3](https://github.com/Linus-f/website-dpsg-wehr/compare/v1.2.2...v1.2.3) (2025-12-21)
+
+
+### Bug Fixes
+
+* restore original icon appearances and fix Lilie rendering ([cc4cad8](https://github.com/Linus-f/website-dpsg-wehr/commit/cc4cad8ab275d18ab010a3db113afa42e2584a88))
+
+
+### Performance Improvements
+
+* optimize critical path and refactor layout for 14kb target ([9f35449](https://github.com/Linus-f/website-dpsg-wehr/commit/9f3544980eec19f464f5083cc85514c4c3a5f446))
+* optimize docker build and image caching ([d860e79](https://github.com/Linus-f/website-dpsg-wehr/commit/d860e79cf47c08743d6283748849fcd24d87faa8))
+
 ## [1.2.2](https://github.com/Linus-f/website-dpsg-wehr/compare/v1.2.1...v1.2.2) (2025-12-21)
 
 
