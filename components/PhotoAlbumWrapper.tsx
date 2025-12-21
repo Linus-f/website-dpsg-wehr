@@ -1,11 +1,11 @@
-"use client";
+"use client"
 
 import PhotoAlbum from "react-photo-album"
-import NextPhotoRenderer from "./NextPhotoRenderer"
-import { PhotoPlus, TagGroup } from "@/types"
-import { useContext, useEffect, useState } from "react";
-import { LightboxContext } from "@/lib/LightboxContext";
+import "react-photo-album/styles.css"
+import { PhotoPlus, TagGroup } from "@/types";
+import { useEffect, useState } from "react";
 import GalleryHeader from "@/components/GalleryHeader";
+import NextPhotoRenderer from "./NextPhotoRenderer";
 
 const tagsInit: TagGroup[] = [
     {
@@ -26,7 +26,6 @@ const tagsInit: TagGroup[] = [
 ];
 
 export default function PhotoAlbumWrapper({ photos } : { photos: PhotoPlus[] }) {
-    const { setSlides } = useContext(LightboxContext);
     const [mounted, setMounted] = useState(false);
     const [fileredPhotos, setFilteredPhotos] = useState<PhotoPlus[]>([]);
     const [tags, setTags] = useState<TagGroup[]>(tagsInit);
@@ -48,16 +47,7 @@ export default function PhotoAlbumWrapper({ photos } : { photos: PhotoPlus[] }) 
         ));
 
         setFilteredPhotos(filtered);
-
-        setSlides(filtered.map((photo: PhotoPlus) => ({
-            src: photo.src,
-            alt: photo.alt,
-            title: photo.alt,
-            width: photo.width,
-            height: photo.height,
-            //srcSet: photo.srcSet,
-        })));
-    }, [mounted, tags, photos, setSlides]);
+    }, [mounted, tags, photos]);
 
     return (
         <div>

@@ -6,7 +6,7 @@
     "dev": "next dev",
     "build": "tsx scripts/generate-ics.ts && next build",
     "start": "next start",
-    "lint": "next lint",
+    "lint": "eslint .",
     "export": "next build && next-image-export-optimizer",
     "release:dry-run": "semantic-release --dry-run --no-ci --branches $(git branch --show-current) --plugins @semantic-release/commit-analyzer",
     "serve": "npx serve@latest out"

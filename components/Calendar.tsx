@@ -7,6 +7,7 @@ import dayGridPlugin from "@fullcalendar/daygrid";
 import timeGridPlugin from "@fullcalendar/timegrid";
 import listPlugin from "@fullcalendar/list";
 import { publicEvents } from "../lib/events.public";
+import "./Calendar.css";
 
 export default function Calendar() {
     return (

@@ -1,21 +1,13 @@
 import type { RenderImageContext, RenderImageProps } from "react-photo-album";
-import { useContext } from "react";
-import { LightboxContext } from "@/lib/LightboxContext";
 import Img from "./Img";
 
 export default function NextPhotoRenderer(
-    { alt, title, sizes, className, onClick, style }: RenderImageProps,
+    { alt, title, sizes, className, style }: RenderImageProps,
     { photo }: RenderImageContext
 ) {
-    const { setOpen } = useContext(LightboxContext);
-
     return (
         <Img
             src={photo}
-            onClick={(event) => {
-                onClick?.(event);
-                setOpen(photo.src);
-            }}
             placeholder={"blurDataURL" in photo ? "blur" : undefined}
             alt={alt || ""}
             title={title}
@@ -24,6 +16,12 @@ export default function NextPhotoRenderer(
             width={photo.width}
             height={photo.height}
             style={{ ...style, cursor: "pointer" }}
+            // Lightbox attributes
+            data-lightbox="true"
+            data-src={photo.src}
+            data-alt={alt || title || ""}
+            data-width={photo.width}
+            data-height={photo.height}
         />
     );
 }
