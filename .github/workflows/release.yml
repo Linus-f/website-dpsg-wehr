@@ -35,7 +35,30 @@ jobs:
         run: pnpm install --frozen-lockfile
 
       - name: 🚀 Semantic Release
+        id: semantic
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           NEXT_TELEMETRY_DISABLED: 1
         run: npx semantic-release
+
+      - name: 🔄 Back-merge main into dev
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          
+          echo "Fetching latest changes..."
+          git fetch origin dev
+          
+          echo "Switching to dev branch..."
+          git checkout dev
+          
+          echo "Merging main into dev..."
+          # Use --ff to avoid a merge commit if dev hasn't diverged.
+          # If it has diverged, a merge commit is created automatically.
+          git merge origin/main --no-edit || {
+            echo "Conflict detected during back-merge. Manual intervention required."
+            exit 1
+          }
+          
+          echo "Pushing changes to dev..."
+          git push origin dev
