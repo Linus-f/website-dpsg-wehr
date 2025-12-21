@@ -55,6 +55,7 @@ async function generate() {
         // We use relative path from this script location? 
         // scripts/generate-ics.ts -> ../lib/events.internal.ts
         // tsx handles this
+        // @ts-ignore
         const module = await import('../lib/events.internal');
         if (module && module.internalEvents) {
             internalEvents = module.internalEvents;
