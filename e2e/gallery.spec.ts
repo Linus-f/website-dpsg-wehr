@@ -26,7 +26,14 @@ test.describe('Photo Gallery', () => {
         await expect(firstImage).toBeVisible();
         await firstImage.scrollIntoViewIfNeeded();
 
-        await firstImage.click();
+        // Wait for image to be fully decoded
+        await expect(async () => {
+            const naturalWidth = await firstImage.evaluate((img: HTMLImageElement) => img.naturalWidth);
+            expect(naturalWidth).toBeGreaterThan(0);
+        }).toPass();
+
+        // Use force click to ensure it hits the image even if layout is shifting
+        await firstImage.click({ force: true });
 
         // Check if the lightbox is visible
         const lightbox = page.locator('.yarl__container');

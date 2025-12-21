@@ -29,6 +29,9 @@ jobs:
     - name: Install Playwright Browsers
       run: pnpm exec playwright install --with-deps chromium
 
+    - name: Export website (optimizes images)
+      run: pnpm export
+
     - name: Run tests
       run: pnpm test:all
 
