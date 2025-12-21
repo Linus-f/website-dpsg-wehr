@@ -30,23 +30,62 @@ jobs:
 
       - name: Semantic Release Dry Run
         id: semantic
-        uses: cycjimmy/semantic-release-action@v4
-        with:
-          dry_run: true
-          # Allow the current branch (head of PR) to trigger a release simulation
-          branches: |
-            [
-              "${{ github.head_ref }}"
-            ]
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          # Run semantic-release in dry-run mode
+          # We force the branch to be the current one so it thinks it's a valid release branch
+          npx semantic-release --dry-run --no-ci --branches ${{ github.head_ref }} > release-output.txt 2>&1 || true
+          
+          # Cat the output for debugging
+          cat release-output.txt
+          
+          # Extract version
+          VERSION=$(grep "The next release version is" release-output.txt | sed -E 's/.*The next release version is (.*)/\1/')
+          
+          if [ -z "$VERSION" ]; then
+            echo "No release triggered."
+            echo "new_release_published=false" >> $GITHUB_OUTPUT
+          else
+            echo "Found next version: $VERSION"
+            echo "new_release_published=true" >> $GITHUB_OUTPUT
+            echo "new_release_version=$VERSION" >> $GITHUB_OUTPUT
+            
+            # Extract notes (this is trickier from stdout, but let's try a simple approach first)
+            # Ideally semantic-release plugins output this, but for now we'll just link to the release.
+            # actually, we can try to grab the release notes if they are printed.
+            # A better way is to rely on the fact that we know the version.
+          fi
+
+      - name: Generate Release Notes
+        if: steps.semantic.outputs.new_release_published == 'true'
+        id: notes
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          # Use the API to generate release notes for the calculated tag
+          # This ensures we get the exact same formatting as GitHub Releases
+          NOTES=$(gh api \
+            --method POST \
+            -H "Accept: application/vnd.github+json" \
+            -H "X-GitHub-Api-Version: 2022-11-28" \
+            /repos/${{ github.repository }}/releases/generate-notes \
+            -f tag_name="v${{ steps.semantic.outputs.new_release_version }}" \
+            -f target_commitish="${{ github.head_ref }}" \
+            --jq '.body')
+            
+          # Escape newlines for GITHUB_OUTPUT
+          EOF=$(dd if=/dev/urandom bs=15 count=1 status=none | base64)
+          echo "release_notes<<$EOF" >> $GITHUB_OUTPUT
+          echo "$NOTES" >> $GITHUB_OUTPUT
+          echo "$EOF" >> $GITHUB_OUTPUT
 
       - name: Update PR
         if: steps.semantic.outputs.new_release_published == 'true'
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           VERSION: ${{ steps.semantic.outputs.new_release_version }}
-          NOTES: ${{ steps.semantic.outputs.new_release_notes }}
+          NOTES: ${{ steps.notes.outputs.release_notes }}
           PR_NUMBER: ${{ github.event.pull_request.number }}
         run: |
           gh pr edit "$PR_NUMBER" \
