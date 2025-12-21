@@ -70,7 +70,7 @@ jobs:
             .next/cache
             .image-cache
             public/images/next-image-export-optimizer-hashes.json
-          key: ${{ runner.os }}-next-images-${{ hashFiles('public/images/**/*') }}
+          key: ${{ runner.os }}-next-images-${{ hashFiles('public/images/**/*', 'next.config.mjs') }}
           restore-keys: |
             ${{ runner.os }}-next-images-
 
@@ -84,10 +84,10 @@ jobs:
           nextImageExportOptimizer_quality: "60"
           nextImageExportOptimizer_storePicturesInWEBP: "true"
           nextImageExportOptimizer_generateAndUseBlurImages: "true"
-          nextImageExportOptimizer_imageSizes: "16,32,48,64,96,128,256,384"
-          nextImageExportOptimizer_deviceSizes: "640,828,1080,1200,1920,2048,3840"
+          nextImageExportOptimizer_imageSizes: "16,64,128,256,384"
+          nextImageExportOptimizer_deviceSizes: "640,1080,1920"
         run: |
-          pnpm next build
+          pnpm build
           mkdir -p out/nextImageExportOptimizer
           if [ -d ".image-cache" ]; then
             echo "Restoring images from cache..."

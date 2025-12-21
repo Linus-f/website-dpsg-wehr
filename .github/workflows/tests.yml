@@ -1,12 +1,13 @@
-name: Tests
+name: Tests & PR Checks
 on:
   push:
-    branches: [ main, dev ]
+    branches: [ dev ]
   pull_request:
     branches: [ main, dev ]
 
 jobs:
   test:
+    name: 🧪 Run Tests
     timeout-minutes: 15
     runs-on: ubuntu-latest
     steps:
@@ -20,49 +21,63 @@ jobs:
         
     - uses: actions/setup-node@v4
       with:
-        node-version: lts/*
+        node-version: 22
         cache: 'pnpm'
 
-    - name: Install dependencies
-      run: pnpm install
+    - name: 🧩 Install dependencies
+      run: pnpm install --frozen-lockfile
 
-    - name: Get Playwright version
+    - name: 🔍 Get Playwright version
       id: playwright-version
       run: echo "version=$(pnpm list @playwright/test --depth=0 | grep @playwright/test | awk '{print $2}')" >> $GITHUB_OUTPUT
 
-    - name: Cache Playwright Browsers
+    - name: 📥 Cache Playwright Browsers
       id: playwright-cache
       uses: actions/cache@v4
       with:
         path: ~/.cache/ms-playwright
         key: ${{ runner.os }}-playwright-${{ steps.playwright-version.outputs.version }}
 
-    - name: Install Playwright Browsers
+    - name: ⚙️ Install Playwright Browsers
       if: steps.playwright-cache.outputs.cache-hit != 'true'
       run: pnpm exec playwright install --with-deps chromium
 
-    - name: Cache Next.js build
+    - name: 💾 Cache Next.js build
       uses: actions/cache@v4
       with:
         path: |
           ${{ github.workspace }}/.next/cache
-        key: ${{ runner.os }}-nextjs-${{ hashFiles('**/pnpm-lock.yaml') }}-${{ hashFiles('**/*.js', '**/*.jsx', '**/*.ts', '**/*.tsx') }}
+        key: ${{ runner.os }}-nextjs-${{ hashFiles('**/pnpm-lock.yaml') }}-${{ hashFiles('**/*.js', '**/*.jsx', '**/*.ts', '**/*.tsx', '**/*.mdx') }}
         restore-keys: |
           ${{ runner.os }}-nextjs-${{ hashFiles('**/pnpm-lock.yaml') }}-
 
-    - name: Cache optimized images
+    - name: 🖼️ Cache optimized images
       uses: actions/cache@v4
       with:
         path: |
+          .image-cache
           public/images/next-image-export-optimizer-hashes.json
-        key: ${{ runner.os }}-image-optimizer-${{ hashFiles('public/images/**/*') }}
+        key: ${{ runner.os }}-next-images-${{ hashFiles('public/images/**/*', 'next.config.mjs') }}
         restore-keys: |
-          ${{ runner.os }}-image-optimizer-
+          ${{ runner.os }}-next-images-
 
-    - name: Export website (optimizes images)
-      run: pnpm export
+    - name: 🏗️ Export website (optimizes images)
+      env:
+        nextImageExportOptimizer_imageSizes: "16,64,128,256,384"
+        nextImageExportOptimizer_deviceSizes: "640,1080,1920"
+      run: |
+        pnpm build
+        mkdir -p out/nextImageExportOptimizer
+        if [ -d ".image-cache" ]; then
+          echo "Restoring images from cache..."
+          cp -r .image-cache/* out/nextImageExportOptimizer/ || true
+        fi
+        pnpm next-image-export-optimizer
+        node scripts/inline-css.mjs
+        mkdir -p .image-cache
+        cp -r out/nextImageExportOptimizer/* .image-cache/
 
-    - name: Run tests
+    - name: 🚦 Run tests
       run: pnpm test:all
 
     - uses: actions/upload-artifact@v4
@@ -71,3 +86,51 @@ jobs:
         name: test-results
         path: test-results/
         retention-days: 30
+
+  preview-release:
+    name: 🚀 Release Preview
+    if: github.event_name == 'pull_request' && github.base_ref == 'main'
+    runs-on: ubuntu-latest
+    steps:
+      - name: 📥 Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          ref: ${{ github.head_ref }}
+
+      - name: 🟢 Use Node.js 22
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: 📦 Install pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 10
+
+      - name: 🧩 Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: 🔍 Semantic Release Dry Run
+        id: semantic
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          HEAD_REF: ${{ github.head_ref }}
+          NEXT_TELEMETRY_DISABLED: 1
+        run: node .github/scripts/release-preview.mjs
+
+      - name: 💬 Update PR
+        if: steps.semantic.outputs.version != ''
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          VERSION: ${{ steps.semantic.outputs.version }}
+          NOTES: ${{ steps.semantic.outputs.notes }}
+          PR_NUMBER: ${{ github.event.pull_request.number }}
+        run: |
+          gh pr edit "$PR_NUMBER" \
+            --title "chore(release): v$VERSION" \
+            --body "### 🚀 Release Preview: v$VERSION
+          
+          _This description is automatically generated based on the commits in this Pull Request._
+          
+          $NOTES"
