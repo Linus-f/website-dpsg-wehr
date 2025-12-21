@@ -2,6 +2,9 @@
 # Expects pre-built artifacts in the 'out' directory
 FROM nginx:alpine
 
+# Install curl for healthcheck
+RUN apk add --no-cache curl
+
 # Security headers module might be needed if not built-in, but standard config works for basic setup.
 # Alpine Nginx usually includes standard modules.
 

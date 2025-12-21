@@ -36,6 +36,9 @@ RUN --mount=type=cache,id=next-cache,target=/app/.next/cache \
 # Stage 2: Serve
 FROM nginx:alpine
 
+# Install curl for healthcheck
+RUN apk add --no-cache curl
+
 # Copy custom Nginx config
 COPY nginx.conf /etc/nginx/conf.d/default.conf
 
