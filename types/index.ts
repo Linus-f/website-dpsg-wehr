@@ -30,3 +30,9 @@ export interface TagGroup {
     tags: string[];
     selectedTags: string[];
 }
+
+export interface AppEvent {
+    title: string;
+    start: string; // YYYY-MM-DD
+    end?: string; // YYYY-MM-DD, exclusive
+}
