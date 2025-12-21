@@ -12,12 +12,15 @@ export default function Aktuelles() {
 
     return (
         <>
+            <div className="prose dark:prose-invert mb-8">
+                <h1>Aktuelles</h1>
+            </div>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 max-w-md mx-auto sm:max-w-max">
                 {postPreviews}
             </div>
 
             {postPreviews.length == 0 && (
-                <div className="text-center">
+                <div className="text-center mt-8">
                     <p className="text-xl font-bold">Hier gibt&apos;s noch nichts zu sehen.</p>
                 </div>
             )}
