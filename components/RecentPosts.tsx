@@ -4,17 +4,15 @@ import { formatPostDate } from '@/lib/date';
 
 export default function RecentPosts() {
     const postMetadata = getPostMetadata();
-    const postPreviews = postMetadata.map(data => {
-        data.date = formatPostDate(data.date)
+    const latestPost = postMetadata[0];
 
-        return <PostPreview key={data.slug} {...data} />
-    });
+    if (!latestPost) return null;
 
-    const latestPreviews = postPreviews.slice(0, 1);
+    const displayDate = formatPostDate(latestPost.date);
 
     return (
       <div className="grid grid-cols-1 gap-4 max-w-md mx-auto sm:max-w-max no-underline" >
-        {latestPreviews}
+        <PostPreview key={latestPost.slug} {...latestPost} date={displayDate} />
       </div>
     );
 }

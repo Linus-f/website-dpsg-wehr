@@ -20,7 +20,7 @@ export default function PostPreview(props: PostMetadata) {
                             height={props.image.height} 
                             width={props.image.width} 
                             src={props.image.src} 
-                            priority={true} 
+                            priority={false} 
                             sizes="(max-width: 768px) 100vw, 448px"
                             alt={props.title}  
                             className="w-full h-48 rounded-t-md bg-gray-100 text-gray-100 dark:bg-gray-600 dark:text-gray-600 object-cover" 

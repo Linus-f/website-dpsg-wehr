@@ -2,9 +2,10 @@ import Content from './pages/startseite/page.mdx'
 
 export default function Home() {
     return (
-        <article className="prose sm:prose-lg dark:prose-invert max-w-none">
-            <Content />
-        </article>
-
+        <div className="dark:text-white">
+            <div className="landing-content">
+                <Content />
+            </div>
+        </div>
     )
 }

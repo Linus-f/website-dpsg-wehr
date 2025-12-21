@@ -2,9 +2,6 @@ import { useState } from 'react';
 import { navigationLinks } from '@/lib/config';
 import { NavigationLinkGroup } from '@/types';
 
-import {
-    IoChevronDownOutline as ChevronDown,
-} from "react-icons/io5";
 import Link from 'next/link';
 import { getIconFromname } from '@/lib/icons';
 
@@ -47,7 +44,9 @@ export function LinksGroup({ navigationLinks, toggleSidebar }: { navigationLinks
           </div>
           {hasLinks && (
             <div className={`text-gray-600 dark:text-white transition-transform duration-200 ${opened ? '' : 'transform -rotate-90'}`}>
-              <ChevronDown/>
+              <svg stroke="currentColor" fill="currentColor" strokeWidth="0" viewBox="0 0 512 512" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg">
+                <path fill="none" strokeLinecap="round" strokeLinejoin="round" strokeWidth="48" d="m112 184 144 144 144-144"></path>
+              </svg>
             </div>
           )}
         </div>

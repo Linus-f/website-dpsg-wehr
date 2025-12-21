@@ -11,7 +11,7 @@
     "build": "tsx scripts/generate-ics.ts && next build",
     "start": "next start",
     "lint": "eslint .",
-    "export": "next build && next-image-export-optimizer",
+    "export": "next build && next-image-export-optimizer && node scripts/inline-css.mjs",
     "release:dry-run": "semantic-release --dry-run --no-ci --branches $(git branch --show-current) --plugins @semantic-release/commit-analyzer",
     "serve": "npx serve@latest out"
   },

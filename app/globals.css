@@ -28,6 +28,22 @@
     }
 }
 
+.landing-content h1 {
+    @apply text-4xl font-bold mb-6 text-center;
+}
+
+.landing-content h2 {
+    @apply text-3xl font-bold mt-12 mb-6;
+}
+
+.landing-content p {
+    @apply text-lg mb-4 leading-relaxed;
+}
+
+.landing-content {
+    @apply max-w-none;
+}
+
 .img-blur {
     filter: blur(5px);
 }
