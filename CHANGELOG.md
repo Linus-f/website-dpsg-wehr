@@ -1,3 +1,10 @@
+## [1.1.2](https://github.com/Linus-f/website-dpsg-wehr/compare/v1.1.1...v1.1.2) (2025-12-21)
+
+
+### Bug Fixes
+
+* **ci:** run docker action after sucessful release ([5a367dc](https://github.com/Linus-f/website-dpsg-wehr/commit/5a367dc309ccb58ae5e55e10d5b6ea5c5d17c41c))
+
 ## [1.1.1](https://github.com/Linus-f/website-dpsg-wehr/compare/v1.1.0...v1.1.1) (2025-12-21)
 
 
