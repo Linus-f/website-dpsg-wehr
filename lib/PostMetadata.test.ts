@@ -24,7 +24,7 @@ describe('getPostMetadata', () => {
 
     it('should return metadata for posts in the directory', () => {
         vi.mocked(fs.readdirSync).mockReturnValue([
-            {name: 'first-post', isDirectory: () => true }
+            'first-post.mdx'
         ] as any);
 
         vi.mocked(fs.readFileSync).mockReturnValue('mocked file content');
