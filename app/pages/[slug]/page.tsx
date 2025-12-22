@@ -9,6 +9,14 @@ import { getExcerpt } from '@/lib/metadata';
 
 import client from '@/tina/__generated__/client';
 import TinaContentClient from '@/components/TinaContentClient';
+import { createClient } from 'tinacms/dist/client';
+import { queries } from '@/tina/__generated__/types';
+
+const localClient = createClient({
+    url: 'http://localhost:9005/graphql',
+    token: 'dummy',
+    queries,
+});
 
 export async function generateStaticParams() {
     const folder = 'content/pages/';
@@ -60,7 +68,17 @@ export default async function GenericPage({ params }: { params: Promise<{ slug: 
 
     let tinaData;
     try {
-        tinaData = await client.queries.page({ relativePath: `${slug}.mdx` });
+        try {
+            tinaData = await client.queries.page({ relativePath: `${slug}.mdx` });
+        } catch (e) {
+            if (process.env.NODE_ENV === 'development') {
+                // eslint-disable-next-line no-console
+                console.log('Default Tina client failed, trying localhost:9005 fallback...');
+                tinaData = await localClient.queries.page({ relativePath: `${slug}.mdx` });
+            } else {
+                throw e;
+            }
+        }
     } catch (e) {
         // eslint-disable-next-line no-console
         console.error('Error fetching Tina data, falling back to MDXRemote', e);

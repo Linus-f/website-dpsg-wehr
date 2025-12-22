@@ -14,7 +14,7 @@ import { createClient } from 'tinacms/dist/client';
 import { queries } from '@/tina/__generated__/types';
 
 const localClient = createClient({
-    url: 'http://127.0.0.1:4001/graphql',
+    url: 'http://localhost:9005/graphql',
     token: 'dummy',
     queries,
 });
@@ -99,7 +99,7 @@ export default async function PostPage({ params }: { params: Promise<{ slug: str
         } catch (e) {
             if (process.env.NODE_ENV === 'development') {
                 // eslint-disable-next-line no-console
-                console.log('Default Tina client failed, trying 127.0.0.1 fallback...');
+                console.log('Default Tina client failed, trying localhost:9005 fallback...');
                 tinaData = await localClient.queries.post({ relativePath: `${slug}.mdx` });
             } else {
                 throw e;

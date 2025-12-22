@@ -111,6 +111,9 @@ export default defineConfig({
                 label: 'News Posts',
                 path: 'content/posts',
                 format: 'mdx',
+                ui: {
+                    router: ({ document }) => `/posts/${document._sys.filename}`,
+                },
                 fields: [
                     {
                         type: 'string',
@@ -166,6 +169,14 @@ export default defineConfig({
                 label: 'Pages',
                 path: 'content/pages',
                 format: 'mdx',
+                ui: {
+                    router: ({ document }) => {
+                        if (document._sys.filename === 'startseite') {
+                            return '/';
+                        }
+                        return `/pages/${document._sys.filename}`;
+                    },
+                },
                 fields: [
                     {
                         type: 'string',
@@ -198,6 +209,9 @@ export default defineConfig({
                 label: 'Youth Groups',
                 path: 'content/gruppen',
                 format: 'mdx',
+                ui: {
+                    router: ({ document }) => `/pages/gruppen/${document._sys.filename}`,
+                },
                 fields: [
                     {
                         type: 'string',
