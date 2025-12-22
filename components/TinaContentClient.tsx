@@ -34,6 +34,7 @@ export default function TinaContentClient(props: {
     query: string;
     contentType: 'post' | 'page' | 'gruppen';
     postMetadata?: PostMetadata[];
+    className?: string;
 }) {
     const { data } = useTina({
         query: props.query,
@@ -69,7 +70,9 @@ export default function TinaContentClient(props: {
     }
 
     return (
-        <article className="prose sm:prose-lg dark:prose-invert max-w-none">
+        <article
+            className={`prose sm:prose-lg dark:prose-invert max-w-none ${props.className || ''}`}
+        >
             <TinaMarkdown content={content.body} components={components} />
         </article>
     );
