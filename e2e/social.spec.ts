@@ -25,4 +25,11 @@ test.describe('Social Metadata', () => {
 
         await expect(page.locator('meta[property="og:title"]')).toHaveAttribute('content', 'Wölflinge - DPSG Wehr');
     });
+
+    test('should have optimized image for scoutfactory post', async ({ page }) => {
+        await page.goto('/posts/scoutfactory');
+
+        await expect(page.locator('meta[property="og:image"]')).toHaveAttribute('content', /.*nextImageExportOptimizer\/sfHeader-opt-1080\.WEBP/);
+        await expect(page.locator('meta[property="og:image:width"]')).toHaveAttribute('content', '1080');
+    });
 });

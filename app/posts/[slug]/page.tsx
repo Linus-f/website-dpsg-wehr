@@ -62,7 +62,7 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
             card: 'summary_large_image',
             title: `${data.title} - DPSG Wehr`,
             description: description,
-            images: images.map(img =\u003e img.url),
+            images: images.map(img => img.url),
         }
     };
 }
