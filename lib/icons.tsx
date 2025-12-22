@@ -1,6 +1,6 @@
 import Lilie from "@/components/Lilie";
 
-export type Icons = 'Lilie' | 'None' | 'News' | 'People' | 'Image' | 'Calendar' | 'Help' | 'House'
+export type Icons = 'Lilie' | 'None' | 'News' | 'People' | 'Image' | 'Calendar' | 'Help' | 'House' | 'Search' | 'More' | 'File'
 
 export const getIconFromname = (iconsName: Icons, color?: string): React.JSX.Element | null =>  {
 
@@ -9,6 +9,42 @@ export const getIconFromname = (iconsName: Icons, color?: string): React.JSX.Ele
         case "Lilie":
 
             return <Lilie color={color}/>;
+
+        case "File":
+
+            return (
+
+                <svg fill="none" stroke="currentColor" strokeWidth="32" viewBox="0 0 512 512" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg">
+
+                    <use href="#icon-file" />
+
+                </svg>
+
+            );
+
+        case "More":
+
+            return (
+
+                <svg fill="currentColor" viewBox="0 0 512 512" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg">
+
+                    <use href="#icon-more" />
+
+                </svg>
+
+            );
+
+        case "Search":
+
+            return (
+
+                <svg fill="currentColor" viewBox="0 0 512 512" height="1em" width="1em" xmlns="http://www.w3.org/2000/svg">
+
+                    <use href="#icon-search" />
+
+                </svg>
+
+            );
 
         case "News":
 

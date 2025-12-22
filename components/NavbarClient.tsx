@@ -8,7 +8,7 @@ export default function NavbarClient() {
     return (
         <button
             onClick={toggleSidebar}
-            className="md:hidden p-1 rounded hover:bg-gray-200 dark:hover:bg-gray-600 text-gray-700 dark:text-gray-200"
+            className="min-[840px]:hidden p-1 rounded hover:bg-gray-200 dark:hover:bg-gray-600 text-gray-700 dark:text-gray-200"
             aria-label="Toggle navigation"
         >
             <svg stroke="currentColor" fill="currentColor" strokeWidth="0" viewBox="0 0 512 512" height="24" width="24" xmlns="http://www.w3.org/2000/svg">
