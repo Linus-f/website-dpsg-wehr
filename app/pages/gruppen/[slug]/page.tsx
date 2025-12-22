@@ -6,7 +6,6 @@ import { Metadata } from 'next';
 import { useMDXComponents } from '@/mdx-components';
 import rehypeImgSize from 'rehype-img-size';
 import { getExcerpt } from '@/lib/metadata';
-import { acrostData } from '@/lib/config';
 
 export async function generateStaticParams() {
     const folder = "content/gruppen/";
@@ -66,7 +65,6 @@ export default async function GroupPage({ params }: { params: Promise<{ slug: st
                     mdxOptions: {
                         rehypePlugins: [[rehypeImgSize as any, { dir: 'public' }]],
                     },
-                    scope: { acrostData }
                 }}
             />
         </article>

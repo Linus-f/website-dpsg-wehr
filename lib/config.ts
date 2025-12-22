@@ -18,16 +18,3 @@ export const navigationLinks: Array<NavigationLinkGroup> = [
     { label: "FAQ", link: "/pages/faq", Icon: "Help" },
 ]
 
-export const acrostData: ArcostData[] = [
-    { left: "", middle: "L", right: "uschdig "},
-    { left: "", middle: "E", right: "n ganz bunte Huufe"},
-    { left: "Fasz", middle: "I", right: "niert vom Pfadfinder sii"},
-    { left: "Allzeit berei", middle: "T", right: ""},
-    { left: "J", middle: "E", right: "di Alterstufe"},
-    { left: "Natü", middle: "R", right: "lich"},
-    { left: "mit G", middle: "R", right: "uppenkindern"},
-    { left: "", middle: "U", right: "nterwegs"},
-    { left: "Gemei", middle: "N", right: "schaftlich"},
-    { left: "un", middle: "D", right: ""},
-    { left: "ein bissch", middle: "E", right: "n verrückt"},
-]
