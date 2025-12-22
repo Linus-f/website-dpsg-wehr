@@ -15,28 +15,28 @@ export interface AppEvent {
 
 export function convertEventToIcsAttribute(event: AppEvent): ics.EventAttributes {
     const startParts = event.start.split('-').map(Number);
-    // @ts-expect-error - ics.DateArray is a tuple, but split returns an array
     const start: ics.DateArray = [startParts[0], startParts[1], startParts[2]];
 
     let end: ics.DateArray | undefined = undefined;
     if (event.end) {
         const endParts = event.end.split('-').map(Number);
-        // @ts-expect-error - ics.DateArray is a tuple, but split returns an array
         end = [endParts[0], endParts[1], endParts[2]];
     }
 
-    const attributes: ics.EventAttributes = {
+    const baseAttributes = {
         start: start,
         title: event.title,
     };
 
+    let attributes: ics.EventAttributes;
+
     if (end) {
-        attributes.end = end;
+        attributes = { ...baseAttributes, end: end };
     } else {
-        attributes.duration = { days: 1 };
+        attributes = { ...baseAttributes, duration: { days: 1 } };
     }
 
-    return attributes as ics.EventAttributes;
+    return attributes;
 }
 
 function generateIcs(events: AppEvent[], filename: string) {

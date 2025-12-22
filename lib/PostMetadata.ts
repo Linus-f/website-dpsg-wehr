@@ -15,7 +15,10 @@ export default function getPostMetadata(): PostMetadata[] {
         let imgSize = undefined;
         if (matterResult.data.image) {
             try {
-                const buffer = fs.readFileSync(`public/${matterResult.data.image}`);
+                const imagePath = matterResult.data.image.startsWith('/')
+                    ? matterResult.data.image.slice(1)
+                    : matterResult.data.image;
+                const buffer = fs.readFileSync(`public/${imagePath}`);
                 imgSize = imageSize(buffer);
             } catch {
                 // Ignore error if image not found
@@ -29,7 +32,11 @@ export default function getPostMetadata(): PostMetadata[] {
             author: matterResult.data.author,
             slug: slug,
             image: {
-                src: matterResult.data.image,
+                src: matterResult.data.image
+                    ? matterResult.data.image.startsWith('/')
+                        ? matterResult.data.image
+                        : `/${matterResult.data.image}`
+                    : '',
                 width: imgSize?.width ? imgSize.width : 0,
                 height: imgSize?.height ? imgSize.height : 0,
             },

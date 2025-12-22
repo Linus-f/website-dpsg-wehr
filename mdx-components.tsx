@@ -17,11 +17,9 @@ export const mdxComponents: MDXComponents = {
     GroupOverview: (props: React.ComponentPropsWithoutRef<typeof GroupOverview>) => (
         <GroupOverview {...props} />
     ),
-    Calendar: (props: React.ComponentPropsWithoutRef<typeof Calendar>) => <Calendar {...props} />,
+    Calendar: () => <Calendar />,
     Download: (props: React.ComponentPropsWithoutRef<typeof Download>) => <Download {...props} />,
-    RecentPosts: (props: React.ComponentPropsWithoutRef<typeof RecentPosts>) => (
-        <RecentPosts {...props} />
-    ),
+    RecentPosts: () => <RecentPosts />,
 };
 
 export function useMDXComponents(components: MDXComponents): MDXComponents {
