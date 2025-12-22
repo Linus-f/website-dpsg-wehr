@@ -30,7 +30,7 @@ test.describe('News Page', () => {
             await expect(page.locator('h1').first()).toBeVisible({ timeout: 10000 });
 
             // Verify automated metadata
-            await expect(page.locator('meta[property="og:title"]')).toHaveAttribute('content', postTitle);
+            await expect(page.locator('meta[property="og:title"]')).toHaveAttribute('content', `${postTitle} - DPSG Wehr`);
             await expect(page.locator('meta[property="og:type"]')).toHaveAttribute('content', 'article');
         } else {
             // If no posts, verify the empty state message
