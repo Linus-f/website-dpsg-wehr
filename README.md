@@ -1,5 +1,6 @@
 # Website der DPSG Wehr
-[![statichost.eu status](https://builder.statichost.eu/dpsg-wehr/status.svg)](https://builder.statichost.eu/dpsg-wehr/)
+[![Tests](https://github.com/Linus-f/website-dpsg-wehr/actions/workflows/tests.yml/badge.svg)](https://github.com/Linus-f/website-dpsg-wehr/actions/workflows/tests.yml)
+![Next.js](https://img.shields.io/badge/Next.js-16-black?logo=next.js&logoColor=white)
 
 Hier findet ihr den Quellcode zu unserer Homepage. Die Website wurde mit [Next.js](https://nextjs.org) entwickelt und wird komplett statisch generiert. Die fertig generierte Website liegt in einem anderen [Repository](https://github.com/Linus-f/website-dpsg-wehr-static).
 
@@ -94,3 +95,10 @@ Die Kalender werden automatisch vor dem Build (`pnpm build`) generiert:
 2.  `public/internal-events.ics`: Enthält öffentliche und interne Termine (falls `events.internal.ts` existiert).
 
 Beide generierten `.ics` Dateien sind ebenfalls in `.gitignore` und werden nicht committed.
+
+## Lizenz
+
+Der Quellcode dieses Projekts ist unter der **MIT Lizenz** veröffentlicht. Siehe [LICENSE](LICENSE) für Details.
+
+**Hinweis zum Inhalt:**
+Die Inhalte in den Ordnern `content/` und `public/` (Texte, Bilder, Grafiken) sind Eigentum der DPSG Wehr und unterliegen dem Urheberrecht. Sie sind **nicht** Teil der Open-Source-Lizenz und dürfen nicht ohne Genehmigung weiterverwendet werden.
