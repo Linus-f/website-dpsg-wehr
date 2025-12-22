@@ -811,7 +811,7 @@
                 "namespace": ["gruppen"]
             }
         ],
-        "config": { "media": { "tina": { "publicFolder": "public", "mediaRoot": "" } } }
+        "config": { "media": { "tina": { "publicFolder": "public", "mediaRoot": "media" } } }
     },
     "lookup": {
         "DocumentConnection": {

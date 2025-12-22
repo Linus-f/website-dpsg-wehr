@@ -1,7 +1,7 @@
 import { getPhotos } from '@/lib/photos';
 import PhotoAlbumWrapper from '@/components/PhotoAlbumWrapper';
 import Img from '@/components/Img';
-import InstagramProfile from '@/public/images/profilbild_insta.jpg';
+import InstagramProfile from '@/public/media/images/profilbild_insta.jpg';
 
 import { IoLogoInstagram as Instagram } from 'react-icons/io5';
 import Link from 'next/link';

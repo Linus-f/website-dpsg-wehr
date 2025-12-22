@@ -10,14 +10,14 @@ export const metadata: Metadata = {
         title: 'Aktuelles - DPSG Wehr',
         description:
             'Neuigkeiten und Berichte von unseren Aktionen, Zeltlagern und Gruppenstunden.',
-        images: ['/images/logo.png'],
+        images: ['/media/images/logo.png'],
     },
     twitter: {
         card: 'summary_large_image',
         title: 'Aktuelles - DPSG Wehr',
         description:
             'Neuigkeiten und Berichte von unseren Aktionen, Zeltlagern und Gruppenstunden.',
-        images: ['/images/logo.png'],
+        images: ['/media/images/logo.png'],
     },
 };
 
