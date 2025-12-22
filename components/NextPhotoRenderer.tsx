@@ -1,5 +1,5 @@
-import type { RenderImageContext, RenderImageProps } from "react-photo-album";
-import Img from "./Img";
+import type { RenderImageContext, RenderImageProps } from 'react-photo-album';
+import Img from './Img';
 
 export default function NextPhotoRenderer(
     { alt, title, sizes, className, style }: RenderImageProps,
@@ -8,18 +8,18 @@ export default function NextPhotoRenderer(
     return (
         <Img
             src={photo}
-            placeholder={"blurDataURL" in photo ? "blur" : undefined}
-            alt={alt || ""}
+            placeholder={'blurDataURL' in photo ? 'blur' : undefined}
+            alt={alt || ''}
             title={title}
             sizes={sizes}
             className={className}
             width={photo.width}
             height={photo.height}
-            style={{ ...style, cursor: "pointer" }}
+            style={{ ...style, cursor: 'pointer' }}
             // Lightbox attributes
             data-lightbox="true"
             data-src={photo.src}
-            data-alt={alt || title || ""}
+            data-alt={alt || title || ''}
             data-width={photo.width}
             data-height={photo.height}
         />

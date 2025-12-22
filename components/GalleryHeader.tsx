@@ -1,16 +1,16 @@
-import { TagGroup } from "@/types";
-import SelectWrapper from "./SelectWrapper";
-import Collapsible from "./Collapsible";
+import { TagGroup } from '@/types';
+import SelectWrapper from './SelectWrapper';
+import Collapsible from './Collapsible';
 
-
-export default function GalleryHeader({tags, setTags}: {tags: TagGroup[], setTags: (tags: TagGroup[]) => void}) {
+export default function GalleryHeader({
+    tags,
+    setTags,
+}: {
+    tags: TagGroup[];
+    setTags: (tags: TagGroup[]) => void;
+}) {
     const dropdowns = tags.map((group: TagGroup) => (
-        <SelectWrapper
-            key={group.name}
-            options={group}
-            tags={tags}
-            setTags={setTags}
-        />
+        <SelectWrapper key={group.name} options={group} tags={tags} setTags={setTags} />
     ));
 
     return (
@@ -21,4 +21,3 @@ export default function GalleryHeader({tags, setTags}: {tags: TagGroup[], setTag
         </Collapsible>
     );
 }
-

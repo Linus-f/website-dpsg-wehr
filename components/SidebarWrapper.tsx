@@ -1,13 +1,13 @@
-"use client";
+'use client';
 
-import { useEffect, useState } from "react";
-import Sidebar from "./Sidebar";
+import { useEffect, useState } from 'react';
+import Sidebar from './Sidebar';
 
 export default function SidebarWrapper() {
     const [sidebarOpen, setSidebarOpen] = useState(false);
 
     useEffect(() => {
-        const toggleSidebar = () => setSidebarOpen(prev => !prev);
+        const toggleSidebar = () => setSidebarOpen((prev) => !prev);
         const closeSidebar = () => setSidebarOpen(false);
 
         window.addEventListener('toggle-sidebar', toggleSidebar);

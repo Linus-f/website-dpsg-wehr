@@ -1,140 +1,140 @@
 name: Build and Push Docker Image
 
 on:
-  workflow_run:
-    workflows: ["Release"]
-    types:
-      - completed
-  workflow_dispatch:
+    workflow_run:
+        workflows: ['Release']
+        types:
+            - completed
+    workflow_dispatch:
 
 permissions:
-  contents: read
-  packages: write
+    contents: read
+    packages: write
 
 jobs:
-  build-and-push:
-    if: ${{ github.event_name == 'workflow_dispatch' || (github.event_name == 'workflow_run' && github.event.workflow_run.conclusion == 'success') }}
-    runs-on: ubuntu-latest
-    steps:
-      - name: 📥 Checkout
-        uses: actions/checkout@v4
-        with:
-          lfs: true
-          fetch-depth: 0
-          ref: ${{ github.event_name == 'workflow_run' && 'main' || '' }}
+    build-and-push:
+        if: ${{ github.event_name == 'workflow_dispatch' || (github.event_name == 'workflow_run' && github.event.workflow_run.conclusion == 'success') }}
+        runs-on: ubuntu-latest
+        steps:
+            - name: 📥 Checkout
+              uses: actions/checkout@v4
+              with:
+                  lfs: true
+                  fetch-depth: 0
+                  ref: ${{ github.event_name == 'workflow_run' && 'main' || '' }}
 
-      - name: 🏷️ Detect Release Tag
-        id: check
-        run: |
-          # Check if the current commit is tagged
-          if TAG=$(git describe --tags --exact-match 2>/dev/null); then
-            echo "Found release tag: $TAG"
-            echo "TAG=$TAG" >> $GITHUB_ENV
-            
-            # Parse semver parts (assuming vX.Y.Z format)
-            VERSION=${TAG#v}
-            echo "VERSION=$VERSION" >> $GITHUB_ENV
-            
-            MAJOR_MINOR=$(echo "$VERSION" | cut -d. -f1-2)
-            echo "MAJOR_MINOR=$MAJOR_MINOR" >> $GITHUB_ENV
-            
-            echo "is_release=true" >> $GITHUB_OUTPUT
-          else
-            echo "No tag found on HEAD. Skipping release build."
-            echo "is_release=false" >> $GITHUB_OUTPUT
-          fi
+            - name: 🏷️ Detect Release Tag
+              id: check
+              run: |
+                  # Check if the current commit is tagged
+                  if TAG=$(git describe --tags --exact-match 2>/dev/null); then
+                    echo "Found release tag: $TAG"
+                    echo "TAG=$TAG" >> $GITHUB_ENV
+                    
+                    # Parse semver parts (assuming vX.Y.Z format)
+                    VERSION=${TAG#v}
+                    echo "VERSION=$VERSION" >> $GITHUB_ENV
+                    
+                    MAJOR_MINOR=$(echo "$VERSION" | cut -d. -f1-2)
+                    echo "MAJOR_MINOR=$MAJOR_MINOR" >> $GITHUB_ENV
+                    
+                    echo "is_release=true" >> $GITHUB_OUTPUT
+                  else
+                    echo "No tag found on HEAD. Skipping release build."
+                    echo "is_release=false" >> $GITHUB_OUTPUT
+                  fi
 
-      - name: 📦 Install pnpm
-        if: steps.check.outputs.is_release == 'true'
-        uses: pnpm/action-setup@v4
-        with:
-          version: 10
+            - name: 📦 Install pnpm
+              if: steps.check.outputs.is_release == 'true'
+              uses: pnpm/action-setup@v4
+              with:
+                  version: 10
 
-      - name: 🟢 Use Node.js 22
-        if: steps.check.outputs.is_release == 'true'
-        uses: actions/setup-node@v4
-        with:
-          node-version: 22
-          cache: 'pnpm'
+            - name: 🟢 Use Node.js 22
+              if: steps.check.outputs.is_release == 'true'
+              uses: actions/setup-node@v4
+              with:
+                  node-version: 22
+                  cache: 'pnpm'
 
-      - name: 🧩 Install dependencies
-        if: steps.check.outputs.is_release == 'true'
-        run: pnpm install --frozen-lockfile
+            - name: 🧩 Install dependencies
+              if: steps.check.outputs.is_release == 'true'
+              run: pnpm install --frozen-lockfile
 
-      - name: 💾 Restore Image Cache
-        if: steps.check.outputs.is_release == 'true'
-        id: image-cache
-        uses: actions/cache@v4
-        with:
-          path: |
-            .next/cache
-            .image-cache
-            public/images/next-image-export-optimizer-hashes.json
-          key: ${{ runner.os }}-next-images-${{ hashFiles('public/images/**/*', 'next.config.mjs') }}
-          restore-keys: |
-            ${{ runner.os }}-next-images-
+            - name: 💾 Restore Image Cache
+              if: steps.check.outputs.is_release == 'true'
+              id: image-cache
+              uses: actions/cache@v4
+              with:
+                  path: |
+                      .next/cache
+                      .image-cache
+                      public/images/next-image-export-optimizer-hashes.json
+                  key: ${{ runner.os }}-next-images-${{ hashFiles('public/images/**/*', 'next.config.mjs') }}
+                  restore-keys: |
+                      ${{ runner.os }}-next-images-
 
-      - name: 🏗️ Build & Optimize
-        if: steps.check.outputs.is_release == 'true'
-        env:
-          NEXT_TELEMETRY_DISABLED: 1
-          nextImageExportOptimizer_imageFolderPath: "public/images"
-          nextImageExportOptimizer_exportFolderPath: "out"
-          nextImageExportOptimizer_exportFolderName: "nextImageExportOptimizer"
-          nextImageExportOptimizer_quality: "60"
-          nextImageExportOptimizer_storePicturesInWEBP: "true"
-          nextImageExportOptimizer_generateAndUseBlurImages: "true"
-          nextImageExportOptimizer_imageSizes: "16,64,128,256,384"
-          nextImageExportOptimizer_deviceSizes: "640,1080,1920"
-        run: |
-          pnpm build
-          mkdir -p out/nextImageExportOptimizer
-          if [ -d ".image-cache" ]; then
-            echo "Restoring images from cache..."
-            cp -r .image-cache/* out/nextImageExportOptimizer/ || true
-          fi
-          pnpm next-image-export-optimizer
-          mkdir -p .image-cache
-          cp -r out/nextImageExportOptimizer/* .image-cache/
+            - name: 🏗️ Build & Optimize
+              if: steps.check.outputs.is_release == 'true'
+              env:
+                  NEXT_TELEMETRY_DISABLED: 1
+                  nextImageExportOptimizer_imageFolderPath: 'public/images'
+                  nextImageExportOptimizer_exportFolderPath: 'out'
+                  nextImageExportOptimizer_exportFolderName: 'nextImageExportOptimizer'
+                  nextImageExportOptimizer_quality: '60'
+                  nextImageExportOptimizer_storePicturesInWEBP: 'true'
+                  nextImageExportOptimizer_generateAndUseBlurImages: 'true'
+                  nextImageExportOptimizer_imageSizes: '16,64,128,256,384'
+                  nextImageExportOptimizer_deviceSizes: '640,1080,1920'
+              run: |
+                  pnpm build
+                  mkdir -p out/nextImageExportOptimizer
+                  if [ -d ".image-cache" ]; then
+                    echo "Restoring images from cache..."
+                    cp -r .image-cache/* out/nextImageExportOptimizer/ || true
+                  fi
+                  pnpm next-image-export-optimizer
+                  mkdir -p .image-cache
+                  cp -r out/nextImageExportOptimizer/* .image-cache/
 
-      - name: 🐳 Setup Docker Buildx
-        if: steps.check.outputs.is_release == 'true'
-        uses: docker/setup-buildx-action@v3
+            - name: 🐳 Setup Docker Buildx
+              if: steps.check.outputs.is_release == 'true'
+              uses: docker/setup-buildx-action@v3
 
-      - name: 🔐 Log in to GHCR
-        if: steps.check.outputs.is_release == 'true'
-        uses: docker/login-action@v3
-        with:
-          registry: ghcr.io
-          username: ${{ github.actor }}
-          password: ${{ secrets.GITHUB_TOKEN }}
+            - name: 🔐 Log in to GHCR
+              if: steps.check.outputs.is_release == 'true'
+              uses: docker/login-action@v3
+              with:
+                  registry: ghcr.io
+                  username: ${{ github.actor }}
+                  password: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: 🔡 Lowercase Repo Name
-        if: steps.check.outputs.is_release == 'true'
-        run: echo "IMAGE_NAME=ghcr.io/$(echo ${{ github.repository }} | tr '[:upper:]' '[:lower:]')" >> $GITHUB_ENV
-      
-      - name: 🏷️ Extract Metadata
-        if: steps.check.outputs.is_release == 'true'
-        id: meta
-        uses: docker/metadata-action@v5
-        with:
-          images: ${{ env.IMAGE_NAME }}
-          tags: |
-            type=semver,pattern={{version}}
-            type=semver,pattern={{major}}.{{minor}}
-            type=raw,value=latest
-            type=raw,value=${{ env.TAG }}
-            type=raw,value=${{ env.VERSION }}
-            type=raw,value=${{ env.MAJOR_MINOR }}
+            - name: 🔡 Lowercase Repo Name
+              if: steps.check.outputs.is_release == 'true'
+              run: echo "IMAGE_NAME=ghcr.io/$(echo ${{ github.repository }} | tr '[:upper:]' '[:lower:]')" >> $GITHUB_ENV
 
-      - name: 🐳 Build and Push
-        if: steps.check.outputs.is_release == 'true'
-        uses: docker/build-push-action@v6
-        with:
-          context: .
-          file: Dockerfile.static
-          push: true
-          tags: ${{ steps.meta.outputs.tags }}
-          labels: ${{ steps.meta.outputs.labels }}
-          cache-from: type=gha
-          cache-to: type=gha,mode=max
+            - name: 🏷️ Extract Metadata
+              if: steps.check.outputs.is_release == 'true'
+              id: meta
+              uses: docker/metadata-action@v5
+              with:
+                  images: ${{ env.IMAGE_NAME }}
+                  tags: |
+                      type=semver,pattern={{version}}
+                      type=semver,pattern={{major}}.{{minor}}
+                      type=raw,value=latest
+                      type=raw,value=${{ env.TAG }}
+                      type=raw,value=${{ env.VERSION }}
+                      type=raw,value=${{ env.MAJOR_MINOR }}
+
+            - name: 🐳 Build and Push
+              if: steps.check.outputs.is_release == 'true'
+              uses: docker/build-push-action@v6
+              with:
+                  context: .
+                  file: Dockerfile.static
+                  push: true
+                  tags: ${{ steps.meta.outputs.tags }}
+                  labels: ${{ steps.meta.outputs.labels }}
+                  cache-from: type=gha
+                  cache-to: type=gha,mode=max

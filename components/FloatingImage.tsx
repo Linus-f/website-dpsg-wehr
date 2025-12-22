@@ -1,7 +1,16 @@
-import Img from "@/components/Img";
+import Img from '@/components/Img';
 
-export default function FloatingImage({ src, alt, width, height } : { src: string, alt: string, width: number, height: number }) {
-
+export default function FloatingImage({
+    src,
+    alt,
+    width,
+    height,
+}: {
+    src: string;
+    alt: string;
+    width: number;
+    height: number;
+}) {
     return (
         <div className="w-screen md:w-full md:prose-lg -mt-8 md:mt-0 mb-8 -mx-2 sm:-mx-4 md:mx-0">
             <Img
@@ -13,7 +22,7 @@ export default function FloatingImage({ src, alt, width, height } : { src: strin
                 priority={true}
                 fetchPriority="high"
                 sizes="(max-width: 768px) 100vw, 896px"
-        />
+            />
         </div>
     );
 }

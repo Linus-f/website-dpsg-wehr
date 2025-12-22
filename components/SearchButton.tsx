@@ -1,8 +1,8 @@
-"use client";
+'use client';
 
-import { useState, useEffect } from "react";
-import { IoSearch } from "react-icons/io5";
-import SearchModal from "./SearchModal";
+import { useState, useEffect } from 'react';
+import { IoSearch } from 'react-icons/io5';
+import SearchModal from './SearchModal';
 
 export default function SearchButton() {
     const [isOpen, setIsOpen] = useState(false);
@@ -18,14 +18,14 @@ export default function SearchButton() {
         }
 
         const handleKeyDown = (e: KeyboardEvent) => {
-            if ((e.metaKey || e.ctrlKey) && e.key === "k") {
+            if ((e.metaKey || e.ctrlKey) && e.key === 'k') {
                 e.preventDefault();
                 setIsOpen(true);
             }
         };
 
-        window.addEventListener("keydown", handleKeyDown);
-        return () => window.removeEventListener("keydown", handleKeyDown);
+        window.addEventListener('keydown', handleKeyDown);
+        return () => window.removeEventListener('keydown', handleKeyDown);
     }, [isMac]);
 
     const onOpenSearch = () => {
@@ -48,7 +48,7 @@ export default function SearchButton() {
                     Suchen...
                 </span>
                 <kbd className="hidden min-[500px]:inline-flex px-1.5 py-0.5 text-[10px] font-semibold text-gray-400 bg-gray-50 border border-gray-200 rounded dark:bg-gray-700 dark:text-gray-400 dark:border-gray-600 uppercase shrink-0">
-                    {isMac ? "⌘" : "Ctrl"} K
+                    {isMac ? '⌘' : 'Ctrl'} K
                 </kbd>
             </button>
             <SearchModal isOpen={isOpen} onClose={onCloseSearch} />

@@ -6,6 +6,6 @@ describe('formatPostDate', () => {
         const input = '2023-12-24';
         const result = formatPostDate(input);
 
-        expect(result).toBe('24. Dezember 2023')
-    })
-})
+        expect(result).toBe('24. Dezember 2023');
+    });
+});

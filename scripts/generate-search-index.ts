@@ -53,13 +53,13 @@ function generateSearchIndex() {
     CONTENT_DIRS.forEach(({ dir, type, baseRoute }) => {
         if (!fs.existsSync(dir)) return;
 
-        const files = fs.readdirSync(dir).filter(file => file.endsWith('.mdx'));
+        const files = fs.readdirSync(dir).filter((file) => file.endsWith('.mdx'));
 
-        files.forEach(file => {
+        files.forEach((file) => {
             const filePath = path.join(dir, file);
             const fileContent = fs.readFileSync(filePath, 'utf8');
             const { data, content } = matter(fileContent);
-            
+
             let slug = file.replace('.mdx', '');
             let route = `${baseRoute}/${slug}`;
 
@@ -71,14 +71,15 @@ function generateSearchIndex() {
             }
 
             // Extract Download components as Files
-            const downloadPattern = /<Download\s+[^>]*src=["'](.*?)["'][^>]*title=["'](.*?)["'][^>]*\/>/g;
+            const downloadPattern =
+                /<Download\s+[^>]*src=["'](.*?)["'][^>]*title=["'](.*?)["'][^>]*\/>/g;
             let dMatch;
             while ((dMatch = downloadPattern.exec(fileContent)) !== null) {
                 searchIndex.push({
                     title: dMatch[2],
                     content: `Datei: ${dMatch[2]}`,
                     slug: dMatch[1],
-                    type: 'file'
+                    type: 'file',
                 });
             }
 
@@ -86,26 +87,24 @@ function generateSearchIndex() {
                 title: data.title || slug,
                 content: cleanContent(content),
                 slug: route,
-                type: type as 'post' | 'page' | 'group' | 'file'
+                type: type as 'post' | 'page' | 'group' | 'file',
             });
         });
     });
 
     const outDir = path.join(process.cwd(), 'public');
     if (!fs.existsSync(outDir)) fs.mkdirSync(outDir);
-    
+
     // Add manual entry for news page which doesn't have an MDX file
     searchIndex.push({
-        title: "News / Aktuelles",
-        content: "Aktuelle Berichte, Informationen über unsere Aktivitäten, Zeltlager, Stammesaktionen und Neuigkeiten aus den Gruppen.",
-        slug: "/news",
-        type: "page"
+        title: 'News / Aktuelles',
+        content:
+            'Aktuelle Berichte, Informationen über unsere Aktivitäten, Zeltlager, Stammesaktionen und Neuigkeiten aus den Gruppen.',
+        slug: '/news',
+        type: 'page',
     });
 
-    fs.writeFileSync(
-        path.join(outDir, 'search-index.json'),
-        JSON.stringify(searchIndex, null, 2)
-    );
+    fs.writeFileSync(path.join(outDir, 'search-index.json'), JSON.stringify(searchIndex, null, 2));
 
     console.log(`Search index generated with ${searchIndex.length} items.`);
 }

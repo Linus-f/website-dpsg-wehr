@@ -13,16 +13,16 @@ export default function Home() {
     return (
         <div className="dark:text-white">
             <div className="landing-content prose sm:prose-lg dark:prose-invert max-w-none">
-                <MDXRemote 
-                    source={content} 
+                <MDXRemote
+                    source={content}
                     components={mdxComponents}
                     options={{
                         mdxOptions: {
                             rehypePlugins: [[rehypeImgSize as never, { dir: 'public' }]],
-                        }
+                        },
                     }}
                 />
             </div>
         </div>
-    )
+    );
 }

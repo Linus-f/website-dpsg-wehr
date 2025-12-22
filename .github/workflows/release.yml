@@ -1,144 +1,144 @@
 name: Release
 
 on:
-  push:
-    branches: [ main ]
-  workflow_dispatch:
+    push:
+        branches: [main]
+    workflow_dispatch:
 
 permissions:
-  contents: write
-  issues: write
-  pull-requests: write
+    contents: write
+    issues: write
+    pull-requests: write
 
 jobs:
-  test:
-    name: 🧪 Run Tests
-    permissions:
-      contents: read
-    timeout-minutes: 15
-    runs-on: ubuntu-latest
-    steps:
-    - uses: actions/checkout@v4
-      with:
-        lfs: true
-    
-    - uses: pnpm/action-setup@v4
-      with:
-        version: 10
-        
-    - uses: actions/setup-node@v4
-      with:
-        node-version: 22
-        cache: 'pnpm'
+    test:
+        name: 🧪 Run Tests
+        permissions:
+            contents: read
+        timeout-minutes: 15
+        runs-on: ubuntu-latest
+        steps:
+            - uses: actions/checkout@v4
+              with:
+                  lfs: true
 
-    - name: 🧩 Install dependencies
-      run: pnpm install --frozen-lockfile
+            - uses: pnpm/action-setup@v4
+              with:
+                  version: 10
 
-    - name: 🔍 Get Playwright version
-      id: playwright-version
-      run: echo "version=$(pnpm list @playwright/test --depth=0 | grep @playwright/test | awk '{print $2}')" >> $GITHUB_OUTPUT
+            - uses: actions/setup-node@v4
+              with:
+                  node-version: 22
+                  cache: 'pnpm'
 
-    - name: 📥 Cache Playwright Browsers
-      id: playwright-cache
-      uses: actions/cache@v4
-      with:
-        path: ~/.cache/ms-playwright
-        key: ${{ runner.os }}-playwright-${{ steps.playwright-version.outputs.version }}
+            - name: 🧩 Install dependencies
+              run: pnpm install --frozen-lockfile
 
-    - name: ⚙️ Install Playwright Browsers
-      if: steps.playwright-cache.outputs.cache-hit != 'true'
-      run: pnpm exec playwright install --with-deps chromium
+            - name: 🔍 Get Playwright version
+              id: playwright-version
+              run: echo "version=$(pnpm list @playwright/test --depth=0 | grep @playwright/test | awk '{print $2}')" >> $GITHUB_OUTPUT
 
-    - name: 💾 Cache Next.js build
-      uses: actions/cache@v4
-      with:
-        path: |
-          ${{ github.workspace }}/.next/cache
-        key: ${{ runner.os }}-nextjs-${{ hashFiles('**/pnpm-lock.yaml') }}-${{ hashFiles('**/*.js', '**/*.jsx', '**/*.ts', '**/*.tsx', '**/*.mdx') }}
-        restore-keys: |
-          ${{ runner.os }}-nextjs-${{ hashFiles('**/pnpm-lock.yaml') }}-
+            - name: 📥 Cache Playwright Browsers
+              id: playwright-cache
+              uses: actions/cache@v4
+              with:
+                  path: ~/.cache/ms-playwright
+                  key: ${{ runner.os }}-playwright-${{ steps.playwright-version.outputs.version }}
 
-    - name: 🖼️ Cache optimized images
-      uses: actions/cache@v4
-      with:
-        path: |
-          .image-cache
-          public/images/next-image-export-optimizer-hashes.json
-        key: ${{ runner.os }}-next-images-${{ hashFiles('public/images/**/*', 'next.config.mjs') }}
-        restore-keys: |
-          ${{ runner.os }}-next-images-
+            - name: ⚙️ Install Playwright Browsers
+              if: steps.playwright-cache.outputs.cache-hit != 'true'
+              run: pnpm exec playwright install --with-deps chromium
 
-    - name: 🏗️ Export website (optimizes images)
-      env:
-        nextImageExportOptimizer_imageSizes: "16,64,128,256,384"
-        nextImageExportOptimizer_deviceSizes: "640,1080,1920"
-      run: |
-        pnpm build
-        mkdir -p out/nextImageExportOptimizer
-        if [ -d ".image-cache" ]; then
-          echo "Restoring images from cache..."
-          cp -r .image-cache/* out/nextImageExportOptimizer/ || true
-        fi
-        pnpm next-image-export-optimizer
-        node scripts/inline-css.mjs
-        mkdir -p .image-cache
-        cp -r out/nextImageExportOptimizer/* .image-cache/
+            - name: 💾 Cache Next.js build
+              uses: actions/cache@v4
+              with:
+                  path: |
+                      ${{ github.workspace }}/.next/cache
+                  key: ${{ runner.os }}-nextjs-${{ hashFiles('**/pnpm-lock.yaml') }}-${{ hashFiles('**/*.js', '**/*.jsx', '**/*.ts', '**/*.tsx', '**/*.mdx') }}
+                  restore-keys: |
+                      ${{ runner.os }}-nextjs-${{ hashFiles('**/pnpm-lock.yaml') }}-
 
-    - name: 🚦 Run tests
-      run: pnpm test:all
+            - name: 🖼️ Cache optimized images
+              uses: actions/cache@v4
+              with:
+                  path: |
+                      .image-cache
+                      public/images/next-image-export-optimizer-hashes.json
+                  key: ${{ runner.os }}-next-images-${{ hashFiles('public/images/**/*', 'next.config.mjs') }}
+                  restore-keys: |
+                      ${{ runner.os }}-next-images-
 
-  release:
-    name: 🚀 Semantic Release
-    needs: test
-    permissions:
-      contents: write
-      issues: write
-      pull-requests: write
-    runs-on: ubuntu-latest
-    steps:
-      - name: 📥 Checkout
-        uses: actions/checkout@v4
-        with:
-          lfs: true
-          fetch-depth: 0
+            - name: 🏗️ Export website (optimizes images)
+              env:
+                  nextImageExportOptimizer_imageSizes: '16,64,128,256,384'
+                  nextImageExportOptimizer_deviceSizes: '640,1080,1920'
+              run: |
+                  pnpm build
+                  mkdir -p out/nextImageExportOptimizer
+                  if [ -d ".image-cache" ]; then
+                    echo "Restoring images from cache..."
+                    cp -r .image-cache/* out/nextImageExportOptimizer/ || true
+                  fi
+                  pnpm next-image-export-optimizer
+                  node scripts/inline-css.mjs
+                  mkdir -p .image-cache
+                  cp -r out/nextImageExportOptimizer/* .image-cache/
 
-      - name: 📦 Install pnpm
-        uses: pnpm/action-setup@v4
-        with:
-          version: 10
+            - name: 🚦 Run tests
+              run: pnpm test:all
 
-      - name: 🟢 Use Node.js 22
-        uses: actions/setup-node@v4
-        with:
-          node-version: 22
-          cache: 'pnpm'
+    release:
+        name: 🚀 Semantic Release
+        needs: test
+        permissions:
+            contents: write
+            issues: write
+            pull-requests: write
+        runs-on: ubuntu-latest
+        steps:
+            - name: 📥 Checkout
+              uses: actions/checkout@v4
+              with:
+                  lfs: true
+                  fetch-depth: 0
 
-      - name: 🧩 Install dependencies
-        run: pnpm install --frozen-lockfile
+            - name: 📦 Install pnpm
+              uses: pnpm/action-setup@v4
+              with:
+                  version: 10
 
-      - name: 🚀 Semantic Release
-        id: semantic
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          NEXT_TELEMETRY_DISABLED: 1
-        run: npx semantic-release
+            - name: 🟢 Use Node.js 22
+              uses: actions/setup-node@v4
+              with:
+                  node-version: 22
+                  cache: 'pnpm'
 
-      - name: 🔄 Back-merge main into dev
-        run: |
-          git config user.name "github-actions[bot]"
-          git config user.email "github-actions[bot]@users.noreply.github.com"
-          
-          echo "Fetching latest changes..."
-          git fetch origin main dev
-          
-          echo "Switching to dev branch..."
-          git checkout dev
-          
-          echo "Merging main into dev..."
-          git merge origin/main --no-edit || {
-            echo "Conflict detected during back-merge. Manual intervention required."
-            exit 1
-          }
-          
-          echo "Pushing changes to dev..."
-          git push origin dev
+            - name: 🧩 Install dependencies
+              run: pnpm install --frozen-lockfile
+
+            - name: 🚀 Semantic Release
+              id: semantic
+              env:
+                  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+                  NEXT_TELEMETRY_DISABLED: 1
+              run: npx semantic-release
+
+            - name: 🔄 Back-merge main into dev
+              run: |
+                  git config user.name "github-actions[bot]"
+                  git config user.email "github-actions[bot]@users.noreply.github.com"
+
+                  echo "Fetching latest changes..."
+                  git fetch origin main dev
+
+                  echo "Switching to dev branch..."
+                  git checkout dev
+
+                  echo "Merging main into dev..."
+                  git merge origin/main --no-edit || {
+                    echo "Conflict detected during back-merge. Manual intervention required."
+                    exit 1
+                  }
+
+                  echo "Pushing changes to dev..."
+                  git push origin dev

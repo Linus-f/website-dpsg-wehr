@@ -1,4 +1,4 @@
-import nextMDX from '@next/mdx'
+import nextMDX from '@next/mdx';
 
 const withMDX = nextMDX({
     extension: /\.mdx?$/,
@@ -6,7 +6,7 @@ const withMDX = nextMDX({
         remarkPlugins: ['remark-frontmatter', 'remark-gfm'],
         rehypePlugins: [['rehype-img-size', { dir: 'public' }]],
     },
-})
+});
 
 /** @type {import('next').NextConfig}*/
 const nextConfig = {
@@ -14,22 +14,22 @@ const nextConfig = {
     pageExtensions: ['js', 'jsx', 'ts', 'tsx', 'md', 'mdx'],
     trailingSlash: true,
     images: {
-        loader: "custom",
+        loader: 'custom',
         imageSizes: [16, 64, 128, 256, 384],
         deviceSizes: [640, 1080, 1920],
-      },
-      output: "export",
-      transpilePackages: ["next-image-export-optimizer"],
-      env: {
-        nextImageExportOptimizer_imageFolderPath: "public/images",
-        nextImageExportOptimizer_exportFolderPath: "out",
-        nextImageExportOptimizer_exportFolderName: "nextImageExportOptimizer",
-        nextImageExportOptimizer_quality: "60",
-        nextImageExportOptimizer_storePicturesInWEBP: "true",
-        nextImageExportOptimizer_generateAndUseBlurImages: "true",
-        nextImageExportOptimizer_imageSizes: "16,64,128,256,384",
-        nextImageExportOptimizer_deviceSizes: "640,1080,1920",
-      },
-}
+    },
+    output: 'export',
+    transpilePackages: ['next-image-export-optimizer'],
+    env: {
+        nextImageExportOptimizer_imageFolderPath: 'public/images',
+        nextImageExportOptimizer_exportFolderPath: 'out',
+        nextImageExportOptimizer_exportFolderName: 'nextImageExportOptimizer',
+        nextImageExportOptimizer_quality: '60',
+        nextImageExportOptimizer_storePicturesInWEBP: 'true',
+        nextImageExportOptimizer_generateAndUseBlurImages: 'true',
+        nextImageExportOptimizer_imageSizes: '16,64,128,256,384',
+        nextImageExportOptimizer_deviceSizes: '640,1080,1920',
+    },
+};
 
-export default withMDX(nextConfig)
+export default withMDX(nextConfig);

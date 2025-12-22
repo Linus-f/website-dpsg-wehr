@@ -1,9 +1,13 @@
-import { DetailedHTMLProps, ImgHTMLAttributes } from "react";
-import Img from "./Img";
+import { DetailedHTMLProps, ImgHTMLAttributes } from 'react';
+import Img from './Img';
 
-export default function MDXImage(props:  DetailedHTMLProps<ImgHTMLAttributes<HTMLImageElement>, HTMLImageElement> & { priority?: boolean | string, fetchPriority?: "high" | "low" | "auto" }) {
-    
-    const isPriority = props.priority === true || props.priority === "true";
+export default function MDXImage(
+    props: DetailedHTMLProps<ImgHTMLAttributes<HTMLImageElement>, HTMLImageElement> & {
+        priority?: boolean | string;
+        fetchPriority?: 'high' | 'low' | 'auto';
+    }
+) {
+    const isPriority = props.priority === true || props.priority === 'true';
 
     const w = typeof props.width === 'string' ? parseInt(props.width) : (props.width as number);
     const h = typeof props.height === 'string' ? parseInt(props.height) : (props.height as number);
@@ -11,7 +15,7 @@ export default function MDXImage(props:  DetailedHTMLProps<ImgHTMLAttributes<HTM
     return (
         <Img
             src={props.src as string}
-            alt={(props.alt || props.title || "") as string}
+            alt={(props.alt || props.title || '') as string}
             width={w}
             height={h}
             id={props.src as string}
@@ -23,7 +27,7 @@ export default function MDXImage(props:  DetailedHTMLProps<ImgHTMLAttributes<HTM
             // We'll use these data attributes for the lightbox to pick up
             data-lightbox="true"
             data-src={props.src}
-            data-alt={props.alt || props.title || ""}
+            data-alt={props.alt || props.title || ''}
             data-width={w}
             data-height={h}
         />

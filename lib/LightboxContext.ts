@@ -1,12 +1,10 @@
-import { createContext } from "react";
-import { SlideImage } from "yet-another-react-lightbox";
+import { createContext } from 'react';
+import { SlideImage } from 'yet-another-react-lightbox';
 
 export const LightboxContext = createContext({
-    open: false, 
+    open: false,
     setOpen: (_src: string) => {},
     slides: [] as SlideImage[],
     addSlide: (_slide: SlideImage) => {},
-    setSlides : (_slides: SlideImage[]) => {},
+    setSlides: (_slides: SlideImage[]) => {},
 });
-
-
