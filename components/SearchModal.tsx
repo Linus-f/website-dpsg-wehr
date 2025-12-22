@@ -61,6 +61,7 @@ export default function SearchModal({ isOpen, onClose }: { isOpen: boolean, onCl
             document.body.style.overflow = "hidden";
         } else {
             document.body.style.overflow = "unset";
+            // eslint-disable-next-line react-hooks/set-state-in-effect
             setQuery(q => { if (q !== "") return ""; return q; });
             setResults(r => { if (r.length !== 0) return []; return r; });
         }

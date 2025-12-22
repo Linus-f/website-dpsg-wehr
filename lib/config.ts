@@ -1,4 +1,4 @@
-import { ArcostData, NavigationLinkGroup } from "@/types";
+import { NavigationLinkGroup } from "@/types";
 
 export const navigationLinks: Array<NavigationLinkGroup> = [
     { label: "News", link: "/news", Icon: "News" },

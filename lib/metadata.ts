@@ -29,7 +29,7 @@ export function getExcerpt(content: string, length = 160): string {
     // 3. Remove Markdown symbols
     plainText = plainText
         .replace(/\[(.*?)\].*?\)/g, '$1') // Links (keep text)
-        .replace(/[\*_~`>]/g, '') // Bold, italic, strikethrough, code, blockquote
+        .replace(/[*_~`>]/g, '') // Bold, italic, strikethrough, code, blockquote
         .replace(/\s+/g, ' ') // Multiple spaces to single space
         .trim();
 

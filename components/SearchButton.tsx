@@ -11,8 +11,9 @@ export default function SearchButton() {
     useEffect(() => {
         if (typeof window !== 'undefined') {
             const platform = navigator.platform.toUpperCase();
-            if (platform.indexOf('MAC') >= 0) {
-                setIsMac(m => { if (!m) return true; return m; });
+            if (platform.indexOf('MAC') >= 0 && !isMac) {
+                // eslint-disable-next-line react-hooks/set-state-in-effect
+                setIsMac(true);
             }
         }
 
@@ -25,7 +26,7 @@ export default function SearchButton() {
 
         window.addEventListener("keydown", handleKeyDown);
         return () => window.removeEventListener("keydown", handleKeyDown);
-    }, []);
+    }, [isMac]);
 
     const onOpenSearch = () => {
         setIsOpen(true);

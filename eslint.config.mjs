@@ -12,6 +12,7 @@ export default [
       ".next/**",
       "out/**",
       "node_modules/**",
+      "coverage/**",
       "postcss.config.js",
       "tailwind.config.js"
     ],

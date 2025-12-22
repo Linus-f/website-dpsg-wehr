@@ -16,19 +16,25 @@ export default function Providers({ children }: { children: React.ReactNode }) {
     const pathname = usePathname();
 
     useEffect(() => {
-        setLightboxOpen(false);
-        setSlides([]);
+        if (lightBoxOpen) {
+            setLightboxOpen(false);
+            setSlides([]);
+        }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [pathname]);
 
     const openLightbox = (src: string) => {
         const images = document.querySelectorAll('img[data-lightbox="true"]');
-        const newSlides: SlideImage[] = Array.from(images).map((img: any) => ({
-            src: img.dataset.src || img.src,
-            alt: img.dataset.alt || img.alt,
-            title: img.dataset.alt || img.alt,
-            width: img.dataset.width ? parseInt(img.dataset.width) : undefined,
-            height: img.dataset.height ? parseInt(img.dataset.height) : undefined,
-        }));
+        const newSlides: SlideImage[] = Array.from(images).map((img) => {
+            const htmlImg = img as HTMLImageElement;
+            return {
+                src: htmlImg.dataset.src || htmlImg.src,
+                alt: htmlImg.dataset.alt || htmlImg.alt,
+                title: htmlImg.dataset.alt || htmlImg.alt,
+                width: htmlImg.dataset.width ? parseInt(htmlImg.dataset.width) : undefined,
+                height: htmlImg.dataset.height ? parseInt(htmlImg.dataset.height) : undefined,
+            };
+        });
 
         setSlides(newSlides);
 

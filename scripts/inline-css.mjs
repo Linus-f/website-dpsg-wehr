@@ -7,11 +7,6 @@ const OUT_DIR = 'out';
 // This script inlines the main CSS bundle into all HTML files in the out directory
 // to achieve the 14KB rule and eliminate render-blocking requests.
 
-function escapeRegExp(string) {
-    // Escape all characters with special meaning in regular expressions
-    return string.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
-}
-
 function getAllHtmlFiles(dirPath, arrayOfFiles) {
     const files = fs.readdirSync(dirPath);
 

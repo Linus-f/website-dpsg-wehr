@@ -12,17 +12,17 @@ test.describe('Calendar', () => {
         await page.addInitScript(() => {
             const mockDate = new Date('2024-05-15T12:00:00').getTime();
             const NativeDate = window.Date;
-            // @ts-ignore
+            // @ts-expect-error - Mocking Date global for consistent testing
             window.Date = class extends NativeDate {
-                constructor(...args: any[]) {
+                constructor(...args: unknown[]) {
                     if (args.length === 0) {
                         super(mockDate);
                     } else {
-                        // @ts-ignore
-                        super(...args);
+                        // @ts-expect-error - Date constructor expects specific arguments
+                        super(...(args as [string | number | Date]));
                     }
                 }
-            } as any;
+            } as unknown as typeof Date;
             window.Date.now = () => mockDate;
         });
 
