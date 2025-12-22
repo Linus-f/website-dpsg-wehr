@@ -29,14 +29,14 @@ export async function generateMetadata(): Promise<Metadata> {
             title: 'Fotos - DPSG Wehr',
             description:
                 'Einblicke in unsere Zeltlager, Gruppenstunden und Aktionen. Entdecke unsere Fotogallerie!',
-            images: ['/images/logo.png'],
+            images: ['/media/images/logo.png'],
         },
         twitter: {
             card: 'summary_large_image',
             title: 'Fotos - DPSG Wehr',
             description:
                 'Einblicke in unsere Zeltlager, Gruppenstunden und Aktionen. Entdecke unsere Fotogallerie!',
-            images: ['/images/logo.png'],
+            images: ['/media/images/logo.png'],
         },
     };
 }

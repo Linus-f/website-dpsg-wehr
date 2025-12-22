@@ -1,6 +1,6 @@
 import ExportedImage from 'next-image-export-optimizer';
 import Link from 'next/link';
-import Logo from '@/public/images/logo.png';
+import Logo from '@/public/media/images/logo.png';
 
 export default function NotFound() {
     return (

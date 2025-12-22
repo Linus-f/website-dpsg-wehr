@@ -99,7 +99,7 @@ export default defineConfig({
     },
     media: {
         tina: {
-            mediaRoot: '',
+            mediaRoot: 'media',
             publicFolder: 'public',
         },
     },

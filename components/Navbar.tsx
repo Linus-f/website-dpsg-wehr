@@ -2,7 +2,7 @@ import Link from 'next/link';
 import ToggleThemeButton from './ToggleThemeButton';
 import { navigationLinks } from '@/lib/config';
 import ExportedImage from 'next-image-export-optimizer';
-import logo from '@/public/images/logo.png';
+import logo from '@/public/media/images/logo.png';
 import { getIconFromname } from '@/lib/icons';
 import NavbarClient from './NavbarClient';
 import SearchButton from './SearchButton';

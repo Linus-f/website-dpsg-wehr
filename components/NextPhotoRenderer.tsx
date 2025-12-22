@@ -7,7 +7,7 @@ export default function NextPhotoRenderer(
 ) {
     return (
         <Img
-            src={photo}
+            src={photo.src}
             placeholder={'blurDataURL' in photo ? 'blur' : undefined}
             alt={alt || ''}
             title={title}

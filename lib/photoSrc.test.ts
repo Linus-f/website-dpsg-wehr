@@ -4,18 +4,18 @@ import { getOptimizedUrl, getSrcSet } from './photoSrc';
 describe('photoSrc utilities', () => {
     describe('getOptimizedUrl', () => {
         it('should generate the correct optimized path for a given image and size', () => {
-            const src = '/images/test/photo.jpg';
+            const src = '/media/images/test/photo.jpg';
             const size = 640;
 
             const result = getOptimizedUrl(src, size);
 
-            expect(result).toBe('/images/test/nextImageExportOptimizer/photo-opt-640.WEBP');
+            expect(result).toBe('/media/images/test/nextImageExportOptimizer/photo-opt-640.WEBP');
         });
     });
 
     describe('getSrcSet', () => {
         it('should return an array with images sources up to the size of the original image', () => {
-            const src = '/images/test/photo.jpg';
+            const src = '/media/images/test/photo.jpg';
             const width = 100;
             const height = 70;
 

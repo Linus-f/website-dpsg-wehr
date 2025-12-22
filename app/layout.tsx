@@ -20,7 +20,7 @@ export const metadata: Metadata = {
         siteName: 'DPSG Wehr',
         images: [
             {
-                url: '/images/logo.png',
+                url: '/media/images/logo.png',
                 width: 800,
                 height: 800,
             },
@@ -32,7 +32,7 @@ export const metadata: Metadata = {
         card: 'summary_large_image',
         title: 'DPSG Wehr',
         description: 'Website der DPSG Wehr',
-        images: ['/images/logo.png'],
+        images: ['/media/images/logo.png'],
     },
 };
 

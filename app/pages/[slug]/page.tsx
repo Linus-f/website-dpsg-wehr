@@ -48,7 +48,7 @@ export async function generateMetadata({
             type: 'website',
             images: [
                 {
-                    url: '/images/logo.png',
+                    url: '/media/images/logo.png',
                     width: 800,
                     height: 800,
                 },
@@ -58,7 +58,7 @@ export async function generateMetadata({
             card: 'summary_large_image',
             title: `${data.title} - DPSG Wehr`,
             description: description,
-            images: ['/images/logo.png'],
+            images: ['/media/images/logo.png'],
         },
     };
 }

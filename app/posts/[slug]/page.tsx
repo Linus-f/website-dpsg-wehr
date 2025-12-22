@@ -42,7 +42,7 @@ export async function generateMetadata({
 
     let images: { url: string; width: number; height: number }[] = [
         {
-            url: '/images/logo.png',
+            url: '/media/images/logo.png',
             width: 800,
             height: 800,
         },

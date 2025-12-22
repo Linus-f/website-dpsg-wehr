@@ -52,10 +52,10 @@ export function getOptimizedImageMetadata(
     originalWidth: number,
     originalHeight: number
 ) {
-    if (!src || src.startsWith('http') || !src.includes('/images/')) return null;
+    if (!src || src.startsWith('http') || !src.includes('/media/images/')) return null;
 
     // For this project, optimized images are in a subfolder named 'nextImageExportOptimizer'
-    // e.g. /images/test.png -> /images/nextImageExportOptimizer/test-opt-1080.WEBP
+    // e.g. /media/images/test.png -> /media/images/nextImageExportOptimizer/test-opt-1080.WEBP
 
     const targetWidth = 1080;
     const aspectRatio = originalWidth / originalHeight;
