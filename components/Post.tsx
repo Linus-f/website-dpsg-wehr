@@ -6,12 +6,16 @@ export default function Post({
     postMetadata,
     children,
     slug,
+    overrideMetadata,
 }: {
     postMetadata: PostMetadata[];
     children: React.ReactNode;
     slug?: string;
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    overrideMetadata?: any;
 }) {
-    const metadata = postMetadata.find((post) => post.slug === slug);
+    const foundMetadata = postMetadata.find((post) => post.slug === slug);
+    const metadata = overrideMetadata ? { ...foundMetadata, ...overrideMetadata } : foundMetadata;
 
     if (!metadata) {
         return (

@@ -7,6 +7,9 @@ import { mdxComponents } from '@/mdx-components';
 import rehypeImgSize from 'rehype-img-size';
 import { getExcerpt } from '@/lib/metadata';
 
+import client from '@/tina/__generated__/client';
+import TinaContentClient from '@/components/TinaContentClient';
+
 export async function generateStaticParams() {
     const folder = 'content/pages/';
     const files = fs.readdirSync(folder).filter((file) => file.endsWith('.mdx'));
@@ -54,6 +57,26 @@ export async function generateMetadata({
 
 export default async function GenericPage({ params }: { params: Promise<{ slug: string }> }) {
     const { slug } = await params;
+
+    let tinaData;
+    try {
+        tinaData = await client.queries.page({ relativePath: `${slug}.mdx` });
+    } catch (e) {
+        // eslint-disable-next-line no-console
+        console.error('Error fetching Tina data, falling back to MDXRemote', e);
+    }
+
+    if (tinaData) {
+        return (
+            <TinaContentClient
+                data={JSON.parse(JSON.stringify(tinaData.data))}
+                query={tinaData.query}
+                variables={tinaData.variables}
+                contentType="page"
+            />
+        );
+    }
+
     const filePath = path.join(process.cwd(), 'content/pages', `${slug}.mdx`);
     const fileContents = fs.readFileSync(filePath, 'utf8');
     const { content } = matter(fileContents);
