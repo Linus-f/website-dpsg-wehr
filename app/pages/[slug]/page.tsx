@@ -31,7 +31,13 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
             title: `${data.title} - DPSG Wehr`,
             description: description,
             type: 'website',
-            images: ['/images/logo.png'],
+            images: [
+                {
+                    url: '/images/logo.png',
+                    width: 800,
+                    height: 800,
+                },
+            ],
         },
         twitter: {
             card: 'summary_large_image',

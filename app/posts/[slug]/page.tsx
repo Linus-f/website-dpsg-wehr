@@ -7,7 +7,7 @@ import getPostMetadata from '@/lib/PostMetadata';
 import { useMDXComponents } from '@/mdx-components';
 import Post from '@/components/Post';
 import rehypeImgSize from 'rehype-img-size';
-import { getExcerpt } from '@/lib/metadata';
+import { getExcerpt, getOptimizedImageMetadata } from '@/lib/metadata';
 
 export async function generateStaticParams() {
     const posts = getPostMetadata();
@@ -23,23 +23,46 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
     const { data, content } = matter(fileContents);
 
     const description = getExcerpt(content);
+    const postMetadata = getPostMetadata();
+    const metadata = postMetadata.find((post) => post.slug === slug);
+
+    let images: any[] = [
+        {
+            url: '/images/logo.png',
+            width: 800,
+            height: 800,
+        }
+    ];
+
+    if (metadata?.image.src) {
+        const optimized = getOptimizedImageMetadata(metadata.image.src, metadata.image.width, metadata.image.height);
+        if (optimized) {
+            images = [optimized];
+        } else {
+            images = [{
+                url: metadata.image.src,
+                width: metadata.image.width,
+                height: metadata.image.height,
+            }];
+        }
+    }
 
     return {
         title: `${data.title} - DPSG Wehr`,
         description: description,
         openGraph: {
-            title: data.title,
+            title: `${data.title} - DPSG Wehr`,
             description: description,
             type: 'article',
             publishedTime: data.date,
             authors: [data.author],
-            images: data.image ? [{ url: data.image }] : ['/images/logo.png'],
+            images: images,
         },
         twitter: {
             card: 'summary_large_image',
-            title: data.title,
+            title: `${data.title} - DPSG Wehr`,
             description: description,
-            images: data.image ? [data.image] : ['/images/logo.png'],
+            images: images.map(img =\u003e img.url),
         }
     };
 }
