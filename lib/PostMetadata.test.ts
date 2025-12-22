@@ -25,7 +25,7 @@ describe('getPostMetadata', () => {
     it('should return metadata for posts in the directory', () => {
         vi.mocked(fs.readdirSync).mockReturnValue([
             'first-post.mdx'
-        ] as any);
+        ] as unknown as ReturnType<typeof fs.readdirSync>);
 
         vi.mocked(fs.readFileSync).mockReturnValue('mocked file content');
 
@@ -35,7 +35,7 @@ describe('getPostMetadata', () => {
                 date: '2023-01-01',
                 image: 'test.jpg'
             }
-        } as any);
+        } as unknown as ReturnType<typeof matter>);
 
         const result = getPostMetadata();
 

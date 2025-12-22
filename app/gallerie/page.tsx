@@ -2,14 +2,14 @@ import fs from 'fs';
 import path from 'path';
 import matter from 'gray-matter';
 import { MDXRemote } from 'next-mdx-remote/rsc';
-import { useMDXComponents } from '@/mdx-components';
+import { mdxComponents } from '@/mdx-components';
 import { Metadata } from 'next';
 
 const filePath = path.join(process.cwd(), 'content/pages/gallerie.mdx');
 
 export async function generateMetadata(): Promise<Metadata> {
     const fileContents = fs.readFileSync(filePath, 'utf8');
-    const { data } = matter(fileContents);
+    const { data: _data } = matter(fileContents);
     
     // Extract metadata from the frontmatter or the exported metadata object in MDX if needed.
     // Since the original MDX exported a metadata object, we can replicate that behavior or use frontmatter.
@@ -41,12 +41,11 @@ export async function generateMetadata(): Promise<Metadata> {
 export default function GalleryPage() {
     const fileContents = fs.readFileSync(filePath, 'utf8');
     const { content } = matter(fileContents);
-    const components = useMDXComponents({});
 
     return (
         <MDXRemote 
             source={content} 
-            components={components}
+            components={mdxComponents}
         />
     );
 }

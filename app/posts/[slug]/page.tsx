@@ -4,7 +4,7 @@ import matter from 'gray-matter';
 import { MDXRemote } from 'next-mdx-remote/rsc';
 import { Metadata } from 'next';
 import getPostMetadata from '@/lib/PostMetadata';
-import { useMDXComponents } from '@/mdx-components';
+import { mdxComponents } from '@/mdx-components';
 import Post from '@/components/Post';
 import rehypeImgSize from 'rehype-img-size';
 import { getExcerpt, getOptimizedImageMetadata } from '@/lib/metadata';
@@ -26,7 +26,7 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
     const postMetadata = getPostMetadata();
     const metadata = postMetadata.find((post) => post.slug === slug);
 
-    let images: any[] = [
+    let images: { url: string; width: number; height: number }[] = [
         {
             url: '/images/logo.png',
             width: 800,
@@ -54,8 +54,8 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
             title: `${data.title} - DPSG Wehr`,
             description: description,
             type: 'article',
-            publishedTime: data.date,
-            authors: [data.author],
+            publishedTime: data.date as string,
+            authors: [data.author as string],
             images: images,
         },
         twitter: {
@@ -73,18 +73,16 @@ export default async function PostPage({ params }: { params: Promise<{ slug: str
     const fileContents = fs.readFileSync(filePath, 'utf8');
     const { content } = matter(fileContents);
     
-    // We use useMDXComponents to get the custom image rendering
-    const components = useMDXComponents({});
     const postMetadata = getPostMetadata();
 
     return (
         <Post postMetadata={postMetadata} slug={slug}>
             <MDXRemote 
                 source={content} 
-                components={components}
+                components={mdxComponents}
                 options={{
                     mdxOptions: {
-                        rehypePlugins: [[rehypeImgSize as any, { dir: 'public' }]],
+                        rehypePlugins: [[rehypeImgSize as never, { dir: 'public' }]],
                     }
                 }}
             />

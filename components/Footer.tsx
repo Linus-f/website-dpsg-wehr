@@ -1,9 +1,5 @@
 import ExportedImage from 'next-image-export-optimizer';
 import Link from 'next/link';
-import {
-    IoLogoInstagram as Instagram,
-    IoLogoFacebook as Facebook,
-} from 'react-icons/io5'
 
 import dpsgLogo from '@/public/dpsg.svg'
 

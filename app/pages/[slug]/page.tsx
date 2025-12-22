@@ -3,7 +3,7 @@ import path from 'path';
 import matter from 'gray-matter';
 import { MDXRemote } from 'next-mdx-remote/rsc';
 import { Metadata } from 'next';
-import { useMDXComponents } from '@/mdx-components';
+import { mdxComponents } from '@/mdx-components';
 import rehypeImgSize from 'rehype-img-size';
 import { getExcerpt } from '@/lib/metadata';
 
@@ -54,16 +54,14 @@ export default async function GenericPage({ params }: { params: Promise<{ slug: 
     const fileContents = fs.readFileSync(filePath, 'utf8');
     const { content } = matter(fileContents);
     
-    const components = useMDXComponents({});
-
     return (
         <article className="prose sm:prose-lg dark:prose-invert max-w-none">
             <MDXRemote 
                 source={content} 
-                components={components}
+                components={mdxComponents}
                 options={{
                     mdxOptions: {
-                        rehypePlugins: [[rehypeImgSize as any, { dir: 'public' }]],
+                        rehypePlugins: [[rehypeImgSize as never, { dir: 'public' }]],
                     }
                 }}
             />

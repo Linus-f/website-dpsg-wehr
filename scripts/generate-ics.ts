@@ -15,17 +15,17 @@ export interface AppEvent {
 
 export function convertEventToIcsAttribute(event: AppEvent): ics.EventAttributes {
     const startParts = event.start.split('-').map(Number);
-    // @ts-ignore
+    // @ts-expect-error - ics.DateArray is a tuple, but split returns an array
     const start: ics.DateArray = [startParts[0], startParts[1], startParts[2]];
     
     let end: ics.DateArray | undefined = undefined;
     if (event.end) {
         const endParts = event.end.split('-').map(Number);
-        // @ts-ignore
+        // @ts-expect-error - ics.DateArray is a tuple, but split returns an array
         end = [endParts[0], endParts[1], endParts[2]];
     }
 
-    const attributes: any = {
+    const attributes: ics.EventAttributes = {
         start: start,
         title: event.title,
     };
