@@ -1,5 +1,5 @@
-import { Photo } from "react-photo-album";
-import { Icons } from "@/lib/icons";
+import { Photo } from 'react-photo-album';
+import { Icons } from '@/lib/icons';
 
 export interface PostMetadata {
     title: string;
@@ -11,7 +11,7 @@ export interface PostMetadata {
         src: string;
         width: number;
         height: number;
-    }
+    };
     desc: string;
 }
 

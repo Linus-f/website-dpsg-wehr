@@ -8,15 +8,19 @@ import rehypeImgSize from 'rehype-img-size';
 import { getExcerpt } from '@/lib/metadata';
 
 export async function generateStaticParams() {
-    const folder = "content/pages/";
-    const files = fs.readdirSync(folder).filter(file => file.endsWith('.mdx'));
-    
+    const folder = 'content/pages/';
+    const files = fs.readdirSync(folder).filter((file) => file.endsWith('.mdx'));
+
     return files.map((filename) => ({
         slug: filename.replace('.mdx', ''),
     }));
 }
 
-export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
+export async function generateMetadata({
+    params,
+}: {
+    params: Promise<{ slug: string }>;
+}): Promise<Metadata> {
     const { slug } = await params;
     const filePath = path.join(process.cwd(), 'content/pages', `${slug}.mdx`);
     const fileContents = fs.readFileSync(filePath, 'utf8');
@@ -44,7 +48,7 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
             title: `${data.title} - DPSG Wehr`,
             description: description,
             images: ['/images/logo.png'],
-        }
+        },
     };
 }
 
@@ -53,16 +57,16 @@ export default async function GenericPage({ params }: { params: Promise<{ slug: 
     const filePath = path.join(process.cwd(), 'content/pages', `${slug}.mdx`);
     const fileContents = fs.readFileSync(filePath, 'utf8');
     const { content } = matter(fileContents);
-    
+
     return (
         <article className="prose sm:prose-lg dark:prose-invert max-w-none">
-            <MDXRemote 
-                source={content} 
+            <MDXRemote
+                source={content}
                 components={mdxComponents}
                 options={{
                     mdxOptions: {
                         rehypePlugins: [[rehypeImgSize as never, { dir: 'public' }]],
-                    }
+                    },
                 }}
             />
         </article>

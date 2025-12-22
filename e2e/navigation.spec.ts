@@ -9,5 +9,5 @@ test('has title and navigates to the news page', async ({ page }) => {
 
     await expect(page).toHaveURL(/.*news/);
 
-    await expect(page.getByRole('heading', { name: 'Aktuelles'})).toBeVisible();
+    await expect(page.getByRole('heading', { name: 'Aktuelles' })).toBeVisible();
 });

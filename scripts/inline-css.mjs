@@ -12,12 +12,12 @@ function getAllHtmlFiles(dirPath, arrayOfFiles) {
 
     arrayOfFiles = arrayOfFiles || [];
 
-    files.forEach(function(file) {
-        if (fs.statSync(dirPath + "/" + file).isDirectory()) {
-            arrayOfFiles = getAllHtmlFiles(dirPath + "/" + file, arrayOfFiles);
+    files.forEach(function (file) {
+        if (fs.statSync(dirPath + '/' + file).isDirectory()) {
+            arrayOfFiles = getAllHtmlFiles(dirPath + '/' + file, arrayOfFiles);
         } else {
-            if (file.endsWith(".html")) {
-                arrayOfFiles.push(path.join(dirPath, "/", file));
+            if (file.endsWith('.html')) {
+                arrayOfFiles.push(path.join(dirPath, '/', file));
             }
         }
     });
@@ -36,7 +36,7 @@ async function inlineCss() {
 
     for (const htmlFile of htmlFiles) {
         let content = fs.readFileSync(htmlFile, 'utf8');
-        
+
         // Find all CSS links that point to Next.js static assets
         // Supporting both /_next/static/css/ and /_next/static/chunks/
         const cssRegex = /<link\s+[^>]*href="(\/_next\/static\/(?:css|chunks)\/[^"]+\.css)"[^>]*>/g;
@@ -68,7 +68,7 @@ async function inlineCss() {
 
             const filename = href.replace(/^\/_next\/static\//, '');
             const cssPath = path.join(OUT_DIR, '_next/static', filename);
-            
+
             if (fs.existsSync(cssPath)) {
                 const cssContent = fs.readFileSync(cssPath, 'utf8');
                 if (cssContent.length < 100000) {
@@ -77,7 +77,9 @@ async function inlineCss() {
                         content = content.replace(full, `<style>${cssContent}</style>`);
                         modified = true;
                     } else if (rel === 'preload') {
-                        console.log(`Removing preload ${href} from ${path.relative(OUT_DIR, htmlFile)}`);
+                        console.log(
+                            `Removing preload ${href} from ${path.relative(OUT_DIR, htmlFile)}`
+                        );
                         content = content.replace(full, '');
                         modified = true;
                     }

@@ -1,4 +1,4 @@
-import getPostMetadata  from '@/lib/PostMetadata';
+import getPostMetadata from '@/lib/PostMetadata';
 import PostPreview from '@/components/PostPreview';
 import { formatPostDate } from '@/lib/date';
 import { Metadata } from 'next';
@@ -8,23 +8,25 @@ export const metadata: Metadata = {
     description: 'Neuigkeiten und Berichte von unseren Aktionen, Zeltlagern und Gruppenstunden.',
     openGraph: {
         title: 'Aktuelles - DPSG Wehr',
-        description: 'Neuigkeiten und Berichte von unseren Aktionen, Zeltlagern und Gruppenstunden.',
+        description:
+            'Neuigkeiten und Berichte von unseren Aktionen, Zeltlagern und Gruppenstunden.',
         images: ['/images/logo.png'],
     },
     twitter: {
         card: 'summary_large_image',
         title: 'Aktuelles - DPSG Wehr',
-        description: 'Neuigkeiten und Berichte von unseren Aktionen, Zeltlagern und Gruppenstunden.',
+        description:
+            'Neuigkeiten und Berichte von unseren Aktionen, Zeltlagern und Gruppenstunden.',
         images: ['/images/logo.png'],
-    }
+    },
 };
 
 export default function Aktuelles() {
     const postMetadata = getPostMetadata();
-    const postPreviews = postMetadata.map(data => {
-        data.date = formatPostDate(data.date)
+    const postPreviews = postMetadata.map((data) => {
+        data.date = formatPostDate(data.date);
 
-        return <PostPreview key={data.slug} {...data} />
+        return <PostPreview key={data.slug} {...data} />;
     });
 
     return (
@@ -32,8 +34,9 @@ export default function Aktuelles() {
             <div className="prose dark:prose-invert mb-8 max-w-none">
                 <h1>Aktuelles</h1>
                 <p>
-                    Hier findet ihr aktuelle Berichte und Informationen über unsere Aktivitäten. 
-                    Ob Zeltlager, Stammesaktionen oder Neuigkeiten aus den Gruppen - bleibt auf dem Laufenden!
+                    Hier findet ihr aktuelle Berichte und Informationen über unsere Aktivitäten. Ob
+                    Zeltlager, Stammesaktionen oder Neuigkeiten aus den Gruppen - bleibt auf dem
+                    Laufenden!
                 </p>
             </div>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 max-w-md mx-auto sm:max-w-max">

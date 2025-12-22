@@ -1,17 +1,23 @@
-import { TagGroup } from "@/types";
-import { useId } from "react";
-import Select, { OnChangeValue } from "react-select";
-import "./SelectWrapper.css";
+import { TagGroup } from '@/types';
+import { useId } from 'react';
+import Select, { OnChangeValue } from 'react-select';
+import './SelectWrapper.css';
 
 interface Option {
     value: string;
     label: string;
 }
 
-export default function SelectWrapper({ options, tags, setTags }: { options: TagGroup, tags: TagGroup[], setTags: (tags: TagGroup[]) => void}) {
-    const handleChange = (
-        newValue: OnChangeValue<Option, true>
-    ) => {
+export default function SelectWrapper({
+    options,
+    tags,
+    setTags,
+}: {
+    options: TagGroup;
+    tags: TagGroup[];
+    setTags: (tags: TagGroup[]) => void;
+}) {
+    const handleChange = (newValue: OnChangeValue<Option, true>) => {
         const newTags = tags.map((tagGroup: TagGroup) => {
             if (tagGroup.name == options.name) {
                 return {

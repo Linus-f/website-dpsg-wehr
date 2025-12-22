@@ -9,7 +9,7 @@ describe('photoSrc utilities', () => {
 
             const result = getOptimizedUrl(src, size);
 
-            expect(result).toBe('/images/test/nextImageExportOptimizer/photo-opt-640.WEBP')
+            expect(result).toBe('/images/test/nextImageExportOptimizer/photo-opt-640.WEBP');
         });
     });
 

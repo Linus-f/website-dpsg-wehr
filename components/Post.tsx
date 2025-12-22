@@ -1,26 +1,43 @@
-import { PostMetadata } from "@/types";
-import FloatingImage from "./FloatingImage";
-import { formatPostDate } from "@/lib/date";
+import { PostMetadata } from '@/types';
+import FloatingImage from './FloatingImage';
+import { formatPostDate } from '@/lib/date';
 
-export default function Post({ postMetadata, children, slug }: { postMetadata: PostMetadata[], children: React.ReactNode, slug?: string}) {
+export default function Post({
+    postMetadata,
+    children,
+    slug,
+}: {
+    postMetadata: PostMetadata[];
+    children: React.ReactNode;
+    slug?: string;
+}) {
     const metadata = postMetadata.find((post) => post.slug === slug);
 
     if (!metadata) {
-        return <article className="prose sm:prose-lg dark:prose-invert max-w-none">{children}</article>;
+        return (
+            <article className="prose sm:prose-lg dark:prose-invert max-w-none">{children}</article>
+        );
     }
 
     return (
         <div>
-            {metadata.image.src && <FloatingImage src={metadata.image.src} alt={metadata.title} width={metadata.image.width} height={metadata.image.height}/>}
+            {metadata.image.src && (
+                <FloatingImage
+                    src={metadata.image.src}
+                    alt={metadata.title}
+                    width={metadata.image.width}
+                    height={metadata.image.height}
+                />
+            )}
             <div className="mb-8">
                 <h1 className="text-center text-4xl font-bold">{metadata.title}</h1>
                 <h2 className="text-center text-xl font-light">{metadata.subtitle}</h2>
             </div>
-            <p className="text-center font-light text-gray-800 dark:text-gray-200">{formatPostDate(metadata.date)}</p>
+            <p className="text-center font-light text-gray-800 dark:text-gray-200">
+                {formatPostDate(metadata.date)}
+            </p>
             <hr className="mt-3 mb-12"></hr>
-            <article className="prose sm:prose-lg dark:prose-invert max-w-none">
-                {children}
-            </article>
+            <article className="prose sm:prose-lg dark:prose-invert max-w-none">{children}</article>
         </div>
     );
 }

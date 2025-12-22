@@ -2,7 +2,7 @@ import { test, expect } from '@playwright/test';
 import { publicEvents } from '../lib/events.public';
 
 test.describe('Calendar', () => {
-    test.use({ 
+    test.use({
         locale: 'de-DE',
         timezoneId: 'Europe/Berlin',
     });
@@ -37,7 +37,8 @@ test.describe('Calendar', () => {
 
         // 3. Verify that an event from the list is rendered
         if (publicEvents.length > 0) {
-            const sampleEvent = publicEvents.find(e => e.start.startsWith('2024')) || publicEvents[0];
+            const sampleEvent =
+                publicEvents.find((e) => e.start.startsWith('2024')) || publicEvents[0];
             await expect(page.getByText(sampleEvent.title).first()).toBeVisible();
         }
     });

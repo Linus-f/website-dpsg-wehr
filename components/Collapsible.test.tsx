@@ -40,7 +40,7 @@ describe('Collapsible component', () => {
         );
 
         const toggle = screen.getByText(label);
-        
+
         // Open
         await user.click(toggle);
         expect(screen.getByText(content)).toBeInTheDocument();

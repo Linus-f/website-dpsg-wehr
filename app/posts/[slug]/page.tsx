@@ -16,7 +16,11 @@ export async function generateStaticParams() {
     }));
 }
 
-export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
+export async function generateMetadata({
+    params,
+}: {
+    params: Promise<{ slug: string }>;
+}): Promise<Metadata> {
     const { slug } = await params;
     const filePath = path.join(process.cwd(), 'content/posts', `${slug}.mdx`);
     const fileContents = fs.readFileSync(filePath, 'utf8');
@@ -31,19 +35,25 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
             url: '/images/logo.png',
             width: 800,
             height: 800,
-        }
+        },
     ];
 
     if (metadata?.image.src) {
-        const optimized = getOptimizedImageMetadata(metadata.image.src, metadata.image.width, metadata.image.height);
+        const optimized = getOptimizedImageMetadata(
+            metadata.image.src,
+            metadata.image.width,
+            metadata.image.height
+        );
         if (optimized) {
             images = [optimized];
         } else {
-            images = [{
-                url: metadata.image.src,
-                width: metadata.image.width,
-                height: metadata.image.height,
-            }];
+            images = [
+                {
+                    url: metadata.image.src,
+                    width: metadata.image.width,
+                    height: metadata.image.height,
+                },
+            ];
         }
     }
 
@@ -62,8 +72,8 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
             card: 'summary_large_image',
             title: `${data.title} - DPSG Wehr`,
             description: description,
-            images: images.map(img => img.url),
-        }
+            images: images.map((img) => img.url),
+        },
     };
 }
 
@@ -72,18 +82,18 @@ export default async function PostPage({ params }: { params: Promise<{ slug: str
     const filePath = path.join(process.cwd(), 'content/posts', `${slug}.mdx`);
     const fileContents = fs.readFileSync(filePath, 'utf8');
     const { content } = matter(fileContents);
-    
+
     const postMetadata = getPostMetadata();
 
     return (
         <Post postMetadata={postMetadata} slug={slug}>
-            <MDXRemote 
-                source={content} 
+            <MDXRemote
+                source={content}
                 components={mdxComponents}
                 options={{
                     mdxOptions: {
                         rehypePlugins: [[rehypeImgSize as never, { dir: 'public' }]],
-                    }
+                    },
                 }}
             />
         </Post>

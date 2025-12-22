@@ -1,24 +1,24 @@
 on:
-  # Runs on pushes targeting the default branch
-  push:
-    branches: ["main"]
+    # Runs on pushes targeting the default branch
+    push:
+        branches: ['main']
 name: 🚀 Deploy website on push
 jobs:
-  web-deploy:
-    name: 🎉 Deploy
-    runs-on: ubuntu-latest
-    steps:
-      - name: 🚚 Get latest code
-        uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
+    web-deploy:
+        name: 🎉 Deploy
+        runs-on: ubuntu-latest
+        steps:
+            - name: 🚚 Get latest code
+              uses: actions/checkout@v4
+              with:
+                  fetch-depth: 0
 
-      - name: 📂 Sync files
-        uses: milanmk/actions-file-deployer@master
-        with:
-          remote-host: "xc1.serverdomain.org"
-          remote-protocol: "sftp"
-          remote-path: "/home/www/"
-          remote-user: ${{ secrets.FTP_USERNAME }}
-          remote-password: ${{ secrets.FTP_PASSWORD }}
-          sync: "delta"
+            - name: 📂 Sync files
+              uses: milanmk/actions-file-deployer@master
+              with:
+                  remote-host: 'xc1.serverdomain.org'
+                  remote-protocol: 'sftp'
+                  remote-path: '/home/www/'
+                  remote-user: ${{ secrets.FTP_USERNAME }}
+                  remote-password: ${{ secrets.FTP_PASSWORD }}
+                  sync: 'delta'

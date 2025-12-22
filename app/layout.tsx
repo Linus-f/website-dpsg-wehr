@@ -1,10 +1,10 @@
-import type { Metadata } from 'next'
-import './globals.css'
-import LayoutBody from '@/components/LayoutBody'
-import Navbar from '@/components/Navbar'
-import Footer from '@/components/Footer'
-import Providers from '@/components/Providers'
-import SVGSymbols from '@/components/SVGSymbols'
+import type { Metadata } from 'next';
+import './globals.css';
+import LayoutBody from '@/components/LayoutBody';
+import Navbar from '@/components/Navbar';
+import Footer from '@/components/Footer';
+import Providers from '@/components/Providers';
+import SVGSymbols from '@/components/SVGSymbols';
 
 export const metadata: Metadata = {
     metadataBase: new URL('https://dpsg-wehr.de'),
@@ -34,22 +34,18 @@ export const metadata: Metadata = {
         description: 'Website der DPSG Wehr',
         images: ['/images/logo.png'],
     },
-}
+};
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
-
     return (
         <html lang="de" suppressHydrationWarning>
-            <head>
-            </head>
+            <head></head>
             <body className={`antialiased prose-headings:break-words prose-headings:hyphens-auto`}>
                 <SVGSymbols />
                 <Providers>
                     <div className="flex flex-col min-h-screen">
                         <Navbar />
-                        <LayoutBody>
-                            {children}
-                        </LayoutBody>
+                        <LayoutBody>{children}</LayoutBody>
                         <Footer />
                     </div>
                 </Providers>

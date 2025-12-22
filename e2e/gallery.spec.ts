@@ -13,7 +13,7 @@ test.describe('Photo Gallery', () => {
         // Check if images are present
         const images = gallery.locator('img');
         await expect(images.first()).toBeVisible();
-        
+
         // Verify at least some images are loaded
         const count = await images.count();
         expect(count).toBeGreaterThan(0);
@@ -21,14 +21,16 @@ test.describe('Photo Gallery', () => {
 
     test('should open the lightbox when an image is clicked', async ({ page }) => {
         const firstImage = page.locator('.react-photo-album img').first();
-        
+
         // Ensure image is visible and loaded
         await expect(firstImage).toBeVisible();
         await firstImage.scrollIntoViewIfNeeded();
 
         // Wait for image to be fully decoded
         await expect(async () => {
-            const naturalWidth = await firstImage.evaluate((img: HTMLImageElement) => img.naturalWidth);
+            const naturalWidth = await firstImage.evaluate(
+                (img: HTMLImageElement) => img.naturalWidth
+            );
             expect(naturalWidth).toBeGreaterThan(0);
         }).toPass();
 
@@ -50,7 +52,7 @@ test.describe('Photo Gallery', () => {
         // 1. Wait for gallery to be mounted
         const album = page.locator('.react-photo-album');
         await expect(album).toBeVisible();
-        
+
         const initialCount = await album.locator('img').count();
         expect(initialCount).toBeGreaterThan(0);
 
@@ -64,7 +66,7 @@ test.describe('Photo Gallery', () => {
 
         // 4. Select "2018" from the dropdown options
         await page.getByText('2018', { exact: true }).click();
-        
+
         // 5. Wait for the gallery to update (filtering happens in a useEffect)
         // We wait for the count to be different from the initial count
         await expect(async () => {

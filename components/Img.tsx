@@ -1,4 +1,4 @@
-import ExportedImage, { ExportedImageProps } from "next-image-export-optimizer";
+import ExportedImage, { ExportedImageProps } from 'next-image-export-optimizer';
 
 export default function Img(props: ExportedImageProps) {
     // For now, we drop the JS-based blur-up to make this a server component.
@@ -6,7 +6,7 @@ export default function Img(props: ExportedImageProps) {
     return (
         <ExportedImage
             {...(props as ExportedImageProps)}
-            className={`${props.className} ${!props.priority ? "animate-unblur" : ""}`}
+            className={`${props.className} ${!props.priority ? 'animate-unblur' : ''}`}
             // Add attributes for the lightbox to pick up
             data-lightbox="true"
             data-src={props.src}
@@ -14,5 +14,5 @@ export default function Img(props: ExportedImageProps) {
             data-width={props.width}
             data-height={props.height}
         />
-    )
+    );
 }

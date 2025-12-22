@@ -1,11 +1,11 @@
-'use client'
+'use client';
 
-import { ThemeProvider } from 'next-themes'
-import { LightboxContext } from '@/lib/LightboxContext'
-import { useState, useEffect } from 'react'
-import { SlideImage } from 'yet-another-react-lightbox'
-import dynamic from 'next/dynamic'
-import { usePathname } from 'next/navigation'
+import { ThemeProvider } from 'next-themes';
+import { LightboxContext } from '@/lib/LightboxContext';
+import { useState, useEffect } from 'react';
+import { SlideImage } from 'yet-another-react-lightbox';
+import dynamic from 'next/dynamic';
+import { usePathname } from 'next/navigation';
 
 const LightboxWrapper = dynamic(() => import('./LightboxWrapper'), { ssr: false });
 
@@ -20,7 +20,7 @@ export default function Providers({ children }: { children: React.ReactNode }) {
             setLightboxOpen(false);
             setSlides([]);
         }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [pathname]);
 
     const openLightbox = (src: string) => {
@@ -38,10 +38,10 @@ export default function Providers({ children }: { children: React.ReactNode }) {
 
         setSlides(newSlides);
 
-        let targetIndex = newSlides.findIndex(slide => slide.src === src);
+        let targetIndex = newSlides.findIndex((slide) => slide.src === src);
         if (targetIndex === -1) {
-            targetIndex = newSlides.findIndex(slide => 
-                slide.src.endsWith(src) || src.endsWith(slide.src)
+            targetIndex = newSlides.findIndex(
+                (slide) => slide.src.endsWith(src) || src.endsWith(slide.src)
             );
         }
 
@@ -56,7 +56,9 @@ export default function Providers({ children }: { children: React.ReactNode }) {
             const target = e.target as HTMLElement;
             const lightboxTrigger = target.closest('[data-lightbox="true"]');
             if (lightboxTrigger) {
-                const src = lightboxTrigger.getAttribute('data-src') || (lightboxTrigger as HTMLImageElement).src;
+                const src =
+                    lightboxTrigger.getAttribute('data-src') ||
+                    (lightboxTrigger as HTMLImageElement).src;
                 if (src) {
                     openLightbox(src);
                 }
@@ -74,7 +76,7 @@ export default function Providers({ children }: { children: React.ReactNode }) {
                     open: lightBoxOpen,
                     setOpen: openLightbox,
                     slides: slides,
-                    addSlide: (s) => setSlides(prev => [s, ...prev]),
+                    addSlide: (s) => setSlides((prev) => [s, ...prev]),
                     setSlides: setSlides,
                 }}
             >
@@ -89,5 +91,5 @@ export default function Providers({ children }: { children: React.ReactNode }) {
                 )}
             </LightboxContext.Provider>
         </ThemeProvider>
-    )
+    );
 }

@@ -1,39 +1,39 @@
 services:
-  website:
-    image: ghcr.io/linus-f/website-dpsg-wehr:latest
-    # container_name: website-dpsg-wehr  <-- Removed to allow replicas
-    restart: unless-stopped
-    deploy:
-      mode: replicated
-      replicas: 2
-      update_config:
-        order: start-first
-        failure_action: rollback
-        delay: 5s
-    networks:
-      - proxy
-    healthcheck:
-      test: ["CMD-SHELL", "curl -f http://127.0.0.1/ || exit 1"]
-      interval: 30s
-      timeout: 10s
-      retries: 3
-      start_period: 5s
-    labels:
-      - "traefik.enable=true"
-      - "traefik.docker.network=proxy"
-      
-      # Watchtower Auto-Update
-      - "com.centurylinklabs.watchtower.enable=true"
+    website:
+        image: ghcr.io/linus-f/website-dpsg-wehr:latest
+        # container_name: website-dpsg-wehr  <-- Removed to allow replicas
+        restart: unless-stopped
+        deploy:
+            mode: replicated
+            replicas: 2
+            update_config:
+                order: start-first
+                failure_action: rollback
+                delay: 5s
+        networks:
+            - proxy
+        healthcheck:
+            test: ['CMD-SHELL', 'curl -f http://127.0.0.1/ || exit 1']
+            interval: 30s
+            timeout: 10s
+            retries: 3
+            start_period: 5s
+        labels:
+            - 'traefik.enable=true'
+            - 'traefik.docker.network=proxy'
 
-      # HTTPS Router
-      - "traefik.http.routers.dpsg-website-secure.entrypoints=https"
-      - "traefik.http.routers.dpsg-website-secure.rule=Host(`www.dpsg-wehr.de`) || Host(`dpsg-wehr.de`)"
-      - "traefik.http.routers.dpsg-website-secure.tls=true"
-      - "traefik.http.routers.dpsg-website-secure.tls.certresolver=le_http"
+            # Watchtower Auto-Update
+            - 'com.centurylinklabs.watchtower.enable=true'
 
-      # Service Port
-      - "traefik.http.services.dpsg-website.loadbalancer.server.port=80"
+            # HTTPS Router
+            - 'traefik.http.routers.dpsg-website-secure.entrypoints=https'
+            - 'traefik.http.routers.dpsg-website-secure.rule=Host(`www.dpsg-wehr.de`) || Host(`dpsg-wehr.de`)'
+            - 'traefik.http.routers.dpsg-website-secure.tls=true'
+            - 'traefik.http.routers.dpsg-website-secure.tls.certresolver=le_http'
+
+            # Service Port
+            - 'traefik.http.services.dpsg-website.loadbalancer.server.port=80'
 
 networks:
-  proxy:
-    external: true
+    proxy:
+        external: true

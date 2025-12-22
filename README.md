@@ -1,4 +1,5 @@
 # Website der DPSG Wehr
+
 [![Tests](https://github.com/Linus-f/website-dpsg-wehr/actions/workflows/tests.yml/badge.svg)](https://github.com/Linus-f/website-dpsg-wehr/actions/workflows/tests.yml)
 ![Next.js](https://img.shields.io/badge/Next.js-16-black?logo=next.js&logoColor=white)
 
@@ -13,6 +14,7 @@ Dieses Projekt verwendet [mise](https://mise.jdx.sh/) zur Verwaltung von Entwick
 Die Nutzung von mise muss ggf. mit `mise trust` erlaubt werden.
 
 ## Generieren der Website
+
 Zum generieren der Website werden [git](https://git-scm.com/) und [pnpm](https://pnpm.io/installation) benötigt. Sie kann mit den folgenden Befehlen erstellt werden.
 
 ```bash
@@ -29,7 +31,7 @@ pnpm install
 pnpm export
 ```
 
-Die generierte Website wird im Ordner `out` gespeichert. Zur Entwicklung kann ein lokaler server gestartet werden: 
+Die generierte Website wird im Ordner `out` gespeichert. Zur Entwicklung kann ein lokaler server gestartet werden:
 
 ```bash
 pnpm dev
@@ -74,23 +76,25 @@ pnpm test:report
 
 Die Website generiert automatisch ICS-Kalenderdateien für Termine.
 
-*   **Öffentliche Termine**: Werden in `lib/events.public.ts` gepflegt und sind im Repository enthalten.
-*   **Interne Termine**: Können in einer lokalen Datei `lib/events.internal.ts` definiert werden. Diese Datei wird von Git ignoriert (`.gitignore`).
+- **Öffentliche Termine**: Werden in `lib/events.public.ts` gepflegt und sind im Repository enthalten.
+- **Interne Termine**: Können in einer lokalen Datei `lib/events.internal.ts` definiert werden. Diese Datei wird von Git ignoriert (`.gitignore`).
 
 **Format für `lib/events.internal.ts`:**
+
 ```typescript
-import { AppEvent } from "../types";
+import { AppEvent } from '../types';
 
 export const internalEvents: AppEvent[] = [
     {
-        title: "Leiterrunde",
-        start: "2024-01-01",
+        title: 'Leiterrunde',
+        start: '2024-01-01',
         //optional: end: "2024-01-01"
-    }
+    },
 ];
 ```
 
 Die Kalender werden automatisch vor dem Build (`pnpm build`) generiert:
+
 1.  `public/events.ics`: Enthält nur öffentliche Termine.
 2.  `public/internal-events.ics`: Enthält öffentliche und interne Termine (falls `events.internal.ts` existiert).
 
