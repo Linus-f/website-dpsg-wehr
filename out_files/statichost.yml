@@ -1,6 +1,0 @@
-# using the latest slim image of node v20
-image: node:20.9.0-slim
-# enabling pnpm via corepack
-command: corepack enable && pnpm install --frozen-lockfile && pnpm export
-# normal next output directory
-public: .
