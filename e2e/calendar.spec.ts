@@ -16,12 +16,13 @@ test.describe('Calendar', () => {
             window.Date = class extends NativeDate {
                 constructor(...args: any[]) {
                     if (args.length === 0) {
-                        return new NativeDate(mockDate);
+                        super(mockDate);
+                    } else {
+                        // @ts-ignore
+                        super(...args);
                     }
-                    // @ts-ignore
-                    return new NativeDate(...args);
                 }
-            };
+            } as any;
             window.Date.now = () => mockDate;
         });
 

@@ -8,7 +8,7 @@
   ],
   "scripts": {
     "dev": "next dev",
-    "build": "tsx scripts/generate-ics.ts && next build",
+    "build": "tsx scripts/generate-ics.ts && tsx scripts/generate-search-index.ts && next build",
     "start": "next start",
     "lint": "eslint .",
     "export": "next build && next-image-export-optimizer && node scripts/inline-css.mjs",
@@ -30,6 +30,7 @@
     "@mdx-js/react": "^3.1.1",
     "@next/mdx": "^16.1.0",
     "@types/mdx": "^2.0.13",
+    "fuse.js": "^7.1.0",
     "gray-matter": "^4.0.3",
     "ics": "^3.8.1",
     "image-size": "^2.0.2",

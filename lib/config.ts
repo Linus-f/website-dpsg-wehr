@@ -11,10 +11,10 @@ export const navigationLinks: Array<NavigationLinkGroup> = [
     ]},
     { label: "Fotos", link: "/gallerie", Icon: "Image" },
     { label: "Termine", link: "/pages/termine", Icon: "Calendar" },
-    { label: "Hütten", link: "", Icon: "House", links: [
-        { label: "St. Raphael", link: "https://www.pfadfinderheim-st-raphael.de/", Icon: "None" },
-        { label: "Pfadfinderhaus Nöggenschwiel", link: "http://www.pfadfinderhaus-noeggenschwiel.de/", Icon: "None" },
+    { label: "Mehr", link: "", Icon: "More", links: [
+        { label: "Heim St. Raphael", link: "https://www.pfadfinderheim-st-raphael.de/", Icon: "House" },
+        { label: "Haus Nöggenschwiel", link: "http://www.pfadfinderhaus-noeggenschwiel.de/", Icon: "House" },
+        { label: "FAQ", link: "/pages/faq", Icon: "Help" },
     ]},
-    { label: "FAQ", link: "/pages/faq", Icon: "Help" },
 ]
 
