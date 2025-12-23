@@ -43,7 +43,9 @@ var init_git_media_store = __esm({
                         id: filePath,
                         filename: file.name,
                         directory,
-                        previewSrc: this.getRawUrl(repoPath),
+                        thumbnails: {
+                            '75x75': this.getRawUrl(repoPath),
+                        },
                         src: '/' + filePath,
                     });
                 }
@@ -52,7 +54,7 @@ var init_git_media_store = __esm({
             async list(options) {
                 if (!GITHUB_TOKEN) {
                     console.warn('No GitHub Token available for media list');
-                    return { items: [], totalCount: 0, offset: 0, limit: 20 };
+                    return { items: [] };
                 }
                 const directory = options?.directory ?? '';
                 const offset = options?.offset ?? 0;
@@ -60,23 +62,23 @@ var init_git_media_store = __esm({
                 const dirPart = directory ? directory : '';
                 const repoDir = `${PUBLIC_FOLDER}/${MEDIA_ROOT}${dirPart ? '/' + dirPart : ''}`;
                 const files = await this.listGithubFiles(repoDir);
-                const items = files.slice(offset, offset + limit).map((file) => {
+                const items = files.slice(Number(offset), Number(offset) + limit).map((file) => {
                     const relativePath = file.path.replace(new RegExp(`^${PUBLIC_FOLDER}/`), '');
                     return {
                         type: 'file',
                         id: relativePath,
                         filename: file.name,
                         directory,
-                        previewSrc: this.getRawUrl(file.path),
+                        thumbnails: {
+                            '75x75': this.getRawUrl(file.path),
+                        },
                         src: '/' + relativePath,
                     };
                 });
                 return {
                     items,
-                    totalCount: files.length,
-                    offset,
-                    limit,
-                    nextOffset: offset + limit < files.length ? offset + limit : void 0,
+                    nextOffset:
+                        Number(offset) + limit < files.length ? Number(offset) + limit : void 0,
                 };
             }
             async delete(media) {
@@ -265,6 +267,7 @@ var config_default = defineConfig({
     branch: isLocal ? 'main' : branch,
     clientId: isLocal ? void 0 : process.env.NEXT_PUBLIC_TINA_CLIENT_ID,
     token: isLocal ? void 0 : process.env.TINA_TOKEN,
+    contentApiUrlOverride: isLocal ? 'http://localhost:4001/graphql' : void 0,
     build: {
         outputFolder: 'admin',
         publicFolder: 'public',
@@ -274,7 +277,7 @@ var config_default = defineConfig({
             const pack = await Promise.resolve().then(
                 () => (init_git_media_store(), git_media_store_exports)
             );
-            return new pack.GitMediaStore();
+            return pack.GitMediaStore;
         },
     },
     // See docs on content modeling for more info on how to setup new content models: https://tina.io/docs/r/content-modelling-collections/

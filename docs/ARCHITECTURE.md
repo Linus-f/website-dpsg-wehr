@@ -19,9 +19,9 @@ graph TD
     end
 
     subgraph "TinaCMS Ecosystem"
-        AdminBrowser[Admin SPA (Browser)]
-        TinaCloud[Tina Cloud Identity & Content API]
-        GitHubAPI[GitHub API]
+        AdminBrowser["Admin SPA (Browser)"]
+        TinaCloud["Tina Cloud Identity & Content API"]
+        GitHubAPI["GitHub API"]
     end
 
     subgraph "CI/CD (GitHub Actions)"
@@ -42,9 +42,9 @@ graph TD
     Repo -->|6. Trigger Build| PR
 
     %% Build Process
-    PR -->|Build| NextBuild[Next.js Build]
+    PR -->|Build| NextBuild["Next.js Build"]
     NextBuild -->|Optimize| Optimizer[next-image-export-optimizer]
-    Optimizer -->|Output| StaticHTML[Static HTML + WEBP]
+    Optimizer -->|Output| StaticHTML["Static HTML + WEBP"]
 ```
 
 ## The "Hybrid" CMS Configuration
