@@ -32,7 +32,9 @@ export class GitMediaStore implements MediaStore {
                 id: filePath,
                 filename: file.name,
                 directory: directory,
-                previewSrc: this.getRawUrl(repoPath),
+                thumbnails: {
+                    '75x75': this.getRawUrl(repoPath),
+                },
                 src: '/' + filePath,
             });
         }
@@ -42,38 +44,52 @@ export class GitMediaStore implements MediaStore {
     async list(options?: MediaListOptions): Promise<MediaList> {
         if (!GITHUB_TOKEN) {
             // Fallback or empty if no token (user might be viewing without logging in?)
+
             // But this is called by CMS.
-            // eslint-disable-next-line no-console
+
+             
+
             console.warn('No GitHub Token available for media list');
-            return { items: [], totalCount: 0, offset: 0, limit: 20 };
+
+            return { items: [] };
         }
+
         const directory = options?.directory ?? '';
+
         const offset = options?.offset ?? 0;
+
         const limit = options?.limit ?? 20;
 
         const dirPart = directory ? directory : '';
+
         const repoDir = `${PUBLIC_FOLDER}/${MEDIA_ROOT}${dirPart ? '/' + dirPart : ''}`;
 
         const files = await this.listGithubFiles(repoDir);
 
-        const items = files.slice(offset, offset + limit).map((file) => {
+        const items = files.slice(Number(offset), Number(offset) + limit).map((file) => {
             const relativePath = file.path.replace(new RegExp(`^${PUBLIC_FOLDER}/`), '');
+
             return {
                 type: 'file' as const,
+
                 id: relativePath,
+
                 filename: file.name,
+
                 directory: directory,
-                previewSrc: this.getRawUrl(file.path),
+
+                thumbnails: {
+                    '75x75': this.getRawUrl(file.path),
+                },
+
                 src: '/' + relativePath,
             };
         });
 
         return {
             items,
-            totalCount: files.length,
-            offset,
-            limit,
-            nextOffset: offset + limit < files.length ? offset + limit : undefined,
+
+            nextOffset: Number(offset) + limit < files.length ? Number(offset) + limit : undefined,
         };
     }
 
