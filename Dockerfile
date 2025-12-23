@@ -5,8 +5,16 @@ FROM node:22-alpine AS builder
 RUN npm install -g pnpm
 
 ENV NEXT_TELEMETRY_DISABLED=1
-# Force Tina to use local data and skip cloud checks during build
-ENV TINA_PUBLIC_IS_LOCAL=true
+
+# Build Arguments
+ARG NEXT_PUBLIC_TINA_CLIENT_ID
+ARG TINA_TOKEN
+
+# Set Environment Variables for Build
+ENV NEXT_PUBLIC_TINA_CLIENT_ID=$NEXT_PUBLIC_TINA_CLIENT_ID
+ENV TINA_TOKEN=$TINA_TOKEN
+# Disable local mode to ensure we use the provided cloud credentials
+ENV TINA_PUBLIC_IS_LOCAL=false
 
 # Image Optimization Environment Variables
 ENV nextImageExportOptimizer_imageFolderPath="public/media/images"
@@ -33,11 +41,10 @@ RUN --mount=type=cache,id=next-cache,target=/app/.next/cache \
     --mount=type=cache,id=image-cache,target=/app/.next-image-cache \
     mkdir -p out/nextImageExportOptimizer && \
     (cp -r /app/.next-image-cache/. out/nextImageExportOptimizer/ 2>/dev/null || true) && \
-    pnpm build:ci && \
+    pnpm build && \
     pnpm next-image-export-optimizer && \
     node scripts/inline-css.mjs && \
     (cp -r out/nextImageExportOptimizer/. /app/.next-image-cache/ 2>/dev/null || true) && \
-    # Critical: verify that the build actually produced the website files
     test -f out/index.html
 
 # Stage 2: Serve

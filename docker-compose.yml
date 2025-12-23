@@ -3,6 +3,9 @@ services:
         build:
             context: .
             dockerfile: Dockerfile
+            args:
+                - NEXT_PUBLIC_TINA_CLIENT_ID=${NEXT_PUBLIC_TINA_CLIENT_ID}
+                - TINA_TOKEN=${TINA_TOKEN}
         restart: unless-stopped
         deploy:
             mode: replicated
