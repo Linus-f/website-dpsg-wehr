@@ -12,8 +12,18 @@ import RecentPosts from './RecentPosts.client';
 import GroupOverview from './GroupOverview';
 import Acrostichon from './Acrostichon';
 
-const fixSrc = (src: string) =>
-    src && !src.startsWith('/') && !src.startsWith('http') ? `/${src}` : src;
+const fixSrc = (src: string) => {
+    if (!src) return src;
+    if (src.startsWith('https://assets.tina.io')) {
+        // Extract the path after the Tina Cloud ID
+        // Format: https://assets.tina.io/<ID>/path/to/image.jpg
+        const parts = src.split('/');
+        if (parts.length > 4) {
+            return `/${parts.slice(4).join('/')}`;
+        }
+    }
+    return !src.startsWith('/') && !src.startsWith('http') ? `/${src}` : src;
+};
 
 export default function TinaContentClient(props: {
     data: any;
