@@ -30,10 +30,12 @@ test.describe('News Page', () => {
             await expect(page.locator('h1').first()).toBeVisible({ timeout: 10000 });
 
             // Verify automated metadata
-            await expect(page.locator('meta[property="og:title"]')).toHaveAttribute(
-                'content',
-                `${postTitle} - DPSG Wehr`
+            // Use specific selector including content to avoid matching old/stale meta tags during transition
+            const metaTitle = page.locator(
+                `meta[property="og:title"][content="${postTitle} - DPSG Wehr"]`
             );
+            await expect(metaTitle).toHaveCount(1);
+
             await expect(page.locator('meta[property="og:type"]')).toHaveAttribute(
                 'content',
                 'article'
