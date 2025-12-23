@@ -1,3 +1,10 @@
+## [1.4.1](https://github.com/Linus-f/website-dpsg-wehr/compare/v1.4.0...v1.4.1) (2025-12-23)
+
+### Bug Fixes
+
+- **ci:** use --local flag for tinacms build in CI to skip cloud credential check ([a816b1c](https://github.com/Linus-f/website-dpsg-wehr/commit/a816b1ca6b17943d8ec5a89fe4375c76dcfcee9d))
+- remove git lfs for images and add tinacms build to ci script ([1b68c5c](https://github.com/Linus-f/website-dpsg-wehr/commit/1b68c5c2c5e84b43a825f77634524ef8b19dd5df))
+
 # [1.4.0](https://github.com/Linus-f/website-dpsg-wehr/compare/v1.3.0...v1.4.0) (2025-12-23)
 
 ### Bug Fixes
