@@ -7,9 +7,6 @@ RUN npm install -g pnpm
 ENV NEXT_TELEMETRY_DISABLED=1
 # Force Tina to use local data and skip cloud checks during build
 ENV TINA_PUBLIC_IS_LOCAL=true
-# Set placeholder credentials to satisfy URL construction during local build
-ENV NEXT_PUBLIC_TINA_CLIENT_ID=local
-ENV TINA_TOKEN=local
 
 # Image Optimization Environment Variables
 ENV nextImageExportOptimizer_imageFolderPath="public/media/images"
@@ -40,6 +37,7 @@ RUN --mount=type=cache,id=next-cache,target=/app/.next/cache \
     pnpm next-image-export-optimizer && \
     node scripts/inline-css.mjs && \
     (cp -r out/nextImageExportOptimizer/. /app/.next-image-cache/ 2>/dev/null || true) && \
+    # Critical: verify that the build actually produced the website files
     test -f out/index.html
 
 # Stage 2: Serve
