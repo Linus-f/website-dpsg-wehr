@@ -1,0 +1,5 @@
+# Custom webhook image with Docker and Git installed
+FROM almir/webhook:2.8.1
+
+# Install Docker CLI and Git
+RUN apk add --no-cache docker-cli docker-cli-compose git
