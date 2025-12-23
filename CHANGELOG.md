@@ -1,3 +1,13 @@
+# [1.7.0](https://github.com/Linus-f/website-dpsg-wehr/compare/v1.6.0...v1.7.0) (2025-12-23)
+
+### Bug Fixes
+
+- update CSP to allow GitHub API connections ([d09070b](https://github.com/Linus-f/website-dpsg-wehr/commit/d09070b169a516a77a65aa49a6b244758c21a8b5))
+
+### Features
+
+- display project version in footer ([785aa3c](https://github.com/Linus-f/website-dpsg-wehr/commit/785aa3c280690506ee5de0ea89497c881a1aab64))
+
 # [1.6.0](https://github.com/Linus-f/website-dpsg-wehr/compare/v1.5.1...v1.6.0) (2025-12-23)
 
 ### Bug Fixes
