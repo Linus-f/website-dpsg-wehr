@@ -68,6 +68,9 @@ jobs:
 
             - name: 🏗️ Export website (optimizes images)
               env:
+                  NEXT_PUBLIC_TINA_CLIENT_ID: ${{ secrets.NEXT_PUBLIC_TINA_CLIENT_ID }}
+                  TINA_TOKEN: ${{ secrets.TINA_TOKEN }}
+                  GITHUB_BRANCH: ${{ github.head_ref || github.ref_name }}
                   nextImageExportOptimizer_imageSizes: '16,64,128,256,384'
                   nextImageExportOptimizer_deviceSizes: '640,1080,1920'
               run: |
