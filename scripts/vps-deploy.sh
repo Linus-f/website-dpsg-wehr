@@ -3,11 +3,17 @@
 # This script runs inside the webhook container
 cd /app || exit
 
+# Fix for "dubious ownership" error in Docker environment
+git config --global --add safe.directory /app
+
 echo "🚀 Starting deployment for branch: main"
 
-# 1. Pull latest code (requires git to be installed in the webhook image or the repo already cloned on host)
+# 1. Pull latest code
 echo "📥 Pulling latest changes from main..."
-git pull origin main
+if ! git pull origin main; then
+    echo "❌ Error: git pull failed."
+    exit 1
+fi
 
 # 2. Rebuild and restart the website container
 echo "🏗️ Rebuilding website container..."
