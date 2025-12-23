@@ -85,10 +85,14 @@ const mdxTemplates: any[] = [
     },
 ];
 
-const isLocal = process.env.TINA_PUBLIC_IS_LOCAL === 'true';
+export default defineConfig({
+    branch,
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-const config: any = {
+    // Get this from tina.io
+    clientId: process.env.NEXT_PUBLIC_TINA_CLIENT_ID,
+    // Get this from tina.io
+    token: process.env.TINA_TOKEN,
+
     build: {
         outputFolder: 'admin',
         publicFolder: 'public',
@@ -389,12 +393,4 @@ const config: any = {
             },
         ],
     },
-};
-
-if (!isLocal) {
-    config.branch = branch;
-    config.clientId = process.env.NEXT_PUBLIC_TINA_CLIENT_ID;
-    config.token = process.env.TINA_TOKEN;
-}
-
-export default defineConfig(config);
+});
