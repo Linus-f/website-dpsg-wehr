@@ -89,8 +89,6 @@ const isLocal = process.env.TINA_PUBLIC_IS_LOCAL === 'true';
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 const config: any = {
-    branch,
-
     build: {
         outputFolder: 'admin',
         publicFolder: 'public',
@@ -393,7 +391,8 @@ const config: any = {
     },
 };
 
-if (process.env.NEXT_PUBLIC_TINA_CLIENT_ID && process.env.TINA_TOKEN) {
+if (!isLocal) {
+    config.branch = branch;
     config.clientId = process.env.NEXT_PUBLIC_TINA_CLIENT_ID;
     config.token = process.env.TINA_TOKEN;
 }
