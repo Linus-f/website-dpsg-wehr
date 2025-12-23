@@ -88,18 +88,19 @@ const mdxTemplates: any[] = [
 const isLocal = process.env.TINA_PUBLIC_IS_LOCAL === 'true';
 
 export default defineConfig({
-    branch: isLocal ? '' : branch,
-    clientId: isLocal ? null : process.env.NEXT_PUBLIC_TINA_CLIENT_ID,
-    token: isLocal ? null : process.env.TINA_TOKEN,
+    branch: isLocal ? 'main' : branch,
+    clientId: isLocal ? undefined : process.env.NEXT_PUBLIC_TINA_CLIENT_ID,
+    token: isLocal ? undefined : process.env.TINA_TOKEN,
+    contentApiUrlOverride: isLocal ? 'http://localhost:4001/graphql' : undefined,
 
     build: {
         outputFolder: 'admin',
         publicFolder: 'public',
     },
     media: {
-        tina: {
-            mediaRoot: 'media',
-            publicFolder: 'public',
+        loadCustomStore: async () => {
+            const pack = await import('./git-media-store');
+            return pack.GitMediaStore;
         },
     },
     // See docs on content modeling for more info on how to setup new content models: https://tina.io/docs/r/content-modelling-collections/

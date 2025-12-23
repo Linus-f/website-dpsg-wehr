@@ -5,10 +5,26 @@ FROM node:22-alpine AS builder
 RUN npm install -g pnpm
 
 ENV NEXT_TELEMETRY_DISABLED=1
-# Ensure Tina uses local data during build
-ENV TINA_PUBLIC_IS_LOCAL=true
 
-# Image Optimization Environment Variables - Must match your project structure
+# Build Arguments
+ARG NEXT_PUBLIC_TINA_CLIENT_ID
+ARG TINA_TOKEN
+ARG NEXT_PUBLIC_GITHUB_TOKEN
+ARG NEXT_PUBLIC_REPO_OWNER
+ARG NEXT_PUBLIC_REPO_NAME
+ARG NEXT_PUBLIC_REPO_BRANCH
+
+# Set Environment Variables for Build
+ENV NEXT_PUBLIC_TINA_CLIENT_ID=$NEXT_PUBLIC_TINA_CLIENT_ID
+ENV TINA_TOKEN=$TINA_TOKEN
+ENV NEXT_PUBLIC_GITHUB_TOKEN=$NEXT_PUBLIC_GITHUB_TOKEN
+ENV NEXT_PUBLIC_REPO_OWNER=$NEXT_PUBLIC_REPO_OWNER
+ENV NEXT_PUBLIC_REPO_NAME=$NEXT_PUBLIC_REPO_NAME
+ENV NEXT_PUBLIC_REPO_BRANCH=$NEXT_PUBLIC_REPO_BRANCH
+# Disable local mode to ensure we use the provided cloud credentials
+ENV TINA_PUBLIC_IS_LOCAL=false
+
+# Image Optimization Environment Variables
 ENV nextImageExportOptimizer_imageFolderPath="public/media/images"
 ENV nextImageExportOptimizer_exportFolderPath="out"
 ENV nextImageExportOptimizer_exportFolderName="nextImageExportOptimizer"
@@ -28,14 +44,16 @@ RUN --mount=type=cache,id=pnpm,target=/root/.local/share/pnpm/store \
 # Copy source code
 COPY . .
 
-# Build and Export with cache mounts
-# We mount the image cache to a separate dir to avoid EBUSY errors on the output folder
+# Build and Export
 RUN --mount=type=cache,id=next-cache,target=/app/.next/cache \
     --mount=type=cache,id=image-cache,target=/app/.next-image-cache \
     mkdir -p out/nextImageExportOptimizer && \
-    cp -r /app/.next-image-cache/. out/nextImageExportOptimizer/ 2>/dev/null || true && \
-    pnpm export && \
-    cp -r out/nextImageExportOptimizer/. /app/.next-image-cache/ 2>/dev/null || true
+    (cp -r /app/.next-image-cache/. out/nextImageExportOptimizer/ 2>/dev/null || true) && \
+    pnpm build && \
+    pnpm next-image-export-optimizer && \
+    node scripts/inline-css.mjs && \
+    (cp -r out/nextImageExportOptimizer/. /app/.next-image-cache/ 2>/dev/null || true) && \
+    test -f out/index.html
 
 # Stage 2: Serve
 FROM nginx:alpine
