@@ -18,13 +18,18 @@ if [ ! -f .htpasswd ]; then
     # Check if htpasswd tool exists
     if command -v htpasswd &> /dev/null; then
         read -p "Enter username for Admin Panel: " username
-        htpasswd -c .htpasswd "$username"
-        echo "✅ .htpasswd created."
+        if htpasswd -c .htpasswd "$username"; then
+            echo "✅ .htpasswd created."
+        else
+            echo "❌ Error: Failed to create .htpasswd."
+            exit 1
+        fi
     else
         echo "⚠️  'htpasswd' command not found."
         echo "   Please create .htpasswd manually or install apache2-utils."
         echo "   Format: username:hashed_password"
         cp .htpasswd.example .htpasswd
+        echo "✅ .htpasswd created from example (Action required: Update manually)."
     fi
 else
     echo "✅ .htpasswd already exists."
