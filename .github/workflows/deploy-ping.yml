@@ -1,0 +1,22 @@
+name: Trigger VPS Deploy
+
+on:
+    workflow_run:
+        workflows: ['Release']
+        types:
+            - completed
+    workflow_dispatch:
+
+permissions: {}
+
+jobs:
+    ping-vps:
+        if: "${{ (github.event_name == 'workflow_run' && github.event.workflow_run.conclusion == 'success') || github.event_name == 'workflow_dispatch' }}"
+        runs-on: ubuntu-latest
+        steps:
+            - name: 🚀 Ping Webhook
+              run: |
+                  curl -X POST \
+                  -H "Content-Type: application/json" \
+                  -d '{"ref": "${{ github.ref_name }}"}' \
+                  "${{ secrets.WEBHOOK_URL }}?token=${{ secrets.WEBHOOK_TOKEN }}"

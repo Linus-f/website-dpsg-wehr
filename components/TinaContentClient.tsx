@@ -12,8 +12,24 @@ import RecentPosts from './RecentPosts.client';
 import GroupOverview from './GroupOverview';
 import Acrostichon from './Acrostichon';
 
-const fixSrc = (src: string) =>
-    src && !src.startsWith('/') && !src.startsWith('http') ? `/${src}` : src;
+const fixSrc = (src: string) => {
+    if (!src) return src;
+    try {
+        const url = new URL(src);
+        if (url.protocol === 'https:' && url.hostname === 'assets.tina.io') {
+            // Extract the path after the Tina Cloud ID
+            // Format: https://assets.tina.io/<ID>/path/to/image.jpg
+            const pathParts = url.pathname.split('/').filter(Boolean);
+            if (pathParts.length > 1) {
+                // Drop the first segment (the Tina Cloud ID)
+                return `/${pathParts.slice(1).join('/')}`;
+            }
+        }
+    } catch {
+        // If src is not a valid absolute URL, fall through to the existing logic
+    }
+    return !src.startsWith('/') && !src.startsWith('http') ? `/${src}` : src;
+};
 
 export default function TinaContentClient(props: {
     data: any;
