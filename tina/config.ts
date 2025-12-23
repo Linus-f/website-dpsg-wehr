@@ -91,6 +91,7 @@ export default defineConfig({
     branch: isLocal ? 'main' : branch,
     clientId: isLocal ? undefined : process.env.NEXT_PUBLIC_TINA_CLIENT_ID,
     token: isLocal ? undefined : process.env.TINA_TOKEN,
+    contentApiUrlOverride: isLocal ? '/api/tina/gql' : undefined,
 
     build: {
         outputFolder: 'admin',
