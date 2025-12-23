@@ -31,14 +31,14 @@ RUN --mount=type=cache,id=pnpm,target=/root/.local/share/pnpm/store \
 COPY . .
 
 # Build and Export
-# We use a subshell to ensure we capture failure and manage the cache correctly
+# We use && chaining to ensure failure stops the build and manage cache robustly
 RUN --mount=type=cache,id=next-cache,target=/app/.next/cache \
     --mount=type=cache,id=image-cache,target=/app/.next-image-cache \
-    set -e; \
-    mkdir -p out/nextImageExportOptimizer; \
-    if [ -d "/app/.next-image-cache" ]; then cp -r /app/.next-image-cache/. out/nextImageExportOptimizer/ || true; fi; \
-    pnpm export; \
-    if [ -d "out/nextImageExportOptimizer" ]; then cp -r out/nextImageExportOptimizer/. /app/.next-image-cache/ || true
+    mkdir -p out/nextImageExportOptimizer && \
+    (cp -r /app/.next-image-cache/. out/nextImageExportOptimizer/ 2>/dev/null || true) && \
+    pnpm export && \
+    (cp -r out/nextImageExportOptimizer/. /app/.next-image-cache/ 2>/dev/null || true) && \
+    test -f out/index.html
 
 # Stage 2: Serve
 FROM nginx:alpine
@@ -50,7 +50,6 @@ RUN apk add --no-cache curl
 COPY nginx.conf /etc/nginx/conf.d/default.conf
 
 # Copy static output from builder
-# Verify that index.html exists before finishing the build
 COPY --from=builder /app/out /usr/share/nginx/html
 
 EXPOSE 80
