@@ -1,3 +1,10 @@
+## [1.5.1](https://github.com/Linus-f/website-dpsg-wehr/compare/v1.5.0...v1.5.1) (2025-12-23)
+
+### Bug Fixes
+
+- **docker:** resolve build failures by setting TINA_PUBLIC_IS_LOCAL and fixing image cache mount ([cdcb9b1](https://github.com/Linus-f/website-dpsg-wehr/commit/cdcb9b1efdfa62a80a2f1ddef36a7f69340a160e))
+- **webhook:** use alpine base to provide shell and apk for dependencies ([2ae7eab](https://github.com/Linus-f/website-dpsg-wehr/commit/2ae7eab94ddad6ef47efc2b84409073a9146e40c))
+
 # [1.5.0](https://github.com/Linus-f/website-dpsg-wehr/compare/v1.4.1...v1.5.0) (2025-12-23)
 
 ### Bug Fixes
