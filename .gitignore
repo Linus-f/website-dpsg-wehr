@@ -51,4 +51,5 @@ public/internal-events.ics
 # internal events
 lib/events.internal.ts
 node_modules
-.envtina/__generated__
+.env
+
