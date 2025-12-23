@@ -85,13 +85,12 @@ const mdxTemplates: any[] = [
     },
 ];
 
-export default defineConfig({
-    branch,
+const isLocal = process.env.TINA_PUBLIC_IS_LOCAL === 'true';
 
-    // Get this from tina.io
-    clientId: process.env.NEXT_PUBLIC_TINA_CLIENT_ID,
-    // Get this from tina.io
-    token: process.env.TINA_TOKEN,
+export default defineConfig({
+    branch: isLocal ? 'main' : branch,
+    clientId: isLocal ? undefined : process.env.NEXT_PUBLIC_TINA_CLIENT_ID,
+    token: isLocal ? undefined : process.env.TINA_TOKEN,
 
     build: {
         outputFolder: 'admin',

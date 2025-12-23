@@ -70,22 +70,11 @@ jobs:
 
             - name: 🏗️ Export website (optimizes images)
               env:
-                  NEXT_PUBLIC_TINA_CLIENT_ID: ${{ secrets.NEXT_PUBLIC_TINA_CLIENT_ID }}
-                  TINA_TOKEN: ${{ secrets.TINA_TOKEN }}
-                  GITHUB_BRANCH: ${{ github.head_ref || github.ref_name }}
+                  TINA_PUBLIC_IS_LOCAL: 'true'
                   nextImageExportOptimizer_imageSizes: '16,64,128,256,384'
                   nextImageExportOptimizer_deviceSizes: '640,1080,1920'
               run: |
-                  pnpm build
-                  mkdir -p out/nextImageExportOptimizer
-                  if [ -d ".image-cache" ]; then
-                    echo "Restoring images from cache..."
-                    cp -r .image-cache/* out/nextImageExportOptimizer/ || true
-                  fi
-                  pnpm next-image-export-optimizer
-                  node scripts/inline-css.mjs
-                  mkdir -p .image-cache
-                  cp -r out/nextImageExportOptimizer/* .image-cache/
+                  pnpm build:test
 
             - name: 🚦 Run tests
               run: pnpm test:all
