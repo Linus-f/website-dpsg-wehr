@@ -100,7 +100,7 @@ export default defineConfig({
     media: {
         loadCustomStore: async () => {
             const pack = await import('./git-media-store');
-            return new pack.GitMediaStore();
+            return pack.GitMediaStore;
         },
     },
     // See docs on content modeling for more info on how to setup new content models: https://tina.io/docs/r/content-modelling-collections/
