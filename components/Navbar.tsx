@@ -37,31 +37,19 @@ export default async function Navbar() {
         }
 
         if (tinaData.data.global.header?.nav) {
-            navLinks = tinaData.data.global.header.nav.map(
-                (item: {
-                    label: string;
-                    link: string;
-                    icon: string;
-                    links?: { label: string; link: string; icon: string; color: string }[];
-                }) => ({
-                    label: item.label,
-                    link: item.link,
-                    Icon: item.icon as Icons,
-                    links: item.links?.map(
-                        (subItem: {
-                            label: string;
-                            link: string;
-                            icon: string;
-                            color: string;
-                        }) => ({
-                            label: subItem.label,
-                            link: subItem.link,
-                            Icon: subItem.icon as Icons,
-                            color: subItem.color,
-                        })
-                    ),
-                })
-            );
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
+            navLinks = tinaData.data.global.header.nav.map((item: any) => ({
+                label: item.label,
+                link: item.link,
+                Icon: item.icon as Icons,
+                // eslint-disable-next-line @typescript-eslint/no-explicit-any
+                links: item.links?.map((subItem: any) => ({
+                    label: subItem.label,
+                    link: subItem.link,
+                    Icon: subItem.icon as Icons,
+                    color: subItem.color,
+                })),
+            }));
         }
     } catch (e) {
         // eslint-disable-next-line no-console
