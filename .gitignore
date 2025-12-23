@@ -50,6 +50,7 @@ public/internal-events.ics
 
 # internal events
 lib/events.internal.ts
+public/search-index.json
 node_modules
 .env
 .htpasswd
