@@ -52,4 +52,5 @@ public/internal-events.ics
 lib/events.internal.ts
 node_modules
 .env
+.htpasswd
 

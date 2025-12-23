@@ -97,9 +97,9 @@ export default defineConfig({
         publicFolder: 'public',
     },
     media: {
-        tina: {
-            mediaRoot: 'media',
-            publicFolder: 'public',
+        loadCustomStore: async () => {
+            const pack = await import('./git-media-store');
+            return new pack.GitMediaStore();
         },
     },
     // See docs on content modeling for more info on how to setup new content models: https://tina.io/docs/r/content-modelling-collections/
