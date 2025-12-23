@@ -1,3 +1,27 @@
+# [1.6.0](https://github.com/Linus-f/website-dpsg-wehr/compare/v1.5.1...v1.6.0) (2025-12-23)
+
+### Bug Fixes
+
+- adjust vitest config for 0.34.6 type compatibility ([d87a2c4](https://github.com/Linus-f/website-dpsg-wehr/commit/d87a2c4ea55f34454c2531a15b09e4dd1396adea))
+- **build:** add [@ts-expect-error](https://github.com/ts-expect-error) to vitest config to resolve vite 4 type mismatch ([f78dc43](https://github.com/Linus-f/website-dpsg-wehr/commit/f78dc439f0e9b03eb93ea7277c2438398957002d))
+- **deps:** pin vite to v4.5.5+ to ensure tinacms build compatibility while maintaining security ([104e294](https://github.com/Linus-f/website-dpsg-wehr/commit/104e294a8ecf97146a43fee4ac26a3155f600031))
+- **docker:** ensure build failures stop the process and fix file copying ([1d95735](https://github.com/Linus-f/website-dpsg-wehr/commit/1d95735ba84cf83bc58066a5225228fdc939e875))
+- **docker:** fix syntax error and improve Tina URL mapping ([6bc63e5](https://github.com/Linus-f/website-dpsg-wehr/commit/6bc63e5be8f074b00fb4a9b23560262f48fe15c7))
+- **docker:** use build:ci to ensure tinacms local build during docker build ([34d9a23](https://github.com/Linus-f/website-dpsg-wehr/commit/34d9a234c9beb722d4da346aaf8a3c282989a496))
+- **docker:** use cloud build with secrets to avoid credential validation errors on VPS ([1697f73](https://github.com/Linus-f/website-dpsg-wehr/commit/1697f73abad11e4b37485c64b48144bd9aaa37c9))
+- downgrade vitest to ^0.34.6 for Vite 4 compatibility ([3fa0b09](https://github.com/Linus-f/website-dpsg-wehr/commit/3fa0b09fc119b17af16e32d041c4e58ba0e7747a))
+- **tina:** ensure clientID is not null to prevent URL construction errors during local build ([1d38032](https://github.com/Linus-f/website-dpsg-wehr/commit/1d380328a7a341ddb89df9c6fd93ad52e42afb32))
+- **tina:** ensure loadCustomStore returns the Class constructor, not an instance, to resolve TypeScript error ([8d03aa5](https://github.com/Linus-f/website-dpsg-wehr/commit/8d03aa56bc06c358663567878af989d2a6851419))
+- **tina:** fix unauthorized build error by adding --skip-cloud-checks to build:ci ([3cca28c](https://github.com/Linus-f/website-dpsg-wehr/commit/3cca28c940c06c6c6596e699174d9d64f313dce4))
+- **tina:** update GitMediaStore to match new Media interface and fix TypeScript errors ([e43ad46](https://github.com/Linus-f/website-dpsg-wehr/commit/e43ad46e36eb3c33775bb8ad647602b5f6bc799b))
+- **tina:** use absolute URL for local contentApiUrlOverride to fix Node.js fetch error during SSG build ([4767a36](https://github.com/Linus-f/website-dpsg-wehr/commit/4767a36bc79d28300f7991bf31c76273529cf14f))
+- **tina:** use undefined for local credentials to fix local build errors ([b470d2e](https://github.com/Linus-f/website-dpsg-wehr/commit/b470d2ef6641e91a241f3580645d2b87152ed85b))
+
+### Features
+
+- configure docker build to inject github token for media store ([e9fbb7e](https://github.com/Linus-f/website-dpsg-wehr/commit/e9fbb7ec840c58664e42ebbf333b8c0420c7b6ab))
+- **tina:** implement custom Git media store and secure admin with basic auth ([e09344b](https://github.com/Linus-f/website-dpsg-wehr/commit/e09344b655531e0a4c9a24689dcceeda195421f8))
+
 ## [1.5.1](https://github.com/Linus-f/website-dpsg-wehr/compare/v1.5.0...v1.5.1) (2025-12-23)
 
 ### Bug Fixes
