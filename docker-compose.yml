@@ -6,6 +6,10 @@ services:
             args:
                 - NEXT_PUBLIC_TINA_CLIENT_ID=${NEXT_PUBLIC_TINA_CLIENT_ID}
                 - TINA_TOKEN=${TINA_TOKEN}
+                - NEXT_PUBLIC_GITHUB_TOKEN=${NEXT_PUBLIC_GITHUB_TOKEN}
+                - NEXT_PUBLIC_REPO_OWNER=${NEXT_PUBLIC_REPO_OWNER}
+                - NEXT_PUBLIC_REPO_NAME=${NEXT_PUBLIC_REPO_NAME}
+                - NEXT_PUBLIC_REPO_BRANCH=${NEXT_PUBLIC_REPO_BRANCH}
         restart: unless-stopped
         deploy:
             mode: replicated
