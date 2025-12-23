@@ -1,3 +1,49 @@
+# [1.4.0](https://github.com/Linus-f/website-dpsg-wehr/compare/v1.3.0...v1.4.0) (2025-12-23)
+
+### Bug Fixes
+
+- **ci:** add TinaCMS secrets to tests workflow ([01f476b](https://github.com/Linus-f/website-dpsg-wehr/commit/01f476b32a9ec975d22ffe775be680287e55c943))
+- **ci:** add TinaCMS secrets to tests workflow ([be93738](https://github.com/Linus-f/website-dpsg-wehr/commit/be93738b110a365ee2f94785bfa1a0ee54d8838c))
+- **ci:** aggressively disable Tina Cloud validation by nulling credentials and unsetting env vars ([008a50c](https://github.com/Linus-f/website-dpsg-wehr/commit/008a50c4c19f5ec3e92f6aee7b30a67dc114c8ae))
+- **ci:** aggressively disable Tina Cloud validation by nulling credentials and unsetting env vars ([83be005](https://github.com/Linus-f/website-dpsg-wehr/commit/83be005f60bba25f8f1926b5da49de7f6728a77c))
+- **ci:** disable contentApiUrlOverride and nullify credentials in local mode to avoid fetch errors ([0a00748](https://github.com/Linus-f/website-dpsg-wehr/commit/0a0074813a916c63414548d7f2b77d6c4a3c3983))
+- **ci:** force purely local Tina build in CI to resolve branch indexing errors ([05f22da](https://github.com/Linus-f/website-dpsg-wehr/commit/05f22daed1c0b2f83571a7bbae7d5b9e4e35ffbe))
+- **ci:** force purely local Tina build in CI to resolve branch indexing errors ([0726d92](https://github.com/Linus-f/website-dpsg-wehr/commit/0726d92df2f1264ac39f30b56303e563095e2af3))
+- **ci:** handle local mode credentials in tina config to bypass cloud validation ([ff1f1e4](https://github.com/Linus-f/website-dpsg-wehr/commit/ff1f1e4b25350b4756ffcc1eb75e16236f838b72))
+- **ci:** handle local mode credentials in tina config to bypass cloud validation ([5256624](https://github.com/Linus-f/website-dpsg-wehr/commit/5256624aadbe7d4ecc509a4ef835b332b511726f))
+- **ci:** make clientId and token truly optional in tina config to support purely local builds ([2dd69d1](https://github.com/Linus-f/website-dpsg-wehr/commit/2dd69d103d32c5231ce0ab5927f75fb5be8f7c61))
+- **ci:** make clientId and token truly optional in tina config to support purely local builds ([46bc11f](https://github.com/Linus-f/website-dpsg-wehr/commit/46bc11fe6a71007e57c3294ab96de805cd6163f8))
+- **ci:** strictly exclude cloud config in local mode to avoid 401/404 errors ([c0ccb2a](https://github.com/Linus-f/website-dpsg-wehr/commit/c0ccb2a9c4cec9100a328982fb708077be51b189))
+- **ci:** strictly exclude cloud config in local mode to avoid 401/404 errors ([ee835e7](https://github.com/Linus-f/website-dpsg-wehr/commit/ee835e73a23918a3f0cf90021a011355805ec711))
+- **ci:** use dummy contentApiUrlOverride in local mode to bypass cloud URL validation ([688b046](https://github.com/Linus-f/website-dpsg-wehr/commit/688b04656f94df96fb4355ba88a0b8168c21b577))
+- **ci:** use dummy contentApiUrlOverride in local mode to bypass cloud URL validation ([1892be4](https://github.com/Linus-f/website-dpsg-wehr/commit/1892be4b6e865675a545f7e2d6efda948e153a76))
+- **ci:** use local mode for TinaCMS in test workflows to avoid 403 errors ([4ff0028](https://github.com/Linus-f/website-dpsg-wehr/commit/4ff0028a8262767025f2d0737737d887c3a3b8d9))
+- **ci:** use local mode for TinaCMS in test workflows to avoid 403 errors ([6fd50d1](https://github.com/Linus-f/website-dpsg-wehr/commit/6fd50d1cabe176528b5abb0606094e3bf5f50b45))
+- **ci:** use standard tinacms build with real secrets in CI ([b4f6613](https://github.com/Linus-f/website-dpsg-wehr/commit/b4f66138501bc62c338d4554f051586691ff0f4e))
+- **ci:** use standard tinacms build with real secrets in CI ([f93815e](https://github.com/Linus-f/website-dpsg-wehr/commit/f93815e09882dd2cc47059b29ae78ae37c2e891c))
+- **ci:** use tinacms build --local for tests to avoid cloud dependency ([65dcec1](https://github.com/Linus-f/website-dpsg-wehr/commit/65dcec152b840bd58007c1cb7ec63c449061aecf))
+- **ci:** use tinacms build --local for tests to avoid cloud dependency ([f1c62e9](https://github.com/Linus-f/website-dpsg-wehr/commit/f1c62e95d62a5176ed587ea1846492e503fc4bbb))
+- enable tina live preview with router config and homepage integration ([808f7e2](https://github.com/Linus-f/website-dpsg-wehr/commit/808f7e252b6da4eb559f25ad5b89a0b780bfa23e))
+- enable tina live preview with router config and homepage integration ([ddcf407](https://github.com/Linus-f/website-dpsg-wehr/commit/ddcf407e4a254ff2ef956dfe615b22bd04b7c73f))
+- resolve syntax error and add social preview E2E test ([e7fc6dc](https://github.com/Linus-f/website-dpsg-wehr/commit/e7fc6dceff659b39b1aa1e8e1249f611c4b1eda0))
+- resolve syntax error and add social preview E2E test ([b42f445](https://github.com/Linus-f/website-dpsg-wehr/commit/b42f445a9ec51f2806421f442289f560f6200b47))
+- **types:** resolve Icon type mismatch in Navbar component ([2726d43](https://github.com/Linus-f/website-dpsg-wehr/commit/2726d439f5c3186cde42910f5654ed93e72d91d9))
+- **types:** resolve type mismatch in Footer component and suppress linting ([7113717](https://github.com/Linus-f/website-dpsg-wehr/commit/71137176a0e3815037b987cb255532020b48b208))
+- **types:** verified fix for Navbar type mismatch using 'any' cast ([f2dbccc](https://github.com/Linus-f/website-dpsg-wehr/commit/f2dbccc9bb07e5dd64c4ec40136b17816dbd686d))
+- use optimized webp images for social previews and add image dimensions ([fe55443](https://github.com/Linus-f/website-dpsg-wehr/commit/fe554434388bcddb255cbeeaf166dc76e7a04864))
+- use optimized webp images for social previews and add image dimensions ([fd87c60](https://github.com/Linus-f/website-dpsg-wehr/commit/fd87c6004d49ac6deb35cd762e9f09a76536259f))
+
+### Features
+
+- implement site-wide search with fuzzy highlighting and UI improvements ([d14e96a](https://github.com/Linus-f/website-dpsg-wehr/commit/d14e96a6a242803f492d42e3079b8f7c0a207a72))
+- implement site-wide search with fuzzy highlighting and UI improvements ([44b81d4](https://github.com/Linus-f/website-dpsg-wehr/commit/44b81d4a63dfe49decd26cd97c6acd20a2bf9844))
+- integrate Prettier, Husky, and lint-staged ([0ae9e0d](https://github.com/Linus-f/website-dpsg-wehr/commit/0ae9e0da5319a582d8d735fcda8b44019222cb8a)), closes [#53](https://github.com/Linus-f/website-dpsg-wehr/issues/53)
+- integrate Prettier, Husky, and lint-staged ([aee867b](https://github.com/Linus-f/website-dpsg-wehr/commit/aee867beb1fba9c72e6753c6375fb445e860d79b)), closes [#53](https://github.com/Linus-f/website-dpsg-wehr/issues/53)
+- Integrate TinaCMS for visual editing ([d273cf5](https://github.com/Linus-f/website-dpsg-wehr/commit/d273cf5491f466e403e0a28ebb386e0adc746da8))
+- Integrate TinaCMS for visual editing ([008235f](https://github.com/Linus-f/website-dpsg-wehr/commit/008235f6b1855c089e274b11b52b0d52bdf00f83))
+- integrate TinaCMS with Tina Cloud production setup ([2a090d3](https://github.com/Linus-f/website-dpsg-wehr/commit/2a090d343ad467e799ac2949615c190952508afc))
+- integrate TinaCMS with Tina Cloud production setup ([895df74](https://github.com/Linus-f/website-dpsg-wehr/commit/895df740e6fb4567ee8cce7b3827fd76dad988dc))
+
 # [1.3.0](https://github.com/Linus-f/website-dpsg-wehr/compare/v1.2.5...v1.3.0) (2025-12-21)
 
 ### Bug Fixes
