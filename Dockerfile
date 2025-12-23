@@ -5,10 +5,12 @@ FROM node:22-alpine AS builder
 RUN npm install -g pnpm
 
 ENV NEXT_TELEMETRY_DISABLED=1
-# Ensure Tina uses local data during build
+# Force Tina to use local data and skip cloud checks during build
 ENV TINA_PUBLIC_IS_LOCAL=true
+ENV NEXT_PUBLIC_TINA_CLIENT_ID=null
+ENV TINA_TOKEN=null
 
-# Image Optimization Environment Variables - Must match your project structure
+# Image Optimization Environment Variables
 ENV nextImageExportOptimizer_imageFolderPath="public/media/images"
 ENV nextImageExportOptimizer_exportFolderPath="out"
 ENV nextImageExportOptimizer_exportFolderName="nextImageExportOptimizer"
@@ -28,14 +30,15 @@ RUN --mount=type=cache,id=pnpm,target=/root/.local/share/pnpm/store \
 # Copy source code
 COPY . .
 
-# Build and Export with cache mounts
-# We mount the image cache to a separate dir to avoid EBUSY errors on the output folder
+# Build and Export
+# We use a subshell to ensure we capture failure and manage the cache correctly
 RUN --mount=type=cache,id=next-cache,target=/app/.next/cache \
     --mount=type=cache,id=image-cache,target=/app/.next-image-cache \
-    mkdir -p out/nextImageExportOptimizer && \
-    cp -r /app/.next-image-cache/. out/nextImageExportOptimizer/ 2>/dev/null || true && \
-    pnpm export && \
-    cp -r out/nextImageExportOptimizer/. /app/.next-image-cache/ 2>/dev/null || true
+    set -e; \
+    mkdir -p out/nextImageExportOptimizer; \
+    if [ -d "/app/.next-image-cache" ]; then cp -r /app/.next-image-cache/. out/nextImageExportOptimizer/ || true; fi; \
+    pnpm export; \
+    if [ -d "out/nextImageExportOptimizer" ]; then cp -r out/nextImageExportOptimizer/. /app/.next-image-cache/ || true
 
 # Stage 2: Serve
 FROM nginx:alpine
@@ -47,6 +50,7 @@ RUN apk add --no-cache curl
 COPY nginx.conf /etc/nginx/conf.d/default.conf
 
 # Copy static output from builder
+# Verify that index.html exists before finishing the build
 COPY --from=builder /app/out /usr/share/nginx/html
 
 EXPOSE 80
