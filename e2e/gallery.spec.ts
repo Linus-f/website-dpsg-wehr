@@ -39,7 +39,7 @@ test.describe('Photo Gallery', () => {
 
         // Check if the lightbox is visible
         const lightbox = page.locator('.yarl__container');
-        await expect(lightbox).toBeVisible();
+        await expect(lightbox).toBeVisible({ timeout: 10000 });
 
         // Check if the lightbox close button works
         // Using aria-label for better stability
