@@ -5,9 +5,11 @@ FROM node:22-alpine AS builder
 RUN npm install -g pnpm
 
 ENV NEXT_TELEMETRY_DISABLED=1
+# Ensure Tina uses local data during build
+ENV TINA_PUBLIC_IS_LOCAL=true
 
-# Image Optimization Environment Variables
-ENV nextImageExportOptimizer_imageFolderPath="public/images"
+# Image Optimization Environment Variables - Must match your project structure
+ENV nextImageExportOptimizer_imageFolderPath="public/media/images"
 ENV nextImageExportOptimizer_exportFolderPath="out"
 ENV nextImageExportOptimizer_exportFolderName="nextImageExportOptimizer"
 ENV nextImageExportOptimizer_quality="60"
@@ -26,12 +28,14 @@ RUN --mount=type=cache,id=pnpm,target=/root/.local/share/pnpm/store \
 # Copy source code
 COPY . .
 
-# Build and Export with cache mounts for Next.js and images
+# Build and Export with cache mounts
+# We mount the image cache to a separate dir to avoid EBUSY errors on the output folder
 RUN --mount=type=cache,id=next-cache,target=/app/.next/cache \
-    --mount=type=cache,id=image-cache,target=/app/out/nextImageExportOptimizer \
-    pnpm next build && \
-    pnpm next-image-export-optimizer && \
-    node scripts/inline-css.mjs
+    --mount=type=cache,id=image-cache,target=/app/.next-image-cache \
+    mkdir -p out/nextImageExportOptimizer && \
+    cp -r /app/.next-image-cache/. out/nextImageExportOptimizer/ 2>/dev/null || true && \
+    pnpm export && \
+    cp -r out/nextImageExportOptimizer/. /app/.next-image-cache/ 2>/dev/null || true
 
 # Stage 2: Serve
 FROM nginx:alpine
