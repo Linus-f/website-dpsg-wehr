@@ -11,6 +11,7 @@ import { NavigationLinkGroup, NavigationLink } from '@/types';
 import { client } from '@/tina/__generated__/client';
 import { createClient } from 'tinacms/dist/client';
 import { queries } from '@/tina/__generated__/types';
+import { Icons } from '@/lib/icons';
 
 const localClient = createClient({
     url: 'http://localhost:9005/graphql',
@@ -45,7 +46,7 @@ export default async function Navbar() {
                 }) => ({
                     label: item.label,
                     link: item.link,
-                    Icon: item.icon,
+                    Icon: item.icon as Icons,
                     links: item.links?.map(
                         (subItem: {
                             label: string;
@@ -55,7 +56,7 @@ export default async function Navbar() {
                         }) => ({
                             label: subItem.label,
                             link: subItem.link,
-                            Icon: subItem.icon,
+                            Icon: subItem.icon as Icons,
                             color: subItem.color,
                         })
                     ),
