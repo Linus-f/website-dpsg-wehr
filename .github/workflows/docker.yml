@@ -78,6 +78,9 @@ jobs:
               if: steps.check.outputs.is_release == 'true'
               env:
                   NEXT_TELEMETRY_DISABLED: 1
+                  NEXT_PUBLIC_TINA_CLIENT_ID: ${{ secrets.NEXT_PUBLIC_TINA_CLIENT_ID }}
+                  TINA_TOKEN: ${{ secrets.TINA_TOKEN }}
+                  GITHUB_BRANCH: ${{ github.ref_name }}
                   nextImageExportOptimizer_imageFolderPath: 'public/images'
                   nextImageExportOptimizer_exportFolderPath: 'out'
                   nextImageExportOptimizer_exportFolderName: 'nextImageExportOptimizer'

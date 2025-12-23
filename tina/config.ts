@@ -108,7 +108,7 @@ export default defineConfig({
         collections: [
             {
                 name: 'post',
-                label: 'News Posts',
+                label: 'Aktuelles',
                 path: 'content/posts',
                 format: 'mdx',
                 ui: {
@@ -166,7 +166,7 @@ export default defineConfig({
             },
             {
                 name: 'page',
-                label: 'Pages',
+                label: 'Seiten',
                 path: 'content/pages',
                 format: 'mdx',
                 ui: {
@@ -206,7 +206,7 @@ export default defineConfig({
             },
             {
                 name: 'gruppen',
-                label: 'Youth Groups',
+                label: 'Gruppen',
                 path: 'content/gruppen',
                 format: 'mdx',
                 ui: {
@@ -236,6 +236,158 @@ export default defineConfig({
                         label: 'Body',
                         isBody: true,
                         templates: mdxTemplates,
+                    },
+                ],
+            },
+            {
+                name: 'global',
+                label: 'Allgemeine Einstellungen',
+                path: 'content/global',
+                format: 'json',
+                ui: {
+                    global: true,
+                    allowedActions: {
+                        create: false,
+                        delete: false,
+                    },
+                },
+                fields: [
+                    {
+                        type: 'object',
+                        name: 'header',
+                        label: 'Header',
+                        fields: [
+                            {
+                                type: 'object',
+                                name: 'nav',
+                                label: 'Navigation Links',
+                                list: true,
+                                ui: {
+                                    itemProps: (item) => {
+                                        return { label: item?.label };
+                                    },
+                                },
+                                fields: [
+                                    { type: 'string', name: 'label', label: 'Label' },
+                                    { type: 'string', name: 'link', label: 'Link' },
+                                    {
+                                        type: 'string',
+                                        name: 'icon',
+                                        label: 'Icon',
+                                        options: [
+                                            'Lilie',
+                                            'None',
+                                            'News',
+                                            'People',
+                                            'Image',
+                                            'Calendar',
+                                            'Help',
+                                            'House',
+                                            'Search',
+                                            'More',
+                                            'File',
+                                        ],
+                                    },
+                                    { type: 'string', name: 'color', label: 'Icon Color' },
+                                    {
+                                        type: 'object',
+                                        name: 'links',
+                                        label: 'Sub Links',
+                                        list: true,
+                                        ui: {
+                                            itemProps: (item) => {
+                                                return { label: item?.label };
+                                            },
+                                        },
+                                        fields: [
+                                            { type: 'string', name: 'label', label: 'Label' },
+                                            { type: 'string', name: 'link', label: 'Link' },
+                                            {
+                                                type: 'string',
+                                                name: 'icon',
+                                                label: 'Icon',
+                                                options: [
+                                                    'Lilie',
+                                                    'None',
+                                                    'News',
+                                                    'People',
+                                                    'Image',
+                                                    'Calendar',
+                                                    'Help',
+                                                    'House',
+                                                    'Search',
+                                                    'More',
+                                                    'File',
+                                                ],
+                                            },
+                                            {
+                                                type: 'string',
+                                                name: 'color',
+                                                label: 'Icon Color',
+                                            },
+                                        ],
+                                    },
+                                ],
+                            },
+                        ],
+                    },
+                    {
+                        type: 'object',
+                        name: 'footer',
+                        label: 'Footer',
+                        fields: [
+                            {
+                                type: 'object',
+                                name: 'social',
+                                label: 'Social Media',
+                                fields: [
+                                    {
+                                        type: 'string',
+                                        name: 'facebook',
+                                        label: 'Facebook URL',
+                                    },
+                                    {
+                                        type: 'string',
+                                        name: 'instagram',
+                                        label: 'Instagram URL',
+                                    },
+                                ],
+                            },
+                            {
+                                type: 'object',
+                                name: 'columns',
+                                label: 'Footer Columns',
+                                list: true,
+                                ui: {
+                                    itemProps: (item) => {
+                                        return { label: item?.title };
+                                    },
+                                },
+                                fields: [
+                                    { type: 'string', name: 'title', label: 'Column Title' },
+                                    {
+                                        type: 'object',
+                                        name: 'links',
+                                        label: 'Links',
+                                        list: true,
+                                        ui: {
+                                            itemProps: (item) => {
+                                                return { label: item?.text };
+                                            },
+                                        },
+                                        fields: [
+                                            { type: 'string', name: 'text', label: 'Text' },
+                                            { type: 'string', name: 'url', label: 'URL' },
+                                            {
+                                                type: 'boolean',
+                                                name: 'external',
+                                                label: 'External Link',
+                                            },
+                                        ],
+                                    },
+                                ],
+                            },
+                        ],
                     },
                 ],
             },

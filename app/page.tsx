@@ -8,6 +8,7 @@ import client from '@/tina/__generated__/client';
 import TinaContentClient from '@/components/TinaContentClient';
 import { createClient } from 'tinacms/dist/client';
 import { queries } from '@/tina/__generated__/types';
+import getPostMetadata from '@/lib/PostMetadata';
 
 const localClient = createClient({
     url: 'http://localhost:9005/graphql',
@@ -16,6 +17,7 @@ const localClient = createClient({
 });
 
 export default async function Home() {
+    const postMetadata = getPostMetadata();
     let tinaData;
     try {
         try {
@@ -43,6 +45,7 @@ export default async function Home() {
                     variables={tinaData.variables}
                     contentType="page"
                     className="landing-content"
+                    postMetadata={postMetadata}
                 />
             </div>
         );

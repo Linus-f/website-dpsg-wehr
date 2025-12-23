@@ -1,7 +1,16 @@
 import ExportedImage from 'next-image-export-optimizer';
 import Link from 'next/link';
+import { client } from '@/tina/__generated__/client';
+import { createClient } from 'tinacms/dist/client';
+import { queries } from '@/tina/__generated__/types';
 
 import dpsgLogo from '@/public/dpsg.svg';
+
+const localClient = createClient({
+    url: 'http://localhost:9005/graphql',
+    token: 'dummy',
+    queries,
+});
 
 function SocialLink({
     children,
@@ -14,6 +23,7 @@ function SocialLink({
     hoverColor: string;
     label: string;
 }) {
+    if (!url) return null;
     return (
         <Link href={url} target="_blank" aria-label={label}>
             <div className={`text-white ${hoverColor} text-2xl ml-4`}>{children}</div>
@@ -21,13 +31,9 @@ function SocialLink({
     );
 }
 
-function FacebookLink() {
+function FacebookLink({ url }: { url: string }) {
     return (
-        <SocialLink
-            url="https://de-de.facebook.com/dpsgwehr/"
-            hoverColor="hover:text-blue-600"
-            label="Facebook"
-        >
+        <SocialLink url={url} hoverColor="hover:text-blue-600" label="Facebook">
             <svg
                 stroke="currentColor"
                 fill="currentColor"
@@ -43,13 +49,9 @@ function FacebookLink() {
     );
 }
 
-function InstagramLink() {
+function InstagramLink({ url }: { url: string }) {
     return (
-        <SocialLink
-            url="https://www.instagram.com/pfadfinder_wehr/"
-            hoverColor="hover:text-pink-600"
-            label="Instagram"
-        >
+        <SocialLink url={url} hoverColor="hover:text-pink-600" label="Instagram">
             <svg
                 stroke="currentColor"
                 fill="currentColor"
@@ -67,15 +69,15 @@ function InstagramLink() {
     );
 }
 
-function SocialMedia() {
+function SocialMedia({ facebook, instagram }: { facebook: string; instagram: string }) {
     return (
         <div className="w-full flex place-content-between content-center mt-10 mb-0">
             <p className="text-center text-white text-sm ml-4">
                 © {new Date().getFullYear()} DPSG St. Bernhard Wehr
             </p>
             <div className="flex place-content-end items-center mr-4">
-                <InstagramLink />
-                <FacebookLink />
+                {instagram && <InstagramLink url={instagram} />}
+                {facebook && <FacebookLink url={facebook} />}
             </div>
         </div>
     );
@@ -90,6 +92,7 @@ function FooterLink({
     text: string;
     external?: boolean;
 }) {
+    if (!url || !text) return null;
     return (
         <Link
             href={url}
@@ -103,16 +106,17 @@ function FooterLink({
 
 function FooterLinkColumn({
     title,
-    children,
+    links,
 }: {
     title: string;
-    children?: React.ReactNode;
-    width?: string;
+    links: { text: string; url: string; external: boolean }[];
 }) {
     return (
         <div className={`flex flex-col w-auto m-4 mb-0 sm:flex-1`}>
             <h1 className="font-semibold text-lg mb-2">{title}</h1>
-            {children}
+            {links.map((link, i) => (
+                <FooterLink key={i} {...link} />
+            ))}
         </div>
     );
 }
@@ -134,40 +138,112 @@ function FooterDPSG() {
     );
 }
 
-function FooterMain() {
+function FooterMain({
+    columns,
+}: {
+    columns: { title: string; links: { text: string; url: string; external: boolean }[] }[];
+}) {
     return (
         <div className="flex flex-col sm:flex-row flex-wrap gap-4 text-white ">
             <div className="flex-1 flex flex-row place-content-between">
-                <FooterLinkColumn title="Hütten">
-                    <FooterLink
-                        url="https://www.pfadfinderheim-st-raphael.de/"
-                        text="St. Raphael in Todtmoos"
-                    />
-                    <FooterLink
-                        url="http://www.pfadfinderhaus-noeggenschwiel.de/"
-                        text="Pfadfinderhaus Nöggenschwiel"
-                    />
-                </FooterLinkColumn>
-                <FooterLinkColumn title="Sonstiges">
-                    <FooterLink url="/pages/impressum" text="Impressum" external={false} />
-                    <FooterLink url="/pages/datenschutz" text="Datenschutz" external={false} />
-                    <FooterLink
-                        url="https://github.com/Linus-f/website-dpsg-wehr"
-                        text="Quellcode"
-                    />
-                </FooterLinkColumn>
+                {columns.map((col, i) => (
+                    <FooterLinkColumn key={i} title={col.title} links={col.links} />
+                ))}
             </div>
             <FooterDPSG />
         </div>
     );
 }
 
-export default function Footer() {
+export default async function Footer() {
+    let social = {
+        facebook: 'https://de-de.facebook.com/dpsgwehr/',
+        instagram: 'https://www.instagram.com/pfadfinder_wehr/',
+    };
+    let columns: {
+        title: string;
+        links: { text: string; url: string; external: boolean }[];
+    }[] = [
+        {
+            title: 'Hütten',
+            links: [
+                {
+                    text: 'St. Raphael in Todtmoos',
+                    url: 'https://www.pfadfinderheim-st-raphael.de/',
+                    external: true,
+                },
+                {
+                    text: 'Pfadfinderhaus Nöggenschwiel',
+                    url: 'http://www.pfadfinderhaus-noeggenschwiel.de/',
+                    external: true,
+                },
+            ],
+        },
+        {
+            title: 'Sonstiges',
+            links: [
+                { text: 'Impressum', url: '/pages/impressum', external: false },
+                { text: 'Datenschutz', url: '/pages/datenschutz', external: false },
+                {
+                    text: 'Quellcode',
+                    url: 'https://github.com/Linus-f/website-dpsg-wehr',
+                    external: true,
+                },
+            ],
+        },
+    ];
+
+    try {
+        let tinaData;
+        try {
+            tinaData = await client.queries.global({ relativePath: 'index.json' });
+        } catch (e) {
+            if (process.env.NODE_ENV === 'development') {
+                // eslint-disable-next-line no-console
+                console.log('Default Tina client failed, trying localhost:9005 fallback...');
+                tinaData = await localClient.queries.global({ relativePath: 'index.json' });
+            } else {
+                throw e;
+            }
+        }
+
+        const footerData = tinaData.data.global.footer;
+        if (footerData) {
+            if (footerData.social) {
+                social = {
+                    facebook: footerData.social.facebook || social.facebook,
+                    instagram: footerData.social.instagram || social.instagram,
+                };
+            }
+            if (footerData.columns) {
+                columns = footerData.columns.map(
+                    (col: {
+                        title?: string;
+                        links?: { text?: string; url?: string; external?: boolean }[];
+                    }) => ({
+                        title: col.title || '',
+                        links:
+                            col.links?.map(
+                                (l: { text?: string; url?: string; external?: boolean }) => ({
+                                    text: l.text || '',
+                                    url: l.url || '',
+                                    external: !!l.external,
+                                })
+                            ) || [],
+                    })
+                );
+            }
+        }
+    } catch (e) {
+        // eslint-disable-next-line no-console
+        console.error('Failed to fetch global footer', e);
+    }
+
     return (
         <footer className="bg-gray-800 pb-2 mt-14">
             <div className="max-w-sm sm:max-w-4xl px-3 flex flex-col justify-center mx-auto my-0">
-                <FooterMain />
-                <SocialMedia />
+                <FooterMain columns={columns} />
+                <SocialMedia facebook={social.facebook} instagram={social.instagram} />
             </div>
         </footer>
     );
