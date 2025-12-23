@@ -5,7 +5,7 @@
         "collections": [
             {
                 "name": "post",
-                "label": "News Posts",
+                "label": "Aktuelles",
                 "path": "content/posts",
                 "format": "mdx",
                 "ui": {},
@@ -296,7 +296,7 @@
             },
             {
                 "name": "page",
-                "label": "Pages",
+                "label": "Seiten",
                 "path": "content/pages",
                 "format": "mdx",
                 "ui": {},
@@ -554,7 +554,7 @@
             },
             {
                 "name": "gruppen",
-                "label": "Youth Groups",
+                "label": "Gruppen",
                 "path": "content/gruppen",
                 "format": "mdx",
                 "ui": {},
@@ -809,6 +809,274 @@
                     }
                 ],
                 "namespace": ["gruppen"]
+            },
+            {
+                "name": "global",
+                "label": "Allgemeine Einstellungen",
+                "path": "content/global",
+                "format": "json",
+                "ui": { "global": true, "allowedActions": { "create": false, "delete": false } },
+                "fields": [
+                    {
+                        "type": "object",
+                        "name": "header",
+                        "label": "Header",
+                        "fields": [
+                            {
+                                "type": "object",
+                                "name": "nav",
+                                "label": "Navigation Links",
+                                "list": true,
+                                "ui": {},
+                                "fields": [
+                                    {
+                                        "type": "string",
+                                        "name": "label",
+                                        "label": "Label",
+                                        "namespace": ["global", "header", "nav", "label"],
+                                        "searchable": true,
+                                        "uid": false
+                                    },
+                                    {
+                                        "type": "string",
+                                        "name": "link",
+                                        "label": "Link",
+                                        "namespace": ["global", "header", "nav", "link"],
+                                        "searchable": true,
+                                        "uid": false
+                                    },
+                                    {
+                                        "type": "string",
+                                        "name": "icon",
+                                        "label": "Icon",
+                                        "options": [
+                                            "Lilie",
+                                            "None",
+                                            "News",
+                                            "People",
+                                            "Image",
+                                            "Calendar",
+                                            "Help",
+                                            "House",
+                                            "Search",
+                                            "More",
+                                            "File"
+                                        ],
+                                        "namespace": ["global", "header", "nav", "icon"],
+                                        "searchable": true,
+                                        "uid": false
+                                    },
+                                    {
+                                        "type": "string",
+                                        "name": "color",
+                                        "label": "Icon Color",
+                                        "namespace": ["global", "header", "nav", "color"],
+                                        "searchable": true,
+                                        "uid": false
+                                    },
+                                    {
+                                        "type": "object",
+                                        "name": "links",
+                                        "label": "Sub Links",
+                                        "list": true,
+                                        "ui": {},
+                                        "fields": [
+                                            {
+                                                "type": "string",
+                                                "name": "label",
+                                                "label": "Label",
+                                                "namespace": [
+                                                    "global",
+                                                    "header",
+                                                    "nav",
+                                                    "links",
+                                                    "label"
+                                                ],
+                                                "searchable": true,
+                                                "uid": false
+                                            },
+                                            {
+                                                "type": "string",
+                                                "name": "link",
+                                                "label": "Link",
+                                                "namespace": [
+                                                    "global",
+                                                    "header",
+                                                    "nav",
+                                                    "links",
+                                                    "link"
+                                                ],
+                                                "searchable": true,
+                                                "uid": false
+                                            },
+                                            {
+                                                "type": "string",
+                                                "name": "icon",
+                                                "label": "Icon",
+                                                "options": [
+                                                    "Lilie",
+                                                    "None",
+                                                    "News",
+                                                    "People",
+                                                    "Image",
+                                                    "Calendar",
+                                                    "Help",
+                                                    "House",
+                                                    "Search",
+                                                    "More",
+                                                    "File"
+                                                ],
+                                                "namespace": [
+                                                    "global",
+                                                    "header",
+                                                    "nav",
+                                                    "links",
+                                                    "icon"
+                                                ],
+                                                "searchable": true,
+                                                "uid": false
+                                            },
+                                            {
+                                                "type": "string",
+                                                "name": "color",
+                                                "label": "Icon Color",
+                                                "namespace": [
+                                                    "global",
+                                                    "header",
+                                                    "nav",
+                                                    "links",
+                                                    "color"
+                                                ],
+                                                "searchable": true,
+                                                "uid": false
+                                            }
+                                        ],
+                                        "namespace": ["global", "header", "nav", "links"],
+                                        "searchable": true,
+                                        "uid": false
+                                    }
+                                ],
+                                "namespace": ["global", "header", "nav"],
+                                "searchable": true,
+                                "uid": false
+                            }
+                        ],
+                        "namespace": ["global", "header"],
+                        "searchable": true,
+                        "uid": false
+                    },
+                    {
+                        "type": "object",
+                        "name": "footer",
+                        "label": "Footer",
+                        "fields": [
+                            {
+                                "type": "object",
+                                "name": "social",
+                                "label": "Social Media",
+                                "fields": [
+                                    {
+                                        "type": "string",
+                                        "name": "facebook",
+                                        "label": "Facebook URL",
+                                        "namespace": ["global", "footer", "social", "facebook"],
+                                        "searchable": true,
+                                        "uid": false
+                                    },
+                                    {
+                                        "type": "string",
+                                        "name": "instagram",
+                                        "label": "Instagram URL",
+                                        "namespace": ["global", "footer", "social", "instagram"],
+                                        "searchable": true,
+                                        "uid": false
+                                    }
+                                ],
+                                "namespace": ["global", "footer", "social"],
+                                "searchable": true,
+                                "uid": false
+                            },
+                            {
+                                "type": "object",
+                                "name": "columns",
+                                "label": "Footer Columns",
+                                "list": true,
+                                "ui": {},
+                                "fields": [
+                                    {
+                                        "type": "string",
+                                        "name": "title",
+                                        "label": "Column Title",
+                                        "namespace": ["global", "footer", "columns", "title"],
+                                        "searchable": true,
+                                        "uid": false
+                                    },
+                                    {
+                                        "type": "object",
+                                        "name": "links",
+                                        "label": "Links",
+                                        "list": true,
+                                        "ui": {},
+                                        "fields": [
+                                            {
+                                                "type": "string",
+                                                "name": "text",
+                                                "label": "Text",
+                                                "namespace": [
+                                                    "global",
+                                                    "footer",
+                                                    "columns",
+                                                    "links",
+                                                    "text"
+                                                ],
+                                                "searchable": true,
+                                                "uid": false
+                                            },
+                                            {
+                                                "type": "string",
+                                                "name": "url",
+                                                "label": "URL",
+                                                "namespace": [
+                                                    "global",
+                                                    "footer",
+                                                    "columns",
+                                                    "links",
+                                                    "url"
+                                                ],
+                                                "searchable": true,
+                                                "uid": false
+                                            },
+                                            {
+                                                "type": "boolean",
+                                                "name": "external",
+                                                "label": "External Link",
+                                                "namespace": [
+                                                    "global",
+                                                    "footer",
+                                                    "columns",
+                                                    "links",
+                                                    "external"
+                                                ],
+                                                "searchable": true,
+                                                "uid": false
+                                            }
+                                        ],
+                                        "namespace": ["global", "footer", "columns", "links"],
+                                        "searchable": true,
+                                        "uid": false
+                                    }
+                                ],
+                                "namespace": ["global", "footer", "columns"],
+                                "searchable": true,
+                                "uid": false
+                            }
+                        ],
+                        "namespace": ["global", "footer"],
+                        "searchable": true,
+                        "uid": false
+                    }
+                ],
+                "namespace": ["global"]
             }
         ],
         "config": { "media": { "tina": { "publicFolder": "public", "mediaRoot": "media" } } }
@@ -817,7 +1085,7 @@
         "DocumentConnection": {
             "type": "DocumentConnection",
             "resolveType": "multiCollectionDocumentList",
-            "collections": ["post", "page", "gruppen"]
+            "collections": ["post", "page", "gruppen", "global"]
         },
         "Node": { "type": "Node", "resolveType": "nodeDocument" },
         "DocumentNode": {
@@ -861,6 +1129,18 @@
             "type": "GruppenConnection",
             "resolveType": "collectionDocumentList",
             "collection": "gruppen"
+        },
+        "Global": {
+            "type": "Global",
+            "resolveType": "collectionDocument",
+            "collection": "global",
+            "createGlobal": "create",
+            "updateGlobal": "update"
+        },
+        "GlobalConnection": {
+            "type": "GlobalConnection",
+            "resolveType": "collectionDocumentList",
+            "collection": "global"
         }
     },
     "graphql": {
@@ -1566,6 +1846,88 @@
                                 "name": { "kind": "Name", "value": "GruppenConnection" }
                             }
                         }
+                    },
+                    {
+                        "kind": "FieldDefinition",
+                        "name": { "kind": "Name", "value": "global" },
+                        "arguments": [
+                            {
+                                "kind": "InputValueDefinition",
+                                "name": { "kind": "Name", "value": "relativePath" },
+                                "type": {
+                                    "kind": "NamedType",
+                                    "name": { "kind": "Name", "value": "String" }
+                                }
+                            }
+                        ],
+                        "type": {
+                            "kind": "NonNullType",
+                            "type": {
+                                "kind": "NamedType",
+                                "name": { "kind": "Name", "value": "Global" }
+                            }
+                        }
+                    },
+                    {
+                        "kind": "FieldDefinition",
+                        "name": { "kind": "Name", "value": "globalConnection" },
+                        "arguments": [
+                            {
+                                "kind": "InputValueDefinition",
+                                "name": { "kind": "Name", "value": "before" },
+                                "type": {
+                                    "kind": "NamedType",
+                                    "name": { "kind": "Name", "value": "String" }
+                                }
+                            },
+                            {
+                                "kind": "InputValueDefinition",
+                                "name": { "kind": "Name", "value": "after" },
+                                "type": {
+                                    "kind": "NamedType",
+                                    "name": { "kind": "Name", "value": "String" }
+                                }
+                            },
+                            {
+                                "kind": "InputValueDefinition",
+                                "name": { "kind": "Name", "value": "first" },
+                                "type": {
+                                    "kind": "NamedType",
+                                    "name": { "kind": "Name", "value": "Float" }
+                                }
+                            },
+                            {
+                                "kind": "InputValueDefinition",
+                                "name": { "kind": "Name", "value": "last" },
+                                "type": {
+                                    "kind": "NamedType",
+                                    "name": { "kind": "Name", "value": "Float" }
+                                }
+                            },
+                            {
+                                "kind": "InputValueDefinition",
+                                "name": { "kind": "Name", "value": "sort" },
+                                "type": {
+                                    "kind": "NamedType",
+                                    "name": { "kind": "Name", "value": "String" }
+                                }
+                            },
+                            {
+                                "kind": "InputValueDefinition",
+                                "name": { "kind": "Name", "value": "filter" },
+                                "type": {
+                                    "kind": "NamedType",
+                                    "name": { "kind": "Name", "value": "GlobalFilter" }
+                                }
+                            }
+                        ],
+                        "type": {
+                            "kind": "NonNullType",
+                            "type": {
+                                "kind": "NamedType",
+                                "name": { "kind": "Name", "value": "GlobalConnection" }
+                            }
+                        }
                     }
                 ]
             },
@@ -1595,6 +1957,14 @@
                         "type": {
                             "kind": "NamedType",
                             "name": { "kind": "Name", "value": "GruppenFilter" }
+                        }
+                    },
+                    {
+                        "kind": "InputValueDefinition",
+                        "name": { "kind": "Name", "value": "global" },
+                        "type": {
+                            "kind": "NamedType",
+                            "name": { "kind": "Name", "value": "GlobalFilter" }
                         }
                     }
                 ]
@@ -1846,6 +2216,7 @@
                     { "kind": "NamedType", "name": { "kind": "Name", "value": "Post" } },
                     { "kind": "NamedType", "name": { "kind": "Name", "value": "Page" } },
                     { "kind": "NamedType", "name": { "kind": "Name", "value": "Gruppen" } },
+                    { "kind": "NamedType", "name": { "kind": "Name", "value": "Global" } },
                     { "kind": "NamedType", "name": { "kind": "Name", "value": "Folder" } }
                 ]
             },
@@ -3483,6 +3854,601 @@
                 "kind": "ObjectTypeDefinition",
                 "interfaces": [],
                 "directives": [],
+                "name": { "kind": "Name", "value": "GlobalHeaderNavLinks" },
+                "fields": [
+                    {
+                        "kind": "FieldDefinition",
+                        "name": { "kind": "Name", "value": "label" },
+                        "arguments": [],
+                        "type": {
+                            "kind": "NamedType",
+                            "name": { "kind": "Name", "value": "String" }
+                        }
+                    },
+                    {
+                        "kind": "FieldDefinition",
+                        "name": { "kind": "Name", "value": "link" },
+                        "arguments": [],
+                        "type": {
+                            "kind": "NamedType",
+                            "name": { "kind": "Name", "value": "String" }
+                        }
+                    },
+                    {
+                        "kind": "FieldDefinition",
+                        "name": { "kind": "Name", "value": "icon" },
+                        "arguments": [],
+                        "type": {
+                            "kind": "NamedType",
+                            "name": { "kind": "Name", "value": "String" }
+                        }
+                    },
+                    {
+                        "kind": "FieldDefinition",
+                        "name": { "kind": "Name", "value": "color" },
+                        "arguments": [],
+                        "type": {
+                            "kind": "NamedType",
+                            "name": { "kind": "Name", "value": "String" }
+                        }
+                    }
+                ]
+            },
+            {
+                "kind": "ObjectTypeDefinition",
+                "interfaces": [],
+                "directives": [],
+                "name": { "kind": "Name", "value": "GlobalHeaderNav" },
+                "fields": [
+                    {
+                        "kind": "FieldDefinition",
+                        "name": { "kind": "Name", "value": "label" },
+                        "arguments": [],
+                        "type": {
+                            "kind": "NamedType",
+                            "name": { "kind": "Name", "value": "String" }
+                        }
+                    },
+                    {
+                        "kind": "FieldDefinition",
+                        "name": { "kind": "Name", "value": "link" },
+                        "arguments": [],
+                        "type": {
+                            "kind": "NamedType",
+                            "name": { "kind": "Name", "value": "String" }
+                        }
+                    },
+                    {
+                        "kind": "FieldDefinition",
+                        "name": { "kind": "Name", "value": "icon" },
+                        "arguments": [],
+                        "type": {
+                            "kind": "NamedType",
+                            "name": { "kind": "Name", "value": "String" }
+                        }
+                    },
+                    {
+                        "kind": "FieldDefinition",
+                        "name": { "kind": "Name", "value": "color" },
+                        "arguments": [],
+                        "type": {
+                            "kind": "NamedType",
+                            "name": { "kind": "Name", "value": "String" }
+                        }
+                    },
+                    {
+                        "kind": "FieldDefinition",
+                        "name": { "kind": "Name", "value": "links" },
+                        "arguments": [],
+                        "type": {
+                            "kind": "ListType",
+                            "type": {
+                                "kind": "NamedType",
+                                "name": { "kind": "Name", "value": "GlobalHeaderNavLinks" }
+                            }
+                        }
+                    }
+                ]
+            },
+            {
+                "kind": "ObjectTypeDefinition",
+                "interfaces": [],
+                "directives": [],
+                "name": { "kind": "Name", "value": "GlobalHeader" },
+                "fields": [
+                    {
+                        "kind": "FieldDefinition",
+                        "name": { "kind": "Name", "value": "nav" },
+                        "arguments": [],
+                        "type": {
+                            "kind": "ListType",
+                            "type": {
+                                "kind": "NamedType",
+                                "name": { "kind": "Name", "value": "GlobalHeaderNav" }
+                            }
+                        }
+                    }
+                ]
+            },
+            {
+                "kind": "ObjectTypeDefinition",
+                "interfaces": [],
+                "directives": [],
+                "name": { "kind": "Name", "value": "GlobalFooterSocial" },
+                "fields": [
+                    {
+                        "kind": "FieldDefinition",
+                        "name": { "kind": "Name", "value": "facebook" },
+                        "arguments": [],
+                        "type": {
+                            "kind": "NamedType",
+                            "name": { "kind": "Name", "value": "String" }
+                        }
+                    },
+                    {
+                        "kind": "FieldDefinition",
+                        "name": { "kind": "Name", "value": "instagram" },
+                        "arguments": [],
+                        "type": {
+                            "kind": "NamedType",
+                            "name": { "kind": "Name", "value": "String" }
+                        }
+                    }
+                ]
+            },
+            {
+                "kind": "ObjectTypeDefinition",
+                "interfaces": [],
+                "directives": [],
+                "name": { "kind": "Name", "value": "GlobalFooterColumnsLinks" },
+                "fields": [
+                    {
+                        "kind": "FieldDefinition",
+                        "name": { "kind": "Name", "value": "text" },
+                        "arguments": [],
+                        "type": {
+                            "kind": "NamedType",
+                            "name": { "kind": "Name", "value": "String" }
+                        }
+                    },
+                    {
+                        "kind": "FieldDefinition",
+                        "name": { "kind": "Name", "value": "url" },
+                        "arguments": [],
+                        "type": {
+                            "kind": "NamedType",
+                            "name": { "kind": "Name", "value": "String" }
+                        }
+                    },
+                    {
+                        "kind": "FieldDefinition",
+                        "name": { "kind": "Name", "value": "external" },
+                        "arguments": [],
+                        "type": {
+                            "kind": "NamedType",
+                            "name": { "kind": "Name", "value": "Boolean" }
+                        }
+                    }
+                ]
+            },
+            {
+                "kind": "ObjectTypeDefinition",
+                "interfaces": [],
+                "directives": [],
+                "name": { "kind": "Name", "value": "GlobalFooterColumns" },
+                "fields": [
+                    {
+                        "kind": "FieldDefinition",
+                        "name": { "kind": "Name", "value": "title" },
+                        "arguments": [],
+                        "type": {
+                            "kind": "NamedType",
+                            "name": { "kind": "Name", "value": "String" }
+                        }
+                    },
+                    {
+                        "kind": "FieldDefinition",
+                        "name": { "kind": "Name", "value": "links" },
+                        "arguments": [],
+                        "type": {
+                            "kind": "ListType",
+                            "type": {
+                                "kind": "NamedType",
+                                "name": { "kind": "Name", "value": "GlobalFooterColumnsLinks" }
+                            }
+                        }
+                    }
+                ]
+            },
+            {
+                "kind": "ObjectTypeDefinition",
+                "interfaces": [],
+                "directives": [],
+                "name": { "kind": "Name", "value": "GlobalFooter" },
+                "fields": [
+                    {
+                        "kind": "FieldDefinition",
+                        "name": { "kind": "Name", "value": "social" },
+                        "arguments": [],
+                        "type": {
+                            "kind": "NamedType",
+                            "name": { "kind": "Name", "value": "GlobalFooterSocial" }
+                        }
+                    },
+                    {
+                        "kind": "FieldDefinition",
+                        "name": { "kind": "Name", "value": "columns" },
+                        "arguments": [],
+                        "type": {
+                            "kind": "ListType",
+                            "type": {
+                                "kind": "NamedType",
+                                "name": { "kind": "Name", "value": "GlobalFooterColumns" }
+                            }
+                        }
+                    }
+                ]
+            },
+            {
+                "kind": "ObjectTypeDefinition",
+                "interfaces": [
+                    { "kind": "NamedType", "name": { "kind": "Name", "value": "Node" } },
+                    { "kind": "NamedType", "name": { "kind": "Name", "value": "Document" } }
+                ],
+                "directives": [],
+                "name": { "kind": "Name", "value": "Global" },
+                "fields": [
+                    {
+                        "kind": "FieldDefinition",
+                        "name": { "kind": "Name", "value": "header" },
+                        "arguments": [],
+                        "type": {
+                            "kind": "NamedType",
+                            "name": { "kind": "Name", "value": "GlobalHeader" }
+                        }
+                    },
+                    {
+                        "kind": "FieldDefinition",
+                        "name": { "kind": "Name", "value": "footer" },
+                        "arguments": [],
+                        "type": {
+                            "kind": "NamedType",
+                            "name": { "kind": "Name", "value": "GlobalFooter" }
+                        }
+                    },
+                    {
+                        "kind": "FieldDefinition",
+                        "name": { "kind": "Name", "value": "id" },
+                        "arguments": [],
+                        "type": {
+                            "kind": "NonNullType",
+                            "type": {
+                                "kind": "NamedType",
+                                "name": { "kind": "Name", "value": "ID" }
+                            }
+                        }
+                    },
+                    {
+                        "kind": "FieldDefinition",
+                        "name": { "kind": "Name", "value": "_sys" },
+                        "arguments": [],
+                        "type": {
+                            "kind": "NonNullType",
+                            "type": {
+                                "kind": "NamedType",
+                                "name": { "kind": "Name", "value": "SystemInfo" }
+                            }
+                        }
+                    },
+                    {
+                        "kind": "FieldDefinition",
+                        "name": { "kind": "Name", "value": "_values" },
+                        "arguments": [],
+                        "type": {
+                            "kind": "NonNullType",
+                            "type": {
+                                "kind": "NamedType",
+                                "name": { "kind": "Name", "value": "JSON" }
+                            }
+                        }
+                    }
+                ]
+            },
+            {
+                "kind": "InputObjectTypeDefinition",
+                "name": { "kind": "Name", "value": "GlobalHeaderNavLinksFilter" },
+                "fields": [
+                    {
+                        "kind": "InputValueDefinition",
+                        "name": { "kind": "Name", "value": "label" },
+                        "type": {
+                            "kind": "NamedType",
+                            "name": { "kind": "Name", "value": "StringFilter" }
+                        }
+                    },
+                    {
+                        "kind": "InputValueDefinition",
+                        "name": { "kind": "Name", "value": "link" },
+                        "type": {
+                            "kind": "NamedType",
+                            "name": { "kind": "Name", "value": "StringFilter" }
+                        }
+                    },
+                    {
+                        "kind": "InputValueDefinition",
+                        "name": { "kind": "Name", "value": "icon" },
+                        "type": {
+                            "kind": "NamedType",
+                            "name": { "kind": "Name", "value": "StringFilter" }
+                        }
+                    },
+                    {
+                        "kind": "InputValueDefinition",
+                        "name": { "kind": "Name", "value": "color" },
+                        "type": {
+                            "kind": "NamedType",
+                            "name": { "kind": "Name", "value": "StringFilter" }
+                        }
+                    }
+                ]
+            },
+            {
+                "kind": "InputObjectTypeDefinition",
+                "name": { "kind": "Name", "value": "GlobalHeaderNavFilter" },
+                "fields": [
+                    {
+                        "kind": "InputValueDefinition",
+                        "name": { "kind": "Name", "value": "label" },
+                        "type": {
+                            "kind": "NamedType",
+                            "name": { "kind": "Name", "value": "StringFilter" }
+                        }
+                    },
+                    {
+                        "kind": "InputValueDefinition",
+                        "name": { "kind": "Name", "value": "link" },
+                        "type": {
+                            "kind": "NamedType",
+                            "name": { "kind": "Name", "value": "StringFilter" }
+                        }
+                    },
+                    {
+                        "kind": "InputValueDefinition",
+                        "name": { "kind": "Name", "value": "icon" },
+                        "type": {
+                            "kind": "NamedType",
+                            "name": { "kind": "Name", "value": "StringFilter" }
+                        }
+                    },
+                    {
+                        "kind": "InputValueDefinition",
+                        "name": { "kind": "Name", "value": "color" },
+                        "type": {
+                            "kind": "NamedType",
+                            "name": { "kind": "Name", "value": "StringFilter" }
+                        }
+                    },
+                    {
+                        "kind": "InputValueDefinition",
+                        "name": { "kind": "Name", "value": "links" },
+                        "type": {
+                            "kind": "NamedType",
+                            "name": { "kind": "Name", "value": "GlobalHeaderNavLinksFilter" }
+                        }
+                    }
+                ]
+            },
+            {
+                "kind": "InputObjectTypeDefinition",
+                "name": { "kind": "Name", "value": "GlobalHeaderFilter" },
+                "fields": [
+                    {
+                        "kind": "InputValueDefinition",
+                        "name": { "kind": "Name", "value": "nav" },
+                        "type": {
+                            "kind": "NamedType",
+                            "name": { "kind": "Name", "value": "GlobalHeaderNavFilter" }
+                        }
+                    }
+                ]
+            },
+            {
+                "kind": "InputObjectTypeDefinition",
+                "name": { "kind": "Name", "value": "GlobalFooterSocialFilter" },
+                "fields": [
+                    {
+                        "kind": "InputValueDefinition",
+                        "name": { "kind": "Name", "value": "facebook" },
+                        "type": {
+                            "kind": "NamedType",
+                            "name": { "kind": "Name", "value": "StringFilter" }
+                        }
+                    },
+                    {
+                        "kind": "InputValueDefinition",
+                        "name": { "kind": "Name", "value": "instagram" },
+                        "type": {
+                            "kind": "NamedType",
+                            "name": { "kind": "Name", "value": "StringFilter" }
+                        }
+                    }
+                ]
+            },
+            {
+                "kind": "InputObjectTypeDefinition",
+                "name": { "kind": "Name", "value": "GlobalFooterColumnsLinksFilter" },
+                "fields": [
+                    {
+                        "kind": "InputValueDefinition",
+                        "name": { "kind": "Name", "value": "text" },
+                        "type": {
+                            "kind": "NamedType",
+                            "name": { "kind": "Name", "value": "StringFilter" }
+                        }
+                    },
+                    {
+                        "kind": "InputValueDefinition",
+                        "name": { "kind": "Name", "value": "url" },
+                        "type": {
+                            "kind": "NamedType",
+                            "name": { "kind": "Name", "value": "StringFilter" }
+                        }
+                    },
+                    {
+                        "kind": "InputValueDefinition",
+                        "name": { "kind": "Name", "value": "external" },
+                        "type": {
+                            "kind": "NamedType",
+                            "name": { "kind": "Name", "value": "BooleanFilter" }
+                        }
+                    }
+                ]
+            },
+            {
+                "kind": "InputObjectTypeDefinition",
+                "name": { "kind": "Name", "value": "GlobalFooterColumnsFilter" },
+                "fields": [
+                    {
+                        "kind": "InputValueDefinition",
+                        "name": { "kind": "Name", "value": "title" },
+                        "type": {
+                            "kind": "NamedType",
+                            "name": { "kind": "Name", "value": "StringFilter" }
+                        }
+                    },
+                    {
+                        "kind": "InputValueDefinition",
+                        "name": { "kind": "Name", "value": "links" },
+                        "type": {
+                            "kind": "NamedType",
+                            "name": { "kind": "Name", "value": "GlobalFooterColumnsLinksFilter" }
+                        }
+                    }
+                ]
+            },
+            {
+                "kind": "InputObjectTypeDefinition",
+                "name": { "kind": "Name", "value": "GlobalFooterFilter" },
+                "fields": [
+                    {
+                        "kind": "InputValueDefinition",
+                        "name": { "kind": "Name", "value": "social" },
+                        "type": {
+                            "kind": "NamedType",
+                            "name": { "kind": "Name", "value": "GlobalFooterSocialFilter" }
+                        }
+                    },
+                    {
+                        "kind": "InputValueDefinition",
+                        "name": { "kind": "Name", "value": "columns" },
+                        "type": {
+                            "kind": "NamedType",
+                            "name": { "kind": "Name", "value": "GlobalFooterColumnsFilter" }
+                        }
+                    }
+                ]
+            },
+            {
+                "kind": "InputObjectTypeDefinition",
+                "name": { "kind": "Name", "value": "GlobalFilter" },
+                "fields": [
+                    {
+                        "kind": "InputValueDefinition",
+                        "name": { "kind": "Name", "value": "header" },
+                        "type": {
+                            "kind": "NamedType",
+                            "name": { "kind": "Name", "value": "GlobalHeaderFilter" }
+                        }
+                    },
+                    {
+                        "kind": "InputValueDefinition",
+                        "name": { "kind": "Name", "value": "footer" },
+                        "type": {
+                            "kind": "NamedType",
+                            "name": { "kind": "Name", "value": "GlobalFooterFilter" }
+                        }
+                    }
+                ]
+            },
+            {
+                "kind": "ObjectTypeDefinition",
+                "interfaces": [],
+                "directives": [],
+                "name": { "kind": "Name", "value": "GlobalConnectionEdges" },
+                "fields": [
+                    {
+                        "kind": "FieldDefinition",
+                        "name": { "kind": "Name", "value": "cursor" },
+                        "arguments": [],
+                        "type": {
+                            "kind": "NonNullType",
+                            "type": {
+                                "kind": "NamedType",
+                                "name": { "kind": "Name", "value": "String" }
+                            }
+                        }
+                    },
+                    {
+                        "kind": "FieldDefinition",
+                        "name": { "kind": "Name", "value": "node" },
+                        "arguments": [],
+                        "type": {
+                            "kind": "NamedType",
+                            "name": { "kind": "Name", "value": "Global" }
+                        }
+                    }
+                ]
+            },
+            {
+                "kind": "ObjectTypeDefinition",
+                "interfaces": [
+                    { "kind": "NamedType", "name": { "kind": "Name", "value": "Connection" } }
+                ],
+                "directives": [],
+                "name": { "kind": "Name", "value": "GlobalConnection" },
+                "fields": [
+                    {
+                        "kind": "FieldDefinition",
+                        "name": { "kind": "Name", "value": "pageInfo" },
+                        "arguments": [],
+                        "type": {
+                            "kind": "NonNullType",
+                            "type": {
+                                "kind": "NamedType",
+                                "name": { "kind": "Name", "value": "PageInfo" }
+                            }
+                        }
+                    },
+                    {
+                        "kind": "FieldDefinition",
+                        "name": { "kind": "Name", "value": "totalCount" },
+                        "arguments": [],
+                        "type": {
+                            "kind": "NonNullType",
+                            "type": {
+                                "kind": "NamedType",
+                                "name": { "kind": "Name", "value": "Float" }
+                            }
+                        }
+                    },
+                    {
+                        "kind": "FieldDefinition",
+                        "name": { "kind": "Name", "value": "edges" },
+                        "arguments": [],
+                        "type": {
+                            "kind": "ListType",
+                            "type": {
+                                "kind": "NamedType",
+                                "name": { "kind": "Name", "value": "GlobalConnectionEdges" }
+                            }
+                        }
+                    }
+                ]
+            },
+            {
+                "kind": "ObjectTypeDefinition",
+                "interfaces": [],
+                "directives": [],
                 "name": { "kind": "Name", "value": "Mutation" },
                 "fields": [
                     {
@@ -3890,6 +4856,76 @@
                                 "name": { "kind": "Name", "value": "Gruppen" }
                             }
                         }
+                    },
+                    {
+                        "kind": "FieldDefinition",
+                        "name": { "kind": "Name", "value": "updateGlobal" },
+                        "arguments": [
+                            {
+                                "kind": "InputValueDefinition",
+                                "name": { "kind": "Name", "value": "relativePath" },
+                                "type": {
+                                    "kind": "NonNullType",
+                                    "type": {
+                                        "kind": "NamedType",
+                                        "name": { "kind": "Name", "value": "String" }
+                                    }
+                                }
+                            },
+                            {
+                                "kind": "InputValueDefinition",
+                                "name": { "kind": "Name", "value": "params" },
+                                "type": {
+                                    "kind": "NonNullType",
+                                    "type": {
+                                        "kind": "NamedType",
+                                        "name": { "kind": "Name", "value": "GlobalMutation" }
+                                    }
+                                }
+                            }
+                        ],
+                        "type": {
+                            "kind": "NonNullType",
+                            "type": {
+                                "kind": "NamedType",
+                                "name": { "kind": "Name", "value": "Global" }
+                            }
+                        }
+                    },
+                    {
+                        "kind": "FieldDefinition",
+                        "name": { "kind": "Name", "value": "createGlobal" },
+                        "arguments": [
+                            {
+                                "kind": "InputValueDefinition",
+                                "name": { "kind": "Name", "value": "relativePath" },
+                                "type": {
+                                    "kind": "NonNullType",
+                                    "type": {
+                                        "kind": "NamedType",
+                                        "name": { "kind": "Name", "value": "String" }
+                                    }
+                                }
+                            },
+                            {
+                                "kind": "InputValueDefinition",
+                                "name": { "kind": "Name", "value": "params" },
+                                "type": {
+                                    "kind": "NonNullType",
+                                    "type": {
+                                        "kind": "NamedType",
+                                        "name": { "kind": "Name", "value": "GlobalMutation" }
+                                    }
+                                }
+                            }
+                        ],
+                        "type": {
+                            "kind": "NonNullType",
+                            "type": {
+                                "kind": "NamedType",
+                                "name": { "kind": "Name", "value": "Global" }
+                            }
+                        }
                     }
                 ]
             },
@@ -3919,6 +4955,14 @@
                         "type": {
                             "kind": "NamedType",
                             "name": { "kind": "Name", "value": "GruppenMutation" }
+                        }
+                    },
+                    {
+                        "kind": "InputValueDefinition",
+                        "name": { "kind": "Name", "value": "global" },
+                        "type": {
+                            "kind": "NamedType",
+                            "name": { "kind": "Name", "value": "GlobalMutation" }
                         }
                     },
                     {
@@ -3957,6 +5001,14 @@
                         "type": {
                             "kind": "NamedType",
                             "name": { "kind": "Name", "value": "GruppenMutation" }
+                        }
+                    },
+                    {
+                        "kind": "InputValueDefinition",
+                        "name": { "kind": "Name", "value": "global" },
+                        "type": {
+                            "kind": "NamedType",
+                            "name": { "kind": "Name", "value": "GlobalMutation" }
                         }
                     }
                 ]
@@ -4095,6 +5147,237 @@
                         "kind": "InputValueDefinition",
                         "name": { "kind": "Name", "value": "body" },
                         "type": { "kind": "NamedType", "name": { "kind": "Name", "value": "JSON" } }
+                    }
+                ]
+            },
+            {
+                "kind": "InputObjectTypeDefinition",
+                "name": { "kind": "Name", "value": "GlobalHeaderNavLinksMutation" },
+                "fields": [
+                    {
+                        "kind": "InputValueDefinition",
+                        "name": { "kind": "Name", "value": "label" },
+                        "type": {
+                            "kind": "NamedType",
+                            "name": { "kind": "Name", "value": "String" }
+                        }
+                    },
+                    {
+                        "kind": "InputValueDefinition",
+                        "name": { "kind": "Name", "value": "link" },
+                        "type": {
+                            "kind": "NamedType",
+                            "name": { "kind": "Name", "value": "String" }
+                        }
+                    },
+                    {
+                        "kind": "InputValueDefinition",
+                        "name": { "kind": "Name", "value": "icon" },
+                        "type": {
+                            "kind": "NamedType",
+                            "name": { "kind": "Name", "value": "String" }
+                        }
+                    },
+                    {
+                        "kind": "InputValueDefinition",
+                        "name": { "kind": "Name", "value": "color" },
+                        "type": {
+                            "kind": "NamedType",
+                            "name": { "kind": "Name", "value": "String" }
+                        }
+                    }
+                ]
+            },
+            {
+                "kind": "InputObjectTypeDefinition",
+                "name": { "kind": "Name", "value": "GlobalHeaderNavMutation" },
+                "fields": [
+                    {
+                        "kind": "InputValueDefinition",
+                        "name": { "kind": "Name", "value": "label" },
+                        "type": {
+                            "kind": "NamedType",
+                            "name": { "kind": "Name", "value": "String" }
+                        }
+                    },
+                    {
+                        "kind": "InputValueDefinition",
+                        "name": { "kind": "Name", "value": "link" },
+                        "type": {
+                            "kind": "NamedType",
+                            "name": { "kind": "Name", "value": "String" }
+                        }
+                    },
+                    {
+                        "kind": "InputValueDefinition",
+                        "name": { "kind": "Name", "value": "icon" },
+                        "type": {
+                            "kind": "NamedType",
+                            "name": { "kind": "Name", "value": "String" }
+                        }
+                    },
+                    {
+                        "kind": "InputValueDefinition",
+                        "name": { "kind": "Name", "value": "color" },
+                        "type": {
+                            "kind": "NamedType",
+                            "name": { "kind": "Name", "value": "String" }
+                        }
+                    },
+                    {
+                        "kind": "InputValueDefinition",
+                        "name": { "kind": "Name", "value": "links" },
+                        "type": {
+                            "kind": "ListType",
+                            "type": {
+                                "kind": "NamedType",
+                                "name": { "kind": "Name", "value": "GlobalHeaderNavLinksMutation" }
+                            }
+                        }
+                    }
+                ]
+            },
+            {
+                "kind": "InputObjectTypeDefinition",
+                "name": { "kind": "Name", "value": "GlobalHeaderMutation" },
+                "fields": [
+                    {
+                        "kind": "InputValueDefinition",
+                        "name": { "kind": "Name", "value": "nav" },
+                        "type": {
+                            "kind": "ListType",
+                            "type": {
+                                "kind": "NamedType",
+                                "name": { "kind": "Name", "value": "GlobalHeaderNavMutation" }
+                            }
+                        }
+                    }
+                ]
+            },
+            {
+                "kind": "InputObjectTypeDefinition",
+                "name": { "kind": "Name", "value": "GlobalFooterSocialMutation" },
+                "fields": [
+                    {
+                        "kind": "InputValueDefinition",
+                        "name": { "kind": "Name", "value": "facebook" },
+                        "type": {
+                            "kind": "NamedType",
+                            "name": { "kind": "Name", "value": "String" }
+                        }
+                    },
+                    {
+                        "kind": "InputValueDefinition",
+                        "name": { "kind": "Name", "value": "instagram" },
+                        "type": {
+                            "kind": "NamedType",
+                            "name": { "kind": "Name", "value": "String" }
+                        }
+                    }
+                ]
+            },
+            {
+                "kind": "InputObjectTypeDefinition",
+                "name": { "kind": "Name", "value": "GlobalFooterColumnsLinksMutation" },
+                "fields": [
+                    {
+                        "kind": "InputValueDefinition",
+                        "name": { "kind": "Name", "value": "text" },
+                        "type": {
+                            "kind": "NamedType",
+                            "name": { "kind": "Name", "value": "String" }
+                        }
+                    },
+                    {
+                        "kind": "InputValueDefinition",
+                        "name": { "kind": "Name", "value": "url" },
+                        "type": {
+                            "kind": "NamedType",
+                            "name": { "kind": "Name", "value": "String" }
+                        }
+                    },
+                    {
+                        "kind": "InputValueDefinition",
+                        "name": { "kind": "Name", "value": "external" },
+                        "type": {
+                            "kind": "NamedType",
+                            "name": { "kind": "Name", "value": "Boolean" }
+                        }
+                    }
+                ]
+            },
+            {
+                "kind": "InputObjectTypeDefinition",
+                "name": { "kind": "Name", "value": "GlobalFooterColumnsMutation" },
+                "fields": [
+                    {
+                        "kind": "InputValueDefinition",
+                        "name": { "kind": "Name", "value": "title" },
+                        "type": {
+                            "kind": "NamedType",
+                            "name": { "kind": "Name", "value": "String" }
+                        }
+                    },
+                    {
+                        "kind": "InputValueDefinition",
+                        "name": { "kind": "Name", "value": "links" },
+                        "type": {
+                            "kind": "ListType",
+                            "type": {
+                                "kind": "NamedType",
+                                "name": {
+                                    "kind": "Name",
+                                    "value": "GlobalFooterColumnsLinksMutation"
+                                }
+                            }
+                        }
+                    }
+                ]
+            },
+            {
+                "kind": "InputObjectTypeDefinition",
+                "name": { "kind": "Name", "value": "GlobalFooterMutation" },
+                "fields": [
+                    {
+                        "kind": "InputValueDefinition",
+                        "name": { "kind": "Name", "value": "social" },
+                        "type": {
+                            "kind": "NamedType",
+                            "name": { "kind": "Name", "value": "GlobalFooterSocialMutation" }
+                        }
+                    },
+                    {
+                        "kind": "InputValueDefinition",
+                        "name": { "kind": "Name", "value": "columns" },
+                        "type": {
+                            "kind": "ListType",
+                            "type": {
+                                "kind": "NamedType",
+                                "name": { "kind": "Name", "value": "GlobalFooterColumnsMutation" }
+                            }
+                        }
+                    }
+                ]
+            },
+            {
+                "kind": "InputObjectTypeDefinition",
+                "name": { "kind": "Name", "value": "GlobalMutation" },
+                "fields": [
+                    {
+                        "kind": "InputValueDefinition",
+                        "name": { "kind": "Name", "value": "header" },
+                        "type": {
+                            "kind": "NamedType",
+                            "name": { "kind": "Name", "value": "GlobalHeaderMutation" }
+                        }
+                    },
+                    {
+                        "kind": "InputValueDefinition",
+                        "name": { "kind": "Name", "value": "footer" },
+                        "type": {
+                            "kind": "NamedType",
+                            "name": { "kind": "Name", "value": "GlobalFooterMutation" }
+                        }
                     }
                 ]
             }

@@ -1,0 +1,123 @@
+{
+    "header": {
+        "nav": [
+            {
+                "label": "News",
+                "link": "/news",
+                "icon": "News"
+            },
+            {
+                "label": "Gruppen",
+                "link": "",
+                "icon": "People",
+                "links": [
+                    {
+                        "label": "Wölflinge",
+                        "link": "/pages/gruppen/woelflinge",
+                        "icon": "Lilie",
+                        "color": "#ec661a"
+                    },
+                    {
+                        "label": "Jungpfadfinder",
+                        "link": "/pages/gruppen/jungpfadfinder",
+                        "icon": "Lilie",
+                        "color": "#2d54a1"
+                    },
+                    {
+                        "label": "Pfadfinder",
+                        "link": "/pages/gruppen/pfadfinder",
+                        "icon": "Lilie",
+                        "color": "#08833c"
+                    },
+                    {
+                        "label": "Rover",
+                        "link": "/pages/gruppen/rover",
+                        "icon": "Lilie",
+                        "color": "#cc1e2f"
+                    },
+                    {
+                        "label": "Leiterrunde",
+                        "link": "/pages/gruppen/leiter",
+                        "icon": "Lilie",
+                        "color": "#FFC107"
+                    }
+                ]
+            },
+            {
+                "label": "Fotos",
+                "link": "/gallerie",
+                "icon": "Image"
+            },
+            {
+                "label": "Termine",
+                "link": "/pages/termine",
+                "icon": "Calendar"
+            },
+            {
+                "label": "Mehr",
+                "link": "",
+                "icon": "More",
+                "links": [
+                    {
+                        "label": "Pfadfinerheim St. Raphael",
+                        "link": "https://www.pfadfinderheim-st-raphael.de/",
+                        "icon": "House"
+                    },
+                    {
+                        "label": "Padfinderhaus Nöggenschwiel",
+                        "link": "http://www.pfadfinderhaus-noeggenschwiel.de/",
+                        "icon": "House"
+                    },
+                    {
+                        "label": "FAQ",
+                        "link": "/pages/faq",
+                        "icon": "Help"
+                    }
+                ]
+            }
+        ]
+    },
+    "footer": {
+        "social": {
+            "facebook": "https://de-de.facebook.com/dpsgwehr/",
+            "instagram": "https://www.instagram.com/pfadfinder_wehr/"
+        },
+        "columns": [
+            {
+                "title": "Hütten",
+                "links": [
+                    {
+                        "text": "St. Raphael in Todtmoos",
+                        "url": "https://www.pfadfinderheim-st-raphael.de/",
+                        "external": true
+                    },
+                    {
+                        "text": "Pfadfinderhaus Nöggenschwiel",
+                        "url": "http://www.pfadfinderhaus-noeggenschwiel.de/",
+                        "external": true
+                    }
+                ]
+            },
+            {
+                "title": "Sonstiges",
+                "links": [
+                    {
+                        "text": "Impressum",
+                        "url": "/pages/impressum",
+                        "external": false
+                    },
+                    {
+                        "text": "Datenschutz",
+                        "url": "/pages/datenschutz",
+                        "external": false
+                    },
+                    {
+                        "text": "Quellcode",
+                        "url": "https://github.com/Linus-f/website-dpsg-wehr",
+                        "external": true
+                    }
+                ]
+            }
+        ]
+    }
+}

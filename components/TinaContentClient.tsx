@@ -15,19 +15,6 @@ import Acrostichon from './Acrostichon';
 const fixSrc = (src: string) =>
     src && !src.startsWith('/') && !src.startsWith('http') ? `/${src}` : src;
 
-const components = {
-    img: (props: any) => (
-        <img {...props} src={fixSrc(props.src || props.url)} className="max-w-full h-auto" />
-    ),
-    MDXImage: (props: any) => <MDXImage {...props} src={fixSrc(props.src)} />,
-    Img: (props: any) => <MDXImage {...props} src={fixSrc(props.src)} />,
-    Calendar: (props: any) => <Calendar {...props} />,
-    Download: (props: any) => <Download {...props} />,
-    RecentPosts: (props: any) => <RecentPosts {...props} />,
-    GroupOverview: (props: any) => <GroupOverview {...props} />,
-    Acrostichon: (props: any) => <Acrostichon {...props} />,
-};
-
 export default function TinaContentClient(props: {
     data: any;
     variables: any;
@@ -41,6 +28,21 @@ export default function TinaContentClient(props: {
         variables: props.variables,
         data: props.data,
     });
+
+    const components = {
+        img: (props: any) => (
+            <img {...props} src={fixSrc(props.src || props.url)} className="max-w-full h-auto" />
+        ),
+        MDXImage: (props: any) => <MDXImage {...props} src={fixSrc(props.src)} />,
+        Img: (props: any) => <MDXImage {...props} src={fixSrc(props.src)} />,
+        Calendar: (props: any) => <Calendar {...props} />,
+        Download: (props: any) => <Download {...props} />,
+        RecentPosts: (innerProps: any) => (
+            <RecentPosts postMetadata={props.postMetadata} {...innerProps} />
+        ),
+        GroupOverview: (props: any) => <GroupOverview {...props} />,
+        Acrostichon: (props: any) => <Acrostichon {...props} />,
+    };
 
     const content = data[props.contentType];
 

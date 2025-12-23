@@ -8,9 +8,66 @@ import NavbarClient from './NavbarClient';
 import SearchButton from './SearchButton';
 
 import { NavigationLinkGroup, NavigationLink } from '@/types';
+import { client } from '@/tina/__generated__/client';
+import { createClient } from 'tinacms/dist/client';
+import { queries } from '@/tina/__generated__/types';
 
-export default function Navbar() {
-    const renderedItems = navigationLinks.map((link: NavigationLinkGroup) => {
+const localClient = createClient({
+    url: 'http://localhost:9005/graphql',
+    token: 'dummy',
+    queries,
+});
+
+export default async function Navbar() {
+    let navLinks: NavigationLinkGroup[] = navigationLinks;
+
+    try {
+        let tinaData;
+        try {
+            tinaData = await client.queries.global({ relativePath: 'index.json' });
+        } catch (e) {
+            if (process.env.NODE_ENV === 'development') {
+                // eslint-disable-next-line no-console
+                console.log('Default Tina client failed, trying localhost:9005 fallback...');
+                tinaData = await localClient.queries.global({ relativePath: 'index.json' });
+            } else {
+                throw e;
+            }
+        }
+
+        if (tinaData.data.global.header?.nav) {
+            navLinks = tinaData.data.global.header.nav.map(
+                (item: {
+                    label: string;
+                    link: string;
+                    icon: string;
+                    links?: { label: string; link: string; icon: string; color: string }[];
+                }) => ({
+                    label: item.label,
+                    link: item.link,
+                    Icon: item.icon,
+                    links: item.links?.map(
+                        (subItem: {
+                            label: string;
+                            link: string;
+                            icon: string;
+                            color: string;
+                        }) => ({
+                            label: subItem.label,
+                            link: subItem.link,
+                            Icon: subItem.icon,
+                            color: subItem.color,
+                        })
+                    ),
+                })
+            );
+        }
+    } catch (e) {
+        // eslint-disable-next-line no-console
+        console.error('Failed to fetch global nav', e);
+    }
+
+    const renderedItems = navLinks.map((link: NavigationLinkGroup) => {
         if (link.links) {
             const menuItems = link.links?.map((item: NavigationLink) => {
                 const Icon = getIconFromname(item.Icon, item.color);
