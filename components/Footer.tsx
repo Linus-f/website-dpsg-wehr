@@ -216,22 +216,18 @@ export default async function Footer() {
                 };
             }
             if (footerData.columns) {
-                columns = footerData.columns.map(
-                    (col: {
-                        title?: string;
-                        links?: { text?: string; url?: string; external?: boolean }[];
-                    }) => ({
-                        title: col.title || '',
-                        links:
-                            col.links?.map(
-                                (l: { text?: string; url?: string; external?: boolean }) => ({
-                                    text: l.text || '',
-                                    url: l.url || '',
-                                    external: !!l.external,
-                                })
-                            ) || [],
-                    })
-                );
+                // eslint-disable-next-line @typescript-eslint/no-explicit-any
+                columns = footerData.columns.map((col: any) => ({
+                    title: col?.title || '',
+                    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+                    links:
+                        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+                        col?.links?.map((l: any) => ({
+                            text: l?.text || '',
+                            url: l?.url || '',
+                            external: !!l?.external,
+                        })) || [],
+                }));
             }
         }
     } catch (e) {
