@@ -1,3 +1,9 @@
+## [1.7.1](https://github.com/Linus-f/website-dpsg-wehr/compare/v1.7.0...v1.7.1) (2025-12-23)
+
+### Bug Fixes
+
+- resolve git ownership issues and improve error handling in deploy script ([3ff0e73](https://github.com/Linus-f/website-dpsg-wehr/commit/3ff0e73c7b8a39f27186ea0ff2d99d79b6431d63))
+
 # [1.7.0](https://github.com/Linus-f/website-dpsg-wehr/compare/v1.6.0...v1.7.0) (2025-12-23)
 
 ### Bug Fixes
