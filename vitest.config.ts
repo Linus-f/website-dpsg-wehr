@@ -3,7 +3,6 @@ import react from '@vitejs/plugin-react';
 import path from 'path';
 
 export default defineConfig({
-    // @ts-expect-error - mismatch between vite 4 and newer vitest/plugins types in CI
     plugins: [react()],
     test: {
         environment: 'jsdom',
