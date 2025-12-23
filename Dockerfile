@@ -7,8 +7,9 @@ RUN npm install -g pnpm
 ENV NEXT_TELEMETRY_DISABLED=1
 # Force Tina to use local data and skip cloud checks during build
 ENV TINA_PUBLIC_IS_LOCAL=true
-ENV NEXT_PUBLIC_TINA_CLIENT_ID=null
-ENV TINA_TOKEN=null
+# Set placeholder credentials to satisfy URL construction during local build
+ENV NEXT_PUBLIC_TINA_CLIENT_ID=local
+ENV TINA_TOKEN=local
 
 # Image Optimization Environment Variables
 ENV nextImageExportOptimizer_imageFolderPath="public/media/images"
@@ -31,7 +32,6 @@ RUN --mount=type=cache,id=pnpm,target=/root/.local/share/pnpm/store \
 COPY . .
 
 # Build and Export
-# We use the CI build script which includes 'tinacms build --local'
 RUN --mount=type=cache,id=next-cache,target=/app/.next/cache \
     --mount=type=cache,id=image-cache,target=/app/.next-image-cache \
     mkdir -p out/nextImageExportOptimizer && \
