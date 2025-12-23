@@ -5,6 +5,7 @@ import { createClient } from 'tinacms/dist/client';
 import { queries } from '@/tina/__generated__/types';
 
 import dpsgLogo from '@/public/dpsg.svg';
+import pkg from '@/package.json';
 
 const localClient = createClient({
     url: 'http://localhost:9005/graphql',
@@ -73,7 +74,7 @@ function SocialMedia({ facebook, instagram }: { facebook: string; instagram: str
     return (
         <div className="w-full flex place-content-between content-center mt-10 mb-0">
             <p className="text-center text-white text-sm ml-4">
-                © {new Date().getFullYear()} DPSG St. Bernhard Wehr
+                © {new Date().getFullYear()} DPSG St. Bernhard Wehr (v{pkg.version})
             </p>
             <div className="flex place-content-end items-center mr-4">
                 {instagram && <InstagramLink url={instagram} />}
@@ -219,7 +220,7 @@ export default async function Footer() {
                 // eslint-disable-next-line @typescript-eslint/no-explicit-any
                 columns = footerData.columns.map((col: any) => ({
                     title: col?.title || '',
-                    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+                     
                     links:
                         // eslint-disable-next-line @typescript-eslint/no-explicit-any
                         col?.links?.map((l: any) => ({
