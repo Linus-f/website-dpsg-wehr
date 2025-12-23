@@ -1,3 +1,13 @@
+# [1.5.0](https://github.com/Linus-f/website-dpsg-wehr/compare/v1.4.1...v1.5.0) (2025-12-23)
+
+### Bug Fixes
+
+- convert Tina Cloud Media URLs to local paths to enable image optimization ([b2ba9f8](https://github.com/Linus-f/website-dpsg-wehr/commit/b2ba9f8c24df55b6f5b5c6a9897dfa15e33741e2))
+
+### Features
+
+- implement Docker-based webhook deployment strategy ([e992568](https://github.com/Linus-f/website-dpsg-wehr/commit/e9925681fc1061892d73855a9eac3bdc9443ffc6))
+
 ## [1.4.1](https://github.com/Linus-f/website-dpsg-wehr/compare/v1.4.0...v1.4.1) (2025-12-23)
 
 ### Bug Fixes
