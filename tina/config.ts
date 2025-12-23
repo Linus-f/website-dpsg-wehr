@@ -88,9 +88,11 @@ const mdxTemplates: any[] = [
 const isLocal = process.env.TINA_PUBLIC_IS_LOCAL === 'true';
 
 export default defineConfig({
-    branch: isLocal ? '' : branch,
-    clientId: isLocal ? null : process.env.NEXT_PUBLIC_TINA_CLIENT_ID,
-    token: isLocal ? null : process.env.TINA_TOKEN,
+    branch: isLocal ? 'main' : branch,
+    clientId: isLocal ? 'dummy' : process.env.NEXT_PUBLIC_TINA_CLIENT_ID,
+    token: isLocal ? 'dummy' : process.env.TINA_TOKEN,
+    // When local, force point to the local server started by the CLI
+    contentApiUrlOverride: isLocal ? 'http://localhost:4001/graphql' : undefined,
 
     build: {
         outputFolder: 'admin',
