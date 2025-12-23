@@ -31,12 +31,14 @@ RUN --mount=type=cache,id=pnpm,target=/root/.local/share/pnpm/store \
 COPY . .
 
 # Build and Export
-# We use && chaining to ensure failure stops the build and manage cache robustly
+# We use the CI build script which includes 'tinacms build --local'
 RUN --mount=type=cache,id=next-cache,target=/app/.next/cache \
     --mount=type=cache,id=image-cache,target=/app/.next-image-cache \
     mkdir -p out/nextImageExportOptimizer && \
     (cp -r /app/.next-image-cache/. out/nextImageExportOptimizer/ 2>/dev/null || true) && \
-    pnpm export && \
+    pnpm build:ci && \
+    pnpm next-image-export-optimizer && \
+    node scripts/inline-css.mjs && \
     (cp -r out/nextImageExportOptimizer/. /app/.next-image-cache/ 2>/dev/null || true) && \
     test -f out/index.html
 
