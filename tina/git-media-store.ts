@@ -63,7 +63,7 @@ export class GitMediaStore implements MediaStore {
                 .slice(Number(offset), Number(offset) + limit)
                 .map((item) => {
                     const relativePath = item.path.replace(new RegExp(`^${PUBLIC_FOLDER}/`), '');
-                    // const githubUrl = this.getRawUrl(item.path); // No longer needed for thumbnails
+                    const githubUrl = this.getRawUrl(item.path);
                     const localUrl = '/' + relativePath;
 
                     let mediaItem: Media;
@@ -84,7 +84,7 @@ export class GitMediaStore implements MediaStore {
                             filename: item.name,
                             directory: directory || '',
                             thumbnails: {
-                                '75x75': localUrl, // Use local URL for thumbnail
+                                '75x75': githubUrl,
                             },
                             src: localUrl,
                         };
@@ -125,11 +125,13 @@ export class GitMediaStore implements MediaStore {
     }
 
     previewSrc(src: string): string {
-        // eslint-disable-next-line no-console
-        console.log('GitMediaStore.previewSrc called with:', src);
         if (!src) return '';
         if (src.startsWith('http')) return src;
-        return src.startsWith('/') ? src : `/${src}`;
+        const path = src.startsWith('/') ? src : `/${src}`;
+        if (path.startsWith('/media/')) {
+            return `https://raw.githubusercontent.com/${REPO_OWNER}/${REPO_NAME}/${BRANCH}/public${path}`;
+        }
+        return src;
     }
 
     // --- Helpers ---
