@@ -1,3 +1,9 @@
+## [1.7.16](https://github.com/Linus-f/website-dpsg-wehr/compare/v1.7.15...v1.7.16) (2025-12-24)
+
+### Bug Fixes
+
+- **media:** provide multiple thumbnail sizes in GitMediaStore ([4583e94](https://github.com/Linus-f/website-dpsg-wehr/commit/4583e94eeff2dfb45b1946e4cabfbcd1c25dd138))
+
 ## [1.7.15](https://github.com/Linus-f/website-dpsg-wehr/compare/v1.7.14...v1.7.15) (2025-12-24)
 
 ### Bug Fixes
