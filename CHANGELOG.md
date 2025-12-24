@@ -1,3 +1,9 @@
+## [1.7.8](https://github.com/Linus-f/website-dpsg-wehr/compare/v1.7.7...v1.7.8) (2025-12-24)
+
+### Bug Fixes
+
+- bake auth into docker image to prevent recurring 403 errors ([90e670e](https://github.com/Linus-f/website-dpsg-wehr/commit/90e670e0370b7987cbe01c5330a8704860c08771))
+
 ## [1.7.7](https://github.com/Linus-f/website-dpsg-wehr/compare/v1.7.6...v1.7.7) (2025-12-24)
 
 ### Bug Fixes
