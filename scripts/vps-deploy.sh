@@ -19,6 +19,6 @@ fi
 echo "🏗️ Rebuilding website container..."
 # Note: This requires the 'docker' CLI to be available in the webhook container
 # We use the host's docker daemon via the mounted socket.
-docker compose up -d --build website
+docker compose up -d --build --remove-orphans website
 
 echo "✅ Deployment finished successfully!"
