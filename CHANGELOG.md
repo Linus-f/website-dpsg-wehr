@@ -1,3 +1,5 @@
+## [1.7.17](https://github.com/Linus-f/website-dpsg-wehr/compare/v1.7.16...v1.7.17) (2025-12-24)
+
 ## [1.7.16](https://github.com/Linus-f/website-dpsg-wehr/compare/v1.7.15...v1.7.16) (2025-12-24)
 
 ### Bug Fixes
