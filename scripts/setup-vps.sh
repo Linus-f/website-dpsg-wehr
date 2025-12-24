@@ -12,27 +12,28 @@ else
 fi
 
 # 2. Setup .htpasswd
-if [ ! -f .htpasswd ]; then
-    echo "🔒 Setting up Basic Auth (.htpasswd)..."
+if [ ! -f auth/.htpasswd ]; then
+    echo "🔒 Setting up Basic Auth (auth/.htpasswd)..."
+    mkdir -p auth
     
     # Check if htpasswd tool exists
     if command -v htpasswd &> /dev/null; then
         read -p "Enter username for Admin Panel: " username
-        if htpasswd -c .htpasswd "$username"; then
-            echo "✅ .htpasswd created."
+        if htpasswd -c auth/.htpasswd "$username"; then
+            echo "✅ auth/.htpasswd created."
         else
-            echo "❌ Error: Failed to create .htpasswd."
+            echo "❌ Error: Failed to create auth/.htpasswd."
             exit 1
         fi
     else
         echo "⚠️  'htpasswd' command not found."
-        echo "   Please create .htpasswd manually or install apache2-utils."
+        echo "   Please create auth/.htpasswd manually or install apache2-utils."
         echo "   Format: username:hashed_password"
-        cp .htpasswd.example .htpasswd
-        echo "✅ .htpasswd created from example (Action required: Update manually)."
+        cp .htpasswd.example auth/.htpasswd
+        echo "✅ auth/.htpasswd created from example (Action required: Update manually)."
     fi
 else
-    echo "✅ .htpasswd already exists."
+    echo "✅ auth/.htpasswd already exists."
 fi
 
 echo "🎉 Setup complete! Don't forget to edit .env before starting the container."
