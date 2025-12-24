@@ -1,3 +1,9 @@
+## [1.7.10](https://github.com/Linus-f/website-dpsg-wehr/compare/v1.7.9...v1.7.10) (2025-12-24)
+
+### Bug Fixes
+
+- **media:** handle missing src in image components and update CSP ([9aeaf39](https://github.com/Linus-f/website-dpsg-wehr/commit/9aeaf39191dd49b5c2bf73049f4f38f23432116a))
+
 ## [1.7.9](https://github.com/Linus-f/website-dpsg-wehr/compare/v1.7.8...v1.7.9) (2025-12-24)
 
 ### Bug Fixes
