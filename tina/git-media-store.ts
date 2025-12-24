@@ -77,21 +77,24 @@ export class GitMediaStore implements MediaStore {
                         type: 'dir' as const,
                         id: relativePath,
                         filename: item.name,
-                        directory: directory,
+                        directory: directory || '',
                         thumbnails: {} as Record<string, string>,
                         src: '',
                     };
                 }
 
+                const publicUrl = this.getRawUrl(item.path);
+
                 return {
                     type: 'file' as const,
                     id: relativePath,
                     filename: item.name,
-                    directory: directory,
+                    directory: directory || '',
                     thumbnails: {
-                        '75x75': this.getRawUrl(item.path),
-                    },
-                    src: '/' + relativePath,
+                        '75x75': publicUrl,
+                        '100x100': publicUrl,
+                    } as Record<string, string>,
+                    src: publicUrl,
                 };
             });
 
