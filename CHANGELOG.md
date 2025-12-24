@@ -1,3 +1,9 @@
+## [1.7.4](https://github.com/Linus-f/website-dpsg-wehr/compare/v1.7.3...v1.7.4) (2025-12-24)
+
+### Bug Fixes
+
+- enable folder navigation in media manager ([23bd2be](https://github.com/Linus-f/website-dpsg-wehr/commit/23bd2bed9b75aa478f7855515fde5ce8f020c2e9))
+
 ## [1.7.3](https://github.com/Linus-f/website-dpsg-wehr/compare/v1.7.2...v1.7.3) (2025-12-24)
 
 ### Bug Fixes
