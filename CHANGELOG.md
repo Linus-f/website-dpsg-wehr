@@ -1,3 +1,9 @@
+## [1.7.14](https://github.com/Linus-f/website-dpsg-wehr/compare/v1.7.13...v1.7.14) (2025-12-24)
+
+### Bug Fixes
+
+- **media:** use local paths for thumbnails in GitMediaStore list ([1291b25](https://github.com/Linus-f/website-dpsg-wehr/commit/1291b254f15fc169619507febc51450bded02142))
+
 ## [1.7.13](https://github.com/Linus-f/website-dpsg-wehr/compare/v1.7.12...v1.7.13) (2025-12-24)
 
 ### Bug Fixes
