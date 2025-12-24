@@ -28,8 +28,6 @@ services:
             timeout: 10s
             retries: 3
             start_period: 5s
-        volumes:
-            - ./auth:/etc/nginx/auth:ro
         labels:
             - 'traefik.enable=true'
             - 'traefik.docker.network=proxy'

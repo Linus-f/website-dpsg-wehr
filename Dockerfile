@@ -64,6 +64,9 @@ RUN apk add --no-cache curl
 # Copy custom Nginx config
 COPY nginx.conf /etc/nginx/conf.d/default.conf
 
+# Copy authentication file (if it exists in the build context)
+COPY auth/.htpasswd /etc/nginx/auth/.htpasswd
+
 # Copy static output from builder
 COPY --from=builder /app/out /usr/share/nginx/html
 
