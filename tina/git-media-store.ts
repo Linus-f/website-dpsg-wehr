@@ -123,11 +123,7 @@ export class GitMediaStore implements MediaStore {
     previewSrc(src: string): string {
         if (!src) return '';
         if (src.startsWith('http')) return src;
-        const path = src.startsWith('/') ? src : `/${src}`;
-        if (path.startsWith('/media/')) {
-            return `https://raw.githubusercontent.com/${REPO_OWNER}/${REPO_NAME}/${BRANCH}/public${path}`;
-        }
-        return src;
+        return src.startsWith('/') ? src : `/${src}`;
     }
 
     // --- Helpers ---

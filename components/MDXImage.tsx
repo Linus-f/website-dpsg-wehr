@@ -1,12 +1,20 @@
 import { DetailedHTMLProps, ImgHTMLAttributes } from 'react';
 import Img from './Img';
 
-export default function MDXImage(
-    props: DetailedHTMLProps<ImgHTMLAttributes<HTMLImageElement>, HTMLImageElement> & {
-        priority?: boolean | string;
-        fetchPriority?: 'high' | 'low' | 'auto';
+export default function MDXImage(props: {
+    src: string;
+    alt: string;
+    title?: string;
+    width?: string | number;
+    height?: string | number;
+    priority?: boolean | string;
+    className?: string;
+    fetchPriority?: 'high' | 'low' | 'auto';
+}) {
+    if (typeof window !== 'undefined') {
+        // eslint-disable-next-line no-console
+        console.log('MDXImage rendering with props:', props);
     }
-) {
     if (!props.src) return null;
 
     const isPriority = props.priority === true || props.priority === 'true';
