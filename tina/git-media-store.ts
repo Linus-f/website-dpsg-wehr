@@ -77,6 +77,9 @@ export class GitMediaStore implements MediaStore {
                         type: 'dir' as const,
                         id: relativePath,
                         filename: item.name,
+                        directory: directory,
+                        thumbnails: {} as Record<string, string>,
+                        src: '',
                     };
                 }
 
