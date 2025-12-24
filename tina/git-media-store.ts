@@ -27,18 +27,18 @@ export class GitMediaStore implements MediaStore {
 
             await this.uploadToGithub(repoPath, file);
 
-            const previewUrl = this.getRawUrl(repoPath);
+            const githubUrl = this.getRawUrl(repoPath);
+            const localUrl = '/' + filePath;
 
             newMedia.push({
                 type: 'file',
-                id: '/' + filePath,
+                id: filePath,
                 filename: file.name,
                 directory: directory || '',
                 thumbnails: {
-                    '75x75': previewUrl,
-                    '100x100': previewUrl,
+                    '75x75': githubUrl,
                 },
-                src: previewUrl,
+                src: localUrl,
             });
         }
         return newMedia;
@@ -58,34 +58,46 @@ export class GitMediaStore implements MediaStore {
 
         try {
             const rawItems = await this.listGithubFiles(repoDir);
-
+            
             const items: Media[] = rawItems.slice(Number(offset), Number(offset) + limit).map((item) => {
                 const relativePath = item.path.replace(new RegExp(`^${PUBLIC_FOLDER}/`), '');
-                const previewUrl = this.getRawUrl(item.path);
+                const githubUrl = this.getRawUrl(item.path);
+                const localUrl = '/' + relativePath;
+
+                let mediaItem: Media;
 
                 if (item.type === 'dir') {
-                    return {
-                        type: 'dir' as const,
-                        id: '/' + relativePath,
+                    mediaItem = {
+                        type: 'dir',
+                        id: relativePath,
                         filename: item.name,
                         directory: directory || '',
                         thumbnails: {} as Record<string, string>,
                         src: '',
                     };
+                } else {
+                    mediaItem = {
+                        type: 'file',
+                        id: relativePath,
+                        filename: item.name,
+                        directory: directory || '',
+                        thumbnails: {
+                            '75x75': githubUrl,
+                        },
+                        src: localUrl,
+                    };
                 }
 
-                return {
-                    type: 'file' as const,
-                    id: '/' + relativePath,
-                    filename: item.name,
-                    directory: directory || '',
-                    thumbnails: {
-                        '75x75': previewUrl,
-                        '100x100': previewUrl,
-                    } as Record<string, string>,
-                    src: previewUrl,
-                };
+                return mediaItem;
             });
+
+            // Global debug helper
+            if (typeof window !== 'undefined') {
+                // eslint-disable-next-line @typescript-eslint/no-explicit-any
+                (window as any).lastTinaMediaItems = items;
+                // eslint-disable-next-line no-console
+                console.log('GitMediaStore: Returning items to TinaCMS. Type "window.lastTinaMediaItems" to inspect.');
+            }
 
             return {
                 items,
@@ -100,8 +112,6 @@ export class GitMediaStore implements MediaStore {
     }
 
     async delete(media: Media): Promise<void> {
-        // media.id is typically "media/filename.jpg" or "media/dir/filename.jpg"
-        // We need to prepend public/
         const repoPath = `${PUBLIC_FOLDER}/${media.id}`;
         await this.deleteFromGithub(repoPath);
     }
