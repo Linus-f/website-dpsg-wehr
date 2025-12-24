@@ -1,3 +1,9 @@
+## [1.7.12](https://github.com/Linus-f/website-dpsg-wehr/compare/v1.7.11...v1.7.12) (2025-12-24)
+
+### Bug Fixes
+
+- **components:** sanitize src in TinaContentClient ([574bbc7](https://github.com/Linus-f/website-dpsg-wehr/commit/574bbc7a7e8af6c14ca407ea5679114c48c03f1f)), closes [#31](https://github.com/Linus-f/website-dpsg-wehr/issues/31)
+
 ## [1.7.11](https://github.com/Linus-f/website-dpsg-wehr/compare/v1.7.10...v1.7.11) (2025-12-24)
 
 ### Bug Fixes
