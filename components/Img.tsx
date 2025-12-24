@@ -11,6 +11,8 @@ function getSrc(src: ExportedImageProps['src']): string {
 }
 
 export default function Img(props: ExportedImageProps) {
+    if (!props.src) return null;
+
     // For now, we drop the JS-based blur-up to make this a server component.
     // We can still use CSS animations if needed.
     return (

@@ -7,10 +7,14 @@ export default function MDXImage(
         fetchPriority?: 'high' | 'low' | 'auto';
     }
 ) {
+    if (!props.src) return null;
+
     const isPriority = props.priority === true || props.priority === 'true';
 
-    const w = typeof props.width === 'string' ? parseInt(props.width) : (props.width as number);
-    const h = typeof props.height === 'string' ? parseInt(props.height) : (props.height as number);
+    const w =
+        typeof props.width === 'string' ? parseInt(props.width) : (props.width as number) || 800;
+    const h =
+        typeof props.height === 'string' ? parseInt(props.height) : (props.height as number) || 600;
 
     return (
         <Img
