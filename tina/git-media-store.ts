@@ -121,6 +121,8 @@ export class GitMediaStore implements MediaStore {
     }
 
     previewSrc(src: string): string {
+        // eslint-disable-next-line no-console
+        console.log('GitMediaStore.previewSrc called with:', src);
         if (!src) return '';
         if (src.startsWith('http')) return src;
         return src.startsWith('/') ? src : `/${src}`;
