@@ -1,3 +1,9 @@
+## [1.7.11](https://github.com/Linus-f/website-dpsg-wehr/compare/v1.7.10...v1.7.11) (2025-12-24)
+
+### Bug Fixes
+
+- **media:** implement previewSrc and filter non-image files in GitMediaStore ([0829839](https://github.com/Linus-f/website-dpsg-wehr/commit/082983911e6e09613b23388c98b01342fc05d94b))
+
 ## [1.7.10](https://github.com/Linus-f/website-dpsg-wehr/compare/v1.7.9...v1.7.10) (2025-12-24)
 
 ### Bug Fixes
