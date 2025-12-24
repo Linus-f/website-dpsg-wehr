@@ -9,7 +9,7 @@ const MEDIA_ROOT = 'media';
 const PUBLIC_FOLDER = 'public';
 
 export class GitMediaStore implements MediaStore {
-    accept = '*/*';
+    accept = 'image/*';
 
     async persist(media: MediaUploadOptions[]): Promise<Media[]> {
         if (!GITHUB_TOKEN) {
@@ -59,42 +59,41 @@ export class GitMediaStore implements MediaStore {
         }
 
         const directory = options?.directory ?? '';
-
         const offset = options?.offset ?? 0;
-
         const limit = options?.limit ?? 20;
-
         const dirPart = directory ? directory : '';
-
         const repoDir = `${PUBLIC_FOLDER}/${MEDIA_ROOT}${dirPart ? '/' + dirPart : ''}`;
 
-        const files = await this.listGithubFiles(repoDir);
+        try {
+            const files = await this.listGithubFiles(repoDir);
+            // eslint-disable-next-line no-console
+            console.log(`GitMediaStore: GitHub returned ${files.length} files.`, files);
 
-        const items = files.slice(Number(offset), Number(offset) + limit).map((file) => {
-            const relativePath = file.path.replace(new RegExp(`^${PUBLIC_FOLDER}/`), '');
+            const items = files.slice(Number(offset), Number(offset) + limit).map((file) => {
+                const relativePath = file.path.replace(new RegExp(`^${PUBLIC_FOLDER}/`), '');
+
+                return {
+                    type: 'file' as const,
+                    id: relativePath,
+                    filename: file.name,
+                    directory: directory,
+                    thumbnails: {
+                        '75x75': this.getRawUrl(file.path),
+                    },
+                    src: '/' + relativePath,
+                };
+            });
 
             return {
-                type: 'file' as const,
-
-                id: relativePath,
-
-                filename: file.name,
-
-                directory: directory,
-
-                thumbnails: {
-                    '75x75': this.getRawUrl(file.path),
-                },
-
-                src: '/' + relativePath,
+                items,
+                nextOffset:
+                    Number(offset) + limit < files.length ? Number(offset) + limit : undefined,
             };
-        });
-
-        return {
-            items,
-
-            nextOffset: Number(offset) + limit < files.length ? Number(offset) + limit : undefined,
-        };
+        } catch (e) {
+            // eslint-disable-next-line no-console
+            console.error('GitMediaStore: List failed', e);
+            return { items: [] };
+        }
     }
 
     async delete(media: Media): Promise<void> {
@@ -141,7 +140,7 @@ export class GitMediaStore implements MediaStore {
 
         return (
             data
-                .filter((item: any) => item.type === 'file') // eslint-disable-line @typescript-eslint/no-explicit-any
+                .filter((item: any) => item.type === 'file') // eslint-disable-next-line @typescript-eslint/no-explicit-any
                 // eslint-disable-next-line @typescript-eslint/no-explicit-any
                 .map((item: any) => ({
                     name: item.name,
