@@ -27,33 +27,25 @@ export class GitMediaStore implements MediaStore {
 
             await this.uploadToGithub(repoPath, file);
 
+            const previewUrl = this.getRawUrl(repoPath);
+
             newMedia.push({
                 type: 'file',
-                id: filePath,
+                id: '/' + filePath,
                 filename: file.name,
-                directory: directory,
+                directory: directory || '',
                 thumbnails: {
-                    '75x75': this.getRawUrl(repoPath),
+                    '75x75': previewUrl,
+                    '100x100': previewUrl,
                 },
-                src: '/' + filePath,
+                src: previewUrl,
             });
         }
         return newMedia;
     }
 
     async list(options?: MediaListOptions): Promise<MediaList> {
-        // Debugging logs to verify env vars in production
-        // eslint-disable-next-line no-console
-        console.log('GitMediaStore: Initializing list...', {
-            hasToken: !!GITHUB_TOKEN,
-            repo: `${REPO_OWNER}/${REPO_NAME}`,
-            branch: BRANCH,
-            directory: options?.directory,
-        });
-
         if (!GITHUB_TOKEN) {
-            // Fallback or empty if no token (user might be viewing without logging in?)
-            // But this is called by CMS.
             console.warn('No GitHub Token available for media list');
             return { items: [] };
         }
@@ -66,16 +58,15 @@ export class GitMediaStore implements MediaStore {
 
         try {
             const rawItems = await this.listGithubFiles(repoDir);
-            // eslint-disable-next-line no-console
-            console.log(`GitMediaStore: GitHub returned ${rawItems.length} items.`, rawItems);
 
-            const items = rawItems.slice(Number(offset), Number(offset) + limit).map((item) => {
+            const items: Media[] = rawItems.slice(Number(offset), Number(offset) + limit).map((item) => {
                 const relativePath = item.path.replace(new RegExp(`^${PUBLIC_FOLDER}/`), '');
+                const previewUrl = this.getRawUrl(item.path);
 
                 if (item.type === 'dir') {
                     return {
                         type: 'dir' as const,
-                        id: relativePath,
+                        id: '/' + relativePath,
                         filename: item.name,
                         directory: directory || '',
                         thumbnails: {} as Record<string, string>,
@@ -83,18 +74,16 @@ export class GitMediaStore implements MediaStore {
                     };
                 }
 
-                const publicUrl = this.getRawUrl(item.path);
-
                 return {
                     type: 'file' as const,
-                    id: relativePath,
+                    id: '/' + relativePath,
                     filename: item.name,
                     directory: directory || '',
                     thumbnails: {
-                        '75x75': publicUrl,
-                        '100x100': publicUrl,
+                        '75x75': previewUrl,
+                        '100x100': previewUrl,
                     } as Record<string, string>,
-                    src: publicUrl,
+                    src: previewUrl,
                 };
             });
 
