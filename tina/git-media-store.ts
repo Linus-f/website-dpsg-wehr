@@ -37,6 +37,8 @@ export class GitMediaStore implements MediaStore {
                 directory: directory || '',
                 thumbnails: {
                     '75x75': githubUrl,
+                    '400x400': githubUrl,
+                    '1000x1000': githubUrl,
                 },
                 src: localUrl,
             });

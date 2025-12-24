@@ -11,10 +11,6 @@ export default function MDXImage(props: {
     className?: string;
     fetchPriority?: 'high' | 'low' | 'auto';
 }) {
-    if (typeof window !== 'undefined') {
-        // eslint-disable-next-line no-console
-        console.log('MDXImage rendering with props:', props);
-    }
     if (!props.src) return null;
 
     const isPriority = props.priority === true || props.priority === 'true';
