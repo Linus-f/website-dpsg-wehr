@@ -1,3 +1,9 @@
+## [1.7.2](https://github.com/Linus-f/website-dpsg-wehr/compare/v1.7.1...v1.7.2) (2025-12-24)
+
+### Bug Fixes
+
+- secure admin assets and resolve redirect loop ([0633e0b](https://github.com/Linus-f/website-dpsg-wehr/commit/0633e0b1b8ba50f3f28417347f4dfb31fdb61f23))
+
 ## [1.7.1](https://github.com/Linus-f/website-dpsg-wehr/compare/v1.7.0...v1.7.1) (2025-12-23)
 
 ### Bug Fixes
