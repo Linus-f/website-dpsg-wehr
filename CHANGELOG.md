@@ -1,3 +1,10 @@
+## [1.7.15](https://github.com/Linus-f/website-dpsg-wehr/compare/v1.7.14...v1.7.15) (2025-12-24)
+
+### Bug Fixes
+
+- **media:** implement parse method in GitMediaStore ([26fb602](https://github.com/Linus-f/website-dpsg-wehr/commit/26fb6021cdb569adbd53a6769b1e5eb16c0a4706))
+- **media:** restore GitHub raw URLs for previews and thumbnails ([e21fad3](https://github.com/Linus-f/website-dpsg-wehr/commit/e21fad3c147e6149cffcf429f9052f510ae649c1))
+
 ## [1.7.14](https://github.com/Linus-f/website-dpsg-wehr/compare/v1.7.13...v1.7.14) (2025-12-24)
 
 ### Bug Fixes
