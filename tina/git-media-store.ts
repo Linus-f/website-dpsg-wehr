@@ -120,6 +120,10 @@ export class GitMediaStore implements MediaStore {
         await this.deleteFromGithub(repoPath);
     }
 
+    parse(media: Media): string {
+        return media.src || '';
+    }
+
     previewSrc(src: string): string {
         // eslint-disable-next-line no-console
         console.log('GitMediaStore.previewSrc called with:', src);
