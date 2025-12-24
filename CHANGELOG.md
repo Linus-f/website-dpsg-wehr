@@ -1,3 +1,9 @@
+## [1.7.18](https://github.com/Linus-f/website-dpsg-wehr/compare/v1.7.17...v1.7.18) (2025-12-24)
+
+### Bug Fixes
+
+- **tina:** enable local media store for dev, allow pdfs/files in git store, use media picker for downloads ([7006c70](https://github.com/Linus-f/website-dpsg-wehr/commit/7006c70df278ff40a0d0d058b906aecc0e98cb50))
+
 ## [1.7.17](https://github.com/Linus-f/website-dpsg-wehr/compare/v1.7.16...v1.7.17) (2025-12-24)
 
 ## [1.7.16](https://github.com/Linus-f/website-dpsg-wehr/compare/v1.7.15...v1.7.16) (2025-12-24)
