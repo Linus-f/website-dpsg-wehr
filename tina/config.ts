@@ -29,7 +29,7 @@ const mdxTemplates: any[] = [
         name: 'Download',
         label: 'Download Link',
         fields: [
-            { type: 'string', name: 'src', label: 'File Path' },
+            { type: 'image', name: 'src', label: 'File Path' },
             { type: 'string', name: 'title', label: 'Link Title' },
         ],
     },
@@ -97,12 +97,19 @@ export default defineConfig({
         outputFolder: 'admin',
         publicFolder: 'public',
     },
-    media: {
-        loadCustomStore: async () => {
-            const pack = await import('./git-media-store');
-            return pack.GitMediaStore;
-        },
-    },
+    media: isLocal
+        ? {
+              tina: {
+                  publicFolder: 'public',
+                  mediaRoot: 'media',
+              },
+          }
+        : {
+              loadCustomStore: async () => {
+                  const pack = await import('./git-media-store');
+                  return pack.GitMediaStore;
+              },
+          },
     // See docs on content modeling for more info on how to setup new content models: https://tina.io/docs/r/content-modelling-collections/
     schema: {
         collections: [

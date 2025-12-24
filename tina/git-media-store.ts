@@ -9,7 +9,7 @@ const MEDIA_ROOT = 'media';
 const PUBLIC_FOLDER = 'public';
 
 export class GitMediaStore implements MediaStore {
-    accept = 'image/*';
+    accept = '*/*';
 
     async persist(media: MediaUploadOptions[]): Promise<Media[]> {
         if (!GITHUB_TOKEN) {
@@ -178,7 +178,10 @@ export class GitMediaStore implements MediaStore {
                 .filter((item: any) => {
                     if (item.type === 'dir') return true;
                     if (item.type === 'file') {
-                        return /\.(png|jpg|jpeg|gif|webp|svg)$/i.test(item.name);
+                        // Allow everything in the "files" subdirectory
+                        if (path.includes('/files')) return true;
+                        // Otherwise allow images and pdfs
+                        return /\.(png|jpg|jpeg|gif|webp|svg|pdf)$/i.test(item.name);
                     }
                     return false;
                 })
