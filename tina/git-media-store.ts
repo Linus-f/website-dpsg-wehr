@@ -58,45 +58,49 @@ export class GitMediaStore implements MediaStore {
 
         try {
             const rawItems = await this.listGithubFiles(repoDir);
-            
-            const items: Media[] = rawItems.slice(Number(offset), Number(offset) + limit).map((item) => {
-                const relativePath = item.path.replace(new RegExp(`^${PUBLIC_FOLDER}/`), '');
-                const githubUrl = this.getRawUrl(item.path);
-                const localUrl = '/' + relativePath;
 
-                let mediaItem: Media;
+            const items: Media[] = rawItems
+                .slice(Number(offset), Number(offset) + limit)
+                .map((item) => {
+                    const relativePath = item.path.replace(new RegExp(`^${PUBLIC_FOLDER}/`), '');
+                    const githubUrl = this.getRawUrl(item.path);
+                    const localUrl = '/' + relativePath;
 
-                if (item.type === 'dir') {
-                    mediaItem = {
-                        type: 'dir',
-                        id: relativePath,
-                        filename: item.name,
-                        directory: directory || '',
-                        thumbnails: {} as Record<string, string>,
-                        src: localUrl,
-                    };
-                } else {
-                    mediaItem = {
-                        type: 'file',
-                        id: relativePath,
-                        filename: item.name,
-                        directory: directory || '',
-                        thumbnails: {
-                            '75x75': githubUrl,
-                        },
-                        src: localUrl,
-                    };
-                }
+                    let mediaItem: Media;
 
-                return mediaItem;
-            });
+                    if (item.type === 'dir') {
+                        mediaItem = {
+                            type: 'dir',
+                            id: relativePath,
+                            filename: item.name,
+                            directory: directory || '',
+                            thumbnails: {} as Record<string, string>,
+                            src: localUrl,
+                        };
+                    } else {
+                        mediaItem = {
+                            type: 'file',
+                            id: relativePath,
+                            filename: item.name,
+                            directory: directory || '',
+                            thumbnails: {
+                                '75x75': githubUrl,
+                            },
+                            src: localUrl,
+                        };
+                    }
+
+                    return mediaItem;
+                });
 
             // Global debug helper
             if (typeof window !== 'undefined') {
                 // eslint-disable-next-line @typescript-eslint/no-explicit-any
                 (window as any).lastTinaMediaItems = items;
                 // eslint-disable-next-line no-console
-                console.log('GitMediaStore: Returning items to TinaCMS. Type "window.lastTinaMediaItems" to inspect.');
+                console.log(
+                    'GitMediaStore: Returning items to TinaCMS. Type "window.lastTinaMediaItems" to inspect.'
+                );
             }
 
             return {
@@ -114,6 +118,16 @@ export class GitMediaStore implements MediaStore {
     async delete(media: Media): Promise<void> {
         const repoPath = `${PUBLIC_FOLDER}/${media.id}`;
         await this.deleteFromGithub(repoPath);
+    }
+
+    previewSrc(src: string): string {
+        if (!src) return '';
+        if (src.startsWith('http')) return src;
+        const path = src.startsWith('/') ? src : `/${src}`;
+        if (path.startsWith('/media/')) {
+            return `https://raw.githubusercontent.com/${REPO_OWNER}/${REPO_NAME}/${BRANCH}/public${path}`;
+        }
+        return src;
     }
 
     // --- Helpers ---
@@ -154,7 +168,13 @@ export class GitMediaStore implements MediaStore {
         return (
             data
                 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-                .filter((item: any) => item.type === 'file' || item.type === 'dir')
+                .filter((item: any) => {
+                    if (item.type === 'dir') return true;
+                    if (item.type === 'file') {
+                        return /\.(png|jpg|jpeg|gif|webp|svg)$/i.test(item.name);
+                    }
+                    return false;
+                })
                 // eslint-disable-next-line @typescript-eslint/no-explicit-any
                 .map((item: any) => ({
                     name: item.name,
