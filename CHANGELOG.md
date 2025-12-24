@@ -1,3 +1,9 @@
+## [1.7.6](https://github.com/Linus-f/website-dpsg-wehr/compare/v1.7.5...v1.7.6) (2025-12-24)
+
+### Bug Fixes
+
+- resolve media manager crash and enable image previews ([b809450](https://github.com/Linus-f/website-dpsg-wehr/commit/b809450c70efbb715c1e4af5c37cdef1e492ff99))
+
 ## [1.7.5](https://github.com/Linus-f/website-dpsg-wehr/compare/v1.7.4...v1.7.5) (2025-12-24)
 
 ### Bug Fixes
