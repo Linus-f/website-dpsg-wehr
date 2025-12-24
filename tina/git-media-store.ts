@@ -9,7 +9,7 @@ const MEDIA_ROOT = 'media';
 const PUBLIC_FOLDER = 'public';
 
 export class GitMediaStore implements MediaStore {
-    accept = '*';
+    accept = '*/*';
 
     async persist(media: MediaUploadOptions[]): Promise<Media[]> {
         if (!GITHUB_TOKEN) {
@@ -42,15 +42,19 @@ export class GitMediaStore implements MediaStore {
     }
 
     async list(options?: MediaListOptions): Promise<MediaList> {
+        // Debugging logs to verify env vars in production
+        // eslint-disable-next-line no-console
+        console.log('GitMediaStore: Initializing list...', {
+            hasToken: !!GITHUB_TOKEN,
+            repo: `${REPO_OWNER}/${REPO_NAME}`,
+            branch: BRANCH,
+            directory: options?.directory,
+        });
+
         if (!GITHUB_TOKEN) {
             // Fallback or empty if no token (user might be viewing without logging in?)
-
             // But this is called by CMS.
-
-             
-
             console.warn('No GitHub Token available for media list');
-
             return { items: [] };
         }
 
