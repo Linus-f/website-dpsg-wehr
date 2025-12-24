@@ -63,7 +63,7 @@ export class GitMediaStore implements MediaStore {
                 .slice(Number(offset), Number(offset) + limit)
                 .map((item) => {
                     const relativePath = item.path.replace(new RegExp(`^${PUBLIC_FOLDER}/`), '');
-                    const githubUrl = this.getRawUrl(item.path);
+                    // const githubUrl = this.getRawUrl(item.path); // No longer needed for thumbnails
                     const localUrl = '/' + relativePath;
 
                     let mediaItem: Media;
@@ -84,7 +84,7 @@ export class GitMediaStore implements MediaStore {
                             filename: item.name,
                             directory: directory || '',
                             thumbnails: {
-                                '75x75': githubUrl,
+                                '75x75': localUrl, // Use local URL for thumbnail
                             },
                             src: localUrl,
                         };
