@@ -1,3 +1,5 @@
+name: dpsg-wehr
+
 services:
     website:
         build:
