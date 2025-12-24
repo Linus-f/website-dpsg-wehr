@@ -12,8 +12,17 @@ import RecentPosts from './RecentPosts.client';
 import GroupOverview from './GroupOverview';
 import Acrostichon from './Acrostichon';
 
-const fixSrc = (src: string) => {
+const fixSrc = (src: any) => {
     if (!src) return src;
+
+    // Handle TinaCMS media object
+    if (typeof src === 'object' && 'src' in src) {
+        src = src.src;
+    }
+
+    // Ensure src is a string before proceeding
+    if (typeof src !== 'string') return src;
+
     try {
         const url = new URL(src);
         if (url.protocol === 'https:' && url.hostname === 'assets.tina.io') {

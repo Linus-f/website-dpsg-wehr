@@ -13,15 +13,30 @@ function getSrc(src: ExportedImageProps['src']): string {
 export default function Img(props: ExportedImageProps) {
     if (!props.src) return null;
 
+    let safeSrc = props.src;
+
+    // Handle TinaCMS media object being passed as src
+    if (
+        safeSrc &&
+        typeof safeSrc === 'object' &&
+        'id' in safeSrc &&
+        'filename' in safeSrc &&
+        'src' in safeSrc
+    ) {
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        safeSrc = (safeSrc as any).src;
+    }
+
     // For now, we drop the JS-based blur-up to make this a server component.
     // We can still use CSS animations if needed.
     return (
         <ExportedImage
             {...(props as ExportedImageProps)}
+            src={safeSrc}
             className={`${props.className} ${!props.priority ? 'animate-unblur' : ''}`}
             // Add attributes for the lightbox to pick up
             data-lightbox="true"
-            data-src={getSrc(props.src)}
+            data-src={getSrc(safeSrc)}
             data-alt={props.alt}
             data-width={props.width}
             data-height={props.height}
