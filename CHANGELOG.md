@@ -1,3 +1,9 @@
+## [1.7.5](https://github.com/Linus-f/website-dpsg-wehr/compare/v1.7.4...v1.7.5) (2025-12-24)
+
+### Bug Fixes
+
+- resolve typescript build errors and folder navigation ([6e950aa](https://github.com/Linus-f/website-dpsg-wehr/commit/6e950aa020a0e25d42e656120472f2dc8481670b))
+
 ## [1.7.4](https://github.com/Linus-f/website-dpsg-wehr/compare/v1.7.3...v1.7.4) (2025-12-24)
 
 ### Bug Fixes
