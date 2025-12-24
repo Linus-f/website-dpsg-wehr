@@ -1,3 +1,9 @@
+## [1.7.7](https://github.com/Linus-f/website-dpsg-wehr/compare/v1.7.6...v1.7.7) (2025-12-24)
+
+### Bug Fixes
+
+- implement instant image previews and resolve build errors ([cb3248a](https://github.com/Linus-f/website-dpsg-wehr/commit/cb3248a9a00681833370a2062e9cdf26a3b6cd33))
+
 ## [1.7.6](https://github.com/Linus-f/website-dpsg-wehr/compare/v1.7.5...v1.7.6) (2025-12-24)
 
 ### Bug Fixes
