@@ -65,20 +65,28 @@ export class GitMediaStore implements MediaStore {
         const repoDir = `${PUBLIC_FOLDER}/${MEDIA_ROOT}${dirPart ? '/' + dirPart : ''}`;
 
         try {
-            const files = await this.listGithubFiles(repoDir);
+            const rawItems = await this.listGithubFiles(repoDir);
             // eslint-disable-next-line no-console
-            console.log(`GitMediaStore: GitHub returned ${files.length} files.`, files);
+            console.log(`GitMediaStore: GitHub returned ${rawItems.length} items.`, rawItems);
 
-            const items = files.slice(Number(offset), Number(offset) + limit).map((file) => {
-                const relativePath = file.path.replace(new RegExp(`^${PUBLIC_FOLDER}/`), '');
+            const items = rawItems.slice(Number(offset), Number(offset) + limit).map((item) => {
+                const relativePath = item.path.replace(new RegExp(`^${PUBLIC_FOLDER}/`), '');
+
+                if (item.type === 'dir') {
+                    return {
+                        type: 'dir' as const,
+                        id: relativePath,
+                        filename: item.name,
+                    };
+                }
 
                 return {
                     type: 'file' as const,
                     id: relativePath,
-                    filename: file.name,
+                    filename: item.name,
                     directory: directory,
                     thumbnails: {
-                        '75x75': this.getRawUrl(file.path),
+                        '75x75': this.getRawUrl(item.path),
                     },
                     src: '/' + relativePath,
                 };
@@ -87,7 +95,7 @@ export class GitMediaStore implements MediaStore {
             return {
                 items,
                 nextOffset:
-                    Number(offset) + limit < files.length ? Number(offset) + limit : undefined,
+                    Number(offset) + limit < rawItems.length ? Number(offset) + limit : undefined,
             };
         } catch (e) {
             // eslint-disable-next-line no-console
@@ -140,11 +148,13 @@ export class GitMediaStore implements MediaStore {
 
         return (
             data
-                .filter((item: any) => item.type === 'file') // eslint-disable-next-line @typescript-eslint/no-explicit-any
+                // eslint-disable-next-line @typescript-eslint/no-explicit-any
+                .filter((item: any) => item.type === 'file' || item.type === 'dir')
                 // eslint-disable-next-line @typescript-eslint/no-explicit-any
                 .map((item: any) => ({
                     name: item.name,
-                    path: item.path, // public/media/...
+                    path: item.path,
+                    type: item.type,
                 }))
         );
     }
