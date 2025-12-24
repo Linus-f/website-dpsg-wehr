@@ -73,7 +73,7 @@ export class GitMediaStore implements MediaStore {
                         filename: item.name,
                         directory: directory || '',
                         thumbnails: {} as Record<string, string>,
-                        src: '',
+                        src: localUrl,
                     };
                 } else {
                     mediaItem = {
