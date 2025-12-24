@@ -1,3 +1,9 @@
+## [1.7.9](https://github.com/Linus-f/website-dpsg-wehr/compare/v1.7.8...v1.7.9) (2025-12-24)
+
+### Bug Fixes
+
+- enforce absolute paths for media src and clean up IDs ([c9852ab](https://github.com/Linus-f/website-dpsg-wehr/commit/c9852ab72b9adcb8cd646b4b38191c0b793aeac1))
+
 ## [1.7.8](https://github.com/Linus-f/website-dpsg-wehr/compare/v1.7.7...v1.7.8) (2025-12-24)
 
 ### Bug Fixes
