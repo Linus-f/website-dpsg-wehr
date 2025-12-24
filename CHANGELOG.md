@@ -1,3 +1,9 @@
+## [1.7.3](https://github.com/Linus-f/website-dpsg-wehr/compare/v1.7.2...v1.7.3) (2025-12-24)
+
+### Bug Fixes
+
+- use robust directory mount for auth and resolve Nginx 500 error ([1d1531e](https://github.com/Linus-f/website-dpsg-wehr/commit/1d1531ea44e77e0c1ea18f883198a4a4af1ce93e))
+
 ## [1.7.2](https://github.com/Linus-f/website-dpsg-wehr/compare/v1.7.1...v1.7.2) (2025-12-24)
 
 ### Bug Fixes
