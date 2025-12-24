@@ -1,3 +1,9 @@
+# [1.8.0](https://github.com/Linus-f/website-dpsg-wehr/compare/v1.7.18...v1.8.0) (2025-12-24)
+
+### Features
+
+- **tina:** configure search in tinacms dashboard ([97f70ab](https://github.com/Linus-f/website-dpsg-wehr/commit/97f70abf83b64b444b27b0900e716ea3b8cc1917))
+
 ## [1.7.18](https://github.com/Linus-f/website-dpsg-wehr/compare/v1.7.17...v1.7.18) (2025-12-24)
 
 ### Bug Fixes
