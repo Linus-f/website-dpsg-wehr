@@ -150,11 +150,11 @@
                                 "label": "Download Link",
                                 "fields": [
                                     {
-                                        "type": "string",
+                                        "type": "image",
                                         "name": "src",
                                         "label": "File Path",
                                         "namespace": ["post", "body", "Download", "src"],
-                                        "searchable": true,
+                                        "searchable": false,
                                         "uid": false
                                     },
                                     {
@@ -408,11 +408,11 @@
                                 "label": "Download Link",
                                 "fields": [
                                     {
-                                        "type": "string",
+                                        "type": "image",
                                         "name": "src",
                                         "label": "File Path",
                                         "namespace": ["page", "body", "Download", "src"],
-                                        "searchable": true,
+                                        "searchable": false,
                                         "uid": false
                                     },
                                     {
@@ -666,11 +666,11 @@
                                 "label": "Download Link",
                                 "fields": [
                                     {
-                                        "type": "string",
+                                        "type": "image",
                                         "name": "src",
                                         "label": "File Path",
                                         "namespace": ["gruppen", "body", "Download", "src"],
-                                        "searchable": true,
+                                        "searchable": false,
                                         "uid": false
                                     },
                                     {
@@ -2634,7 +2634,7 @@
                         "name": { "kind": "Name", "value": "src" },
                         "type": {
                             "kind": "NamedType",
-                            "name": { "kind": "Name", "value": "StringFilter" }
+                            "name": { "kind": "Name", "value": "ImageFilter" }
                         }
                     },
                     {
@@ -3113,7 +3113,7 @@
                         "name": { "kind": "Name", "value": "src" },
                         "type": {
                             "kind": "NamedType",
-                            "name": { "kind": "Name", "value": "StringFilter" }
+                            "name": { "kind": "Name", "value": "ImageFilter" }
                         }
                     },
                     {
@@ -3560,7 +3560,7 @@
                         "name": { "kind": "Name", "value": "src" },
                         "type": {
                             "kind": "NamedType",
-                            "name": { "kind": "Name", "value": "StringFilter" }
+                            "name": { "kind": "Name", "value": "ImageFilter" }
                         }
                     },
                     {
