@@ -1,3 +1,9 @@
+## [1.9.2](https://github.com/Linus-f/website-dpsg-wehr/compare/v1.9.1...v1.9.2) (2025-12-25)
+
+### Bug Fixes
+
+- **docker:** install build tools for better-sqlite3 native compilation ([5ccce9a](https://github.com/Linus-f/website-dpsg-wehr/commit/5ccce9a123ea3945a293ae656a06fda8cc992200))
+
 ## [1.9.1](https://github.com/Linus-f/website-dpsg-wehr/compare/v1.9.0...v1.9.1) (2025-12-25)
 
 ### Bug Fixes
