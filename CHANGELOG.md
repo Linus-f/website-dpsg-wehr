@@ -1,3 +1,14 @@
+# [1.9.0](https://github.com/Linus-f/website-dpsg-wehr/compare/v1.8.0...v1.9.0) (2025-12-25)
+
+### Bug Fixes
+
+- **ics:** resolve typescript type error in event attribute generation ([9e5f638](https://github.com/Linus-f/website-dpsg-wehr/commit/9e5f638b3c9241beb6ae5a1e3c2ee87a375bb7d5))
+
+### Features
+
+- **calendar:** support secure internal ics generation via token ([c87827d](https://github.com/Linus-f/website-dpsg-wehr/commit/c87827d4a960f30dcf1797f12ea4cb2ecf4db4e7)), closes [#58](https://github.com/Linus-f/website-dpsg-wehr/issues/58)
+- **calendar:** support time, location and description in events ([abe7322](https://github.com/Linus-f/website-dpsg-wehr/commit/abe732299e552aab9664d0fa41b585434f8ba468))
+
 # [1.8.0](https://github.com/Linus-f/website-dpsg-wehr/compare/v1.7.18...v1.8.0) (2025-12-24)
 
 ### Features
