@@ -3,7 +3,7 @@
 This project supports a dual-calendar system:
 
 1. **Public Calendar:** Visible to everyone on the website.
-2. **Internal Calendar:** Contains sensitive dates (e.g., Leiterrunden) and is hidden from the public.
+2. **Internal Calendar:** Contains internal dates (e.g., Leiterrunden) and is hidden from the public.
 
 ## Architecture
 
@@ -39,9 +39,11 @@ import { AppEvent } from '../types';
 
 export const internalEvents: AppEvent[] = [
     {
-        title: 'Confidential Meeting',
-        start: '2024-01-01',
-        end: '2024-01-02', // Optional
+        title: 'Internal Meeting',
+        start: '2024-01-01 14:00',
+        end: '2024-01-02 16:30', // Optional
+        location: 'Wehr',
+        description: 'example',
     },
     // ... more events
 ];
