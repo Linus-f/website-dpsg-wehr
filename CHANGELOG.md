@@ -1,3 +1,9 @@
+## [1.9.1](https://github.com/Linus-f/website-dpsg-wehr/compare/v1.9.0...v1.9.1) (2025-12-25)
+
+### Bug Fixes
+
+- **tina:** manually sync tina-lock.json with schema changes ([dc49660](https://github.com/Linus-f/website-dpsg-wehr/commit/dc49660706992c7ada0a4329b175849d4eb106ef))
+
 # [1.9.0](https://github.com/Linus-f/website-dpsg-wehr/compare/v1.8.0...v1.9.0) (2025-12-25)
 
 ### Bug Fixes
