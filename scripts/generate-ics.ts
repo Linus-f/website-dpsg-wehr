@@ -24,32 +24,31 @@ function parseDate(dateStr: string): ics.DateArray {
 export function convertEventToIcsAttribute(event: AppEvent): ics.EventAttributes {
     const start = parseDate(event.start);
 
-    const baseAttributes: ics.EventAttributes = {
+    const attributes: ics.EventAttributes = {
         start: start,
         title: event.title,
         location: event.location,
         description: event.description,
+        duration: { days: 1 }, // Default duration
     };
 
     if (event.end) {
-        baseAttributes.end = parseDate(event.end);
+        // If end date is present, we must remove duration and add end
+        // We use a temporary object to avoid TS type errors during transition
+        const { duration, ...rest } = attributes;
+        return {
+            ...rest,
+            end: parseDate(event.end),
+        };
     } else {
-        // If it's a date-only event (3 parts), default to 1 day duration
-        if (start.length === 3) {
-            baseAttributes.duration = { days: 1 };
+        // If no end date, adjust duration based on time presence
+        if (start.length === 5) {
+            attributes.duration = { hours: 1 };
         }
-        // If it has time (5 parts) but no end, default to 1 hour?
-        // standard ics behavior often defaults to 1 hour if not specified,
-        // or we can leave it to the client.
-        // Let's set a default duration of 1 hour for timed events if no end is specified.
-        else {
-            baseAttributes.duration = { hours: 1 };
-        }
+        // If date-only (length 3), default days: 1 is already set
+        return attributes;
     }
-
-    return baseAttributes;
 }
-
 function generateIcs(events: AppEvent[], filename: string) {
     const icsEvents = events.map(convertEventToIcsAttribute);
 
