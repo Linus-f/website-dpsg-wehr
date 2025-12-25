@@ -134,3 +134,7 @@ When running on the VPS or targeting production:
 2.  Run `./scripts/setup-vps.sh` to generate `.env` and `.htpasswd`.
 3.  Add `NEXT_PUBLIC_GITHUB_TOKEN` to `.env`.
 4.  `docker compose up -d`.
+
+## Feature Guides
+
+- [Internal Calendar & Event Management](./INTERNAL_CALENDAR.md) - How the secure dual-calendar system works.

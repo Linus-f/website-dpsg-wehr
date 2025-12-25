@@ -34,8 +34,10 @@ export interface TagGroup {
 
 export interface AppEvent {
     title: string;
-    start: string; // YYYY-MM-DD
-    end?: string; // YYYY-MM-DD, exclusive
+    start: string; // YYYY-MM-DD or YYYY-MM-DD HH:mm
+    end?: string; // YYYY-MM-DD or YYYY-MM-DD HH:mm
+    location?: string;
+    description?: string;
 }
 
 export interface NavigationLinkGroup {

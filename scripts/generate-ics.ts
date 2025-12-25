@@ -3,42 +3,52 @@ import * as fs from 'fs';
 import * as path from 'path';
 import { publicEvents } from '../lib/events.public';
 import { internalEvents } from '../lib/events.internal.example'; // We use example here as we don't have the real one
+import { AppEvent } from '../types';
 
 // This script generates ICS files from the events defined in the codebase.
 // It is run as part of the build process.
 
-export interface AppEvent {
-    title: string;
-    start: string; // YYYY-MM-DD
-    end?: string; // YYYY-MM-DD
+function parseDate(dateStr: string): ics.DateArray {
+    // Normalize separator to space (handles "YYYY-MM-DDTHH:mm" and "YYYY-MM-DD HH:mm")
+    const normalized = dateStr.replace('T', ' ');
+    const [datePart, timePart] = normalized.split(' ');
+    const [year, month, day] = datePart.split('-').map(Number);
+
+    if (timePart) {
+        const [hour, minute] = timePart.split(':').map(Number);
+        return [year, month, day, hour, minute];
+    }
+    return [year, month, day];
 }
 
 export function convertEventToIcsAttribute(event: AppEvent): ics.EventAttributes {
-    const startParts = event.start.split('-').map(Number);
-    const start: ics.DateArray = [startParts[0], startParts[1], startParts[2]];
+    const start = parseDate(event.start);
 
-    let end: ics.DateArray | undefined = undefined;
-    if (event.end) {
-        const endParts = event.end.split('-').map(Number);
-        end = [endParts[0], endParts[1], endParts[2]];
-    }
-
-    const baseAttributes = {
+    const attributes: ics.EventAttributes = {
         start: start,
         title: event.title,
+        location: event.location,
+        description: event.description,
+        duration: { days: 1 }, // Default duration
     };
 
-    let attributes: ics.EventAttributes;
-
-    if (end) {
-        attributes = { ...baseAttributes, end: end };
+    if (event.end) {
+        // If end date is present, we must remove duration and add end
+        // We use a temporary object to avoid TS type errors during transition
+        const { duration, ...rest } = attributes;
+        return {
+            ...rest,
+            end: parseDate(event.end),
+        };
     } else {
-        attributes = { ...baseAttributes, duration: { days: 1 } };
+        // If no end date, adjust duration based on time presence
+        if (start.length === 5) {
+            attributes.duration = { hours: 1 };
+        }
+        // If date-only (length 3), default days: 1 is already set
+        return attributes;
     }
-
-    return attributes;
 }
-
 function generateIcs(events: AppEvent[], filename: string) {
     const icsEvents = events.map(convertEventToIcsAttribute);
 
@@ -66,6 +76,12 @@ export function generateAll() {
     // Generate public events
     generateIcs(publicEvents, 'events.ics');
 
+    // Determine internal events filename
+    const internalIcsToken = process.env.INTERNAL_ICS_TOKEN;
+    const internalFilename = internalIcsToken
+        ? `internal-events-${internalIcsToken}.ics`
+        : 'internal-events.ics';
+
     // Try to generate internal events if the file exists
     const internalEventsPath = path.join(process.cwd(), 'lib/events.internal.ts');
     if (fs.existsSync(internalEventsPath)) {
@@ -74,14 +90,14 @@ export function generateAll() {
         const modulePath = '../lib/events.internal';
         import(modulePath)
             .then((m) => {
-                generateIcs(m.internalEvents, 'internal-events.ics');
+                generateIcs(m.internalEvents, internalFilename);
             })
             .catch((err) => {
                 console.error('Error loading internal events:', err);
             });
     } else {
         console.log('No internal events file found, using example.');
-        generateIcs(internalEvents, 'internal-events.ics');
+        generateIcs(internalEvents, internalFilename);
     }
 }
 
