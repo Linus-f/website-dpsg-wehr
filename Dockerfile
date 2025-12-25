@@ -40,6 +40,9 @@ ENV nextImageExportOptimizer_deviceSizes="640,828,1080,1200,1920,2048,3840"
 
 WORKDIR /app
 
+# Install build dependencies for native modules (better-sqlite3)
+RUN apk add --no-cache python3 make g++
+
 # Copy dependencies first for caching
 COPY package.json pnpm-lock.yaml ./
 RUN --mount=type=cache,id=pnpm,target=/root/.local/share/pnpm/store \
