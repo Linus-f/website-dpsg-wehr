@@ -12,6 +12,7 @@ services:
                 - NEXT_PUBLIC_REPO_OWNER=${NEXT_PUBLIC_REPO_OWNER}
                 - NEXT_PUBLIC_REPO_NAME=${NEXT_PUBLIC_REPO_NAME}
                 - NEXT_PUBLIC_REPO_BRANCH=${NEXT_PUBLIC_REPO_BRANCH}
+                - INTERNAL_ICS_TOKEN=${INTERNAL_ICS_TOKEN}
         restart: unless-stopped
         deploy:
             mode: replicated

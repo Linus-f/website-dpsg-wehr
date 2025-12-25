@@ -66,6 +66,12 @@ export function generateAll() {
     // Generate public events
     generateIcs(publicEvents, 'events.ics');
 
+    // Determine internal events filename
+    const internalIcsToken = process.env.INTERNAL_ICS_TOKEN;
+    const internalFilename = internalIcsToken
+        ? `internal-events-${internalIcsToken}.ics`
+        : 'internal-events.ics';
+
     // Try to generate internal events if the file exists
     const internalEventsPath = path.join(process.cwd(), 'lib/events.internal.ts');
     if (fs.existsSync(internalEventsPath)) {
@@ -74,14 +80,14 @@ export function generateAll() {
         const modulePath = '../lib/events.internal';
         import(modulePath)
             .then((m) => {
-                generateIcs(m.internalEvents, 'internal-events.ics');
+                generateIcs(m.internalEvents, internalFilename);
             })
             .catch((err) => {
                 console.error('Error loading internal events:', err);
             });
     } else {
         console.log('No internal events file found, using example.');
-        generateIcs(internalEvents, 'internal-events.ics');
+        generateIcs(internalEvents, internalFilename);
     }
 }
 
