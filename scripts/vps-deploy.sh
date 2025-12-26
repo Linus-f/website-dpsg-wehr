@@ -57,11 +57,11 @@ if [ -f "lib/events.internal.ts" ] && [ -f ".env" ]; then
     if [ -n "$TOKEN" ]; then
         echo "   Found Internal Events file and Token. Generating..."
         
-        # Use a temporary docker service defined in-line to ensure correct volume mapping relative to the host
-        # We assume the host path context is correct for docker compose
+        # Use the dedicated 'generator' service defined in docker-compose.yml
+        # This ensures the volume mount (.:/app) is handled correctly relative to the host path
         
-        docker compose run --rm --entrypoint "" -w /app website \
-             /bin/sh -c "apk add --no-cache nodejs npm && npm install -g pnpm && pnpm install --frozen-lockfile --ignore-scripts && npx tsx scripts/generate-ics.ts"
+        docker compose run --rm generator \
+             /bin/sh -c "npm install -g pnpm && pnpm install --frozen-lockfile --ignore-scripts && INTERNAL_ICS_TOKEN=$TOKEN npx tsx scripts/generate-ics.ts"
             
         mv public/internal-events*.ics public/generated/ 2>/dev/null || true
         mv public/events.ics public/generated/ 2>/dev/null || true

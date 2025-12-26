@@ -48,6 +48,15 @@ services:
             - '9000:9000'
         restart: unless-stopped
 
+    # Temporary service for generating ICS files
+    generator:
+        image: node:22-alpine
+        volumes:
+            - .:/app
+        working_dir: /app
+        profiles:
+            - tools  # Ensure this doesn't start with 'docker compose up'
+
 networks:
     proxy:
         external: true
