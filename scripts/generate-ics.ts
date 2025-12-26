@@ -42,7 +42,7 @@ function getBerlinOffset(year: number, month: number, day: number, hour: number)
 function toBerlinUTC(dateArray: ics.DateArray): ics.DateArray {
     if (dateArray.length < 5) return dateArray; // Date-only, return as is
 
-    const [y, m, d, h, min] = dateArray;
+    const [y, m, d, h, min] = dateArray as [number, number, number, number, number];
     const offset = getBerlinOffset(y, m, d, h);
 
     // Create date in UTC
@@ -80,7 +80,7 @@ export function convertEventToIcsAttribute(event: AppEvent): ics.EventAttributes
     };
 
     if (end) {
-        const { duration, ...rest } = attributes;
+        const { duration: _duration, ...rest } = attributes;
         return {
             ...rest,
             end: end,
