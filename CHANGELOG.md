@@ -1,3 +1,9 @@
+## [1.16.4](https://github.com/Linus-f/website-dpsg-wehr/compare/v1.16.3...v1.16.4) (2025-12-26)
+
+### Bug Fixes
+
+- **vps:** fix pnpm install in generator container ([039b54b](https://github.com/Linus-f/website-dpsg-wehr/commit/039b54bfd909766b00a4f7686b7608648e323390))
+
 ## [1.16.3](https://github.com/Linus-f/website-dpsg-wehr/compare/v1.16.2...v1.16.3) (2025-12-26)
 
 ### Bug Fixes
