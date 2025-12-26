@@ -1,3 +1,9 @@
+# [1.16.0](https://github.com/Linus-f/website-dpsg-wehr/compare/v1.15.0...v1.16.0) (2025-12-26)
+
+### Features
+
+- **vps:** serve generated ics files from root url via nginx alias ([34eddbf](https://github.com/Linus-f/website-dpsg-wehr/commit/34eddbfb13f603bf7bc6b8fe46e8ac6be3770bb0))
+
 # [1.15.0](https://github.com/Linus-f/website-dpsg-wehr/compare/v1.14.0...v1.15.0) (2025-12-26)
 
 ### Features
