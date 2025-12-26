@@ -1,3 +1,9 @@
+## [1.13.1](https://github.com/Linus-f/website-dpsg-wehr/compare/v1.13.0...v1.13.1) (2025-12-26)
+
+### Bug Fixes
+
+- **vps:** enhance deploy script with error handling and logging ([5c698a3](https://github.com/Linus-f/website-dpsg-wehr/commit/5c698a3ef67a1105981a53146152215ab3d4a1b7))
+
 # [1.13.0](https://github.com/Linus-f/website-dpsg-wehr/compare/v1.12.0...v1.13.0) (2025-12-26)
 
 ### Features
