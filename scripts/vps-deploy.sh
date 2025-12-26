@@ -48,41 +48,25 @@ echo "⬇️  Pulling new image..."
 docker compose pull website
 
 # 4. Generate Internal ICS (Hybrid Approach)
-# We run a temporary Node container to generate the ICS file using the local secrets
 echo "tj📅 Generating Internal Calendar..."
 mkdir -p public/generated
 
-# We use the 'node:22-alpine' image to run the script, mounting the necessary files
-# We mount the whole project to access scripts/ and lib/
-# We output to public/generated which is then mounted by Nginx
 if [ -f "lib/events.internal.ts" ] && [ -f ".env" ]; then
-    # Extract token
     TOKEN=$(grep '^INTERNAL_ICS_TOKEN=' .env | cut -d '=' -f2- | tr -d '"' | tr -d "'")
     
     if [ -n "$TOKEN" ]; then
         echo "   Found Internal Events file and Token. Generating..."
         
-        # Run generation in a temporary container
-        # We assume the user has 'tsx' dependencies. 
-        # Actually, simpler: The pre-built image HAS the scripts. 
-        # But the pre-built image is Nginx (no node).
-        # So we use a standard node image and install the minimal deps.
-        
-        # Optimization: We just manually construct the file or use a tiny helper script?
-        # No, we need the full 'ics' library logic.
-        
-        # Let's use a temporary container to install deps and run the script.
-        # This is slow but reliable.
+        # We mount $(pwd) to /app. The Docker working dir is /app.
+        # Ensure package.json is in the current directory (which it is, for dpsg-wehr).
         
         docker run --rm \
             -v "$(pwd):/app" \
             -w /app \
             -e INTERNAL_ICS_TOKEN="$TOKEN" \
             node:22-alpine \
-            sh -c "npm install -g pnpm && pnpm install --frozen-lockfile && npx tsx scripts/generate-ics.ts"
+            sh -c "npm install -g pnpm && pnpm install --frozen-lockfile --ignore-scripts && npx tsx scripts/generate-ics.ts"
             
-        # Move the generated files to the mounted directory
-        # We move any file matching the pattern to cover both tokenized and non-tokenized versions
         mv public/internal-events*.ics public/generated/ 2>/dev/null || true
         mv public/events.ics public/generated/ 2>/dev/null || true
         
@@ -93,7 +77,6 @@ if [ -f "lib/events.internal.ts" ] && [ -f ".env" ]; then
 else
     echo "   ⚠️ lib/events.internal.ts not found. Skipping internal calendar generation."
 fi
-
 
 # 5. Update container
 echo "🚀 Restarting containers..."
