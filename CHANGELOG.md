@@ -1,3 +1,13 @@
+# [1.11.0](https://github.com/Linus-f/website-dpsg-wehr/compare/v1.10.0...v1.11.0) (2025-12-26)
+
+### Bug Fixes
+
+- **tina:** revert tina-lock.json to production schema ([418becb](https://github.com/Linus-f/website-dpsg-wehr/commit/418becb7bb423793cdf1566fd46329923e26b07d))
+
+### Features
+
+- **scripts:** add check-schema script to compare local and remote tina-lock.json ([8a72417](https://github.com/Linus-f/website-dpsg-wehr/commit/8a72417498aaeb90b8bc344ec676a6cdb5076882))
+
 # [1.10.0](https://github.com/Linus-f/website-dpsg-wehr/compare/v1.9.3...v1.10.0) (2025-12-26)
 
 ### Features
