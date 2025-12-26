@@ -1,3 +1,9 @@
+## [1.17.1](https://github.com/Linus-f/website-dpsg-wehr/compare/v1.17.0...v1.17.1) (2025-12-26)
+
+### Bug Fixes
+
+- **calendar:** fix typescript error, linting issues and add unit tests ([b5a7637](https://github.com/Linus-f/website-dpsg-wehr/commit/b5a763762f9adbc4656d0f4dee60bacc57764c5a))
+
 # [1.17.0](https://github.com/Linus-f/website-dpsg-wehr/compare/v1.16.9...v1.17.0) (2025-12-26)
 
 ### Features
