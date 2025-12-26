@@ -21,6 +21,7 @@
         "test:all": "pnpm test --run && pnpm test:e2e",
         "test:report": "npx serve test-results",
         "format": "prettier --write .",
+        "check-schema": "tsx scripts/check-tina-schema.ts",
         "prepare": "husky"
     },
     "lint-staged": {
