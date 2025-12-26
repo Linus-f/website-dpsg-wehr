@@ -1,3 +1,9 @@
+## [1.16.6](https://github.com/Linus-f/website-dpsg-wehr/compare/v1.16.5...v1.16.6) (2025-12-26)
+
+### Bug Fixes
+
+- **calendar:** set event timezone to Europe/Berlin ([13758ac](https://github.com/Linus-f/website-dpsg-wehr/commit/13758acf98bac0455d55222a7ccd4138afbb9a17))
+
 ## [1.16.5](https://github.com/Linus-f/website-dpsg-wehr/compare/v1.16.4...v1.16.5) (2025-12-26)
 
 ### Bug Fixes
