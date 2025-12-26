@@ -1,3 +1,9 @@
+# [1.12.0](https://github.com/Linus-f/website-dpsg-wehr/compare/v1.11.0...v1.12.0) (2025-12-26)
+
+### Features
+
+- **ci:** switch to pre-built docker images for vps deployment ([9d8ddaf](https://github.com/Linus-f/website-dpsg-wehr/commit/9d8ddaf5c9776302fe4877c300b4b768f660b2cd))
+
 # [1.11.0](https://github.com/Linus-f/website-dpsg-wehr/compare/v1.10.0...v1.11.0) (2025-12-26)
 
 ### Bug Fixes
