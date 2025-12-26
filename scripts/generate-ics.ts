@@ -26,6 +26,8 @@ export function convertEventToIcsAttribute(event: AppEvent): ics.EventAttributes
 
     const attributes: ics.EventAttributes = {
         start: start,
+        startInputType: 'local',
+        startOutputType: 'local',
         title: event.title,
         location: event.location,
         description: event.description,
