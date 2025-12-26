@@ -1,3 +1,9 @@
+## [1.16.9](https://github.com/Linus-f/website-dpsg-wehr/compare/v1.16.8...v1.16.9) (2025-12-26)
+
+### Bug Fixes
+
+- **vps:** use HOST_PROJECT_PATH for generator volume mount ([68b5f0c](https://github.com/Linus-f/website-dpsg-wehr/commit/68b5f0ca2ee14f7d073faf970c43e581cac58967))
+
 ## [1.16.8](https://github.com/Linus-f/website-dpsg-wehr/compare/v1.16.7...v1.16.8) (2025-12-26)
 
 ### Bug Fixes
