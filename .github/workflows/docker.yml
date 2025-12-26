@@ -141,3 +141,11 @@ jobs:
                   labels: ${{ steps.meta.outputs.labels }}
                   cache-from: type=gha
                   cache-to: type=gha,mode=max
+
+            - name: 🚀 Trigger VPS Deployment
+              if: steps.check.outputs.is_release == 'true'
+              run: |
+                  curl -X POST \
+                  -H "Content-Type: application/json" \
+                  -d '{"ref": "${{ github.ref_name }}"}' \
+                  "${{ secrets.WEBHOOK_URL }}?token=${{ secrets.WEBHOOK_TOKEN }}"
