@@ -77,12 +77,13 @@ if [ -f "lib/events.internal.ts" ] && [ -f ".env" ]; then
         docker run --rm \
             -v "$(pwd):/app" \
             -w /app \
+            -e INTERNAL_ICS_TOKEN="$TOKEN" \
             node:22-alpine \
             sh -c "npm install -g pnpm && pnpm install --frozen-lockfile && npx tsx scripts/generate-ics.ts"
             
         # Move the generated files to the mounted directory
-        # The script outputs to public/
-        mv public/internal-events-${TOKEN}.ics public/generated/ 2>/dev/null || true
+        # We move any file matching the pattern to cover both tokenized and non-tokenized versions
+        mv public/internal-events*.ics public/generated/ 2>/dev/null || true
         mv public/events.ics public/generated/ 2>/dev/null || true
         
         echo "   ✅ Calendar files generated in public/generated/"
