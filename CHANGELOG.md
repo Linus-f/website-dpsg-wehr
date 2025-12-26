@@ -1,3 +1,9 @@
+# [1.15.0](https://github.com/Linus-f/website-dpsg-wehr/compare/v1.14.0...v1.15.0) (2025-12-26)
+
+### Features
+
+- **vps:** generate internal calendar on deploy using local secrets ([1b8943e](https://github.com/Linus-f/website-dpsg-wehr/commit/1b8943e18a1a605a4f11bfd2437a64af8a9518a7))
+
 # [1.14.0](https://github.com/Linus-f/website-dpsg-wehr/compare/v1.13.2...v1.14.0) (2025-12-26)
 
 ### Features
