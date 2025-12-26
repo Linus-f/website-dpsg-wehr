@@ -1079,7 +1079,7 @@
                 "namespace": ["global"]
             }
         ],
-        "config": { "media": { "tina": { "publicFolder": "public", "mediaRoot": "media" } } }
+        "config": { "media": {} }
     },
     "lookup": {
         "DocumentConnection": {
