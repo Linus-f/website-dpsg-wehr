@@ -1,3 +1,9 @@
+# [1.10.0](https://github.com/Linus-f/website-dpsg-wehr/compare/v1.9.3...v1.10.0) (2025-12-26)
+
+### Features
+
+- **calendar:** implement secure internal calendar and subscription helper page ([4623aff](https://github.com/Linus-f/website-dpsg-wehr/commit/4623affff927519c3866dba2b8e626400c2a94d3))
+
 ## [1.9.3](https://github.com/Linus-f/website-dpsg-wehr/compare/v1.9.2...v1.9.3) (2025-12-26)
 
 ### Bug Fixes
