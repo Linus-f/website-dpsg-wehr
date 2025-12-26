@@ -1,3 +1,9 @@
+## [1.9.3](https://github.com/Linus-f/website-dpsg-wehr/compare/v1.9.2...v1.9.3) (2025-12-26)
+
+### Bug Fixes
+
+- **build:** remove tina search to resolve build issues ([e906a63](https://github.com/Linus-f/website-dpsg-wehr/commit/e906a639d39fe21863749c7a2e7ff298adcdc869))
+
 ## [1.9.2](https://github.com/Linus-f/website-dpsg-wehr/compare/v1.9.1...v1.9.2) (2025-12-25)
 
 ### Bug Fixes
