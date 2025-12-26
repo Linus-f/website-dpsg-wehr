@@ -57,15 +57,11 @@ if [ -f "lib/events.internal.ts" ] && [ -f ".env" ]; then
     if [ -n "$TOKEN" ]; then
         echo "   Found Internal Events file and Token. Generating..."
         
-        # We mount $(pwd) to /app. The Docker working dir is /app.
-        # Ensure package.json is in the current directory (which it is, for dpsg-wehr).
+        # Use a temporary docker service defined in-line to ensure correct volume mapping relative to the host
+        # We assume the host path context is correct for docker compose
         
-        docker run --rm \
-            -v "$(pwd):/app" \
-            -w /app \
-            -e INTERNAL_ICS_TOKEN="$TOKEN" \
-            node:22-alpine \
-            sh -c "npm install -g pnpm && pnpm install --frozen-lockfile --ignore-scripts && npx tsx scripts/generate-ics.ts"
+        docker compose run --rm --entrypoint "" -w /app website \
+             /bin/sh -c "apk add --no-cache nodejs npm && npm install -g pnpm && pnpm install --frozen-lockfile --ignore-scripts && npx tsx scripts/generate-ics.ts"
             
         mv public/internal-events*.ics public/generated/ 2>/dev/null || true
         mv public/events.ics public/generated/ 2>/dev/null || true
