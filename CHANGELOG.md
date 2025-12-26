@@ -1,3 +1,9 @@
+## [1.16.8](https://github.com/Linus-f/website-dpsg-wehr/compare/v1.16.7...v1.16.8) (2025-12-26)
+
+### Bug Fixes
+
+- **calendar:** remove invalid timezone property from ics attributes ([bb0489b](https://github.com/Linus-f/website-dpsg-wehr/commit/bb0489b8705b813a9e0b661c09e9b43c8e3817d4))
+
 ## [1.16.7](https://github.com/Linus-f/website-dpsg-wehr/compare/v1.16.6...v1.16.7) (2025-12-26)
 
 ### Bug Fixes
