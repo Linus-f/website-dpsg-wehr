@@ -1,3 +1,9 @@
+## [1.16.1](https://github.com/Linus-f/website-dpsg-wehr/compare/v1.16.0...v1.16.1) (2025-12-26)
+
+### Bug Fixes
+
+- **vps:** pass INTERNAL_ICS_TOKEN to ics generator container ([abd90db](https://github.com/Linus-f/website-dpsg-wehr/commit/abd90dbd65a37b4e2b18c8cc6169b832bd1c0d03))
+
 # [1.16.0](https://github.com/Linus-f/website-dpsg-wehr/compare/v1.15.0...v1.16.0) (2025-12-26)
 
 ### Features
