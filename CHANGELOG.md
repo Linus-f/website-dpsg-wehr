@@ -1,3 +1,9 @@
+## [1.13.2](https://github.com/Linus-f/website-dpsg-wehr/compare/v1.13.1...v1.13.2) (2025-12-26)
+
+### Bug Fixes
+
+- **vps:** make deploy script compatible with host and container execution ([b137d68](https://github.com/Linus-f/website-dpsg-wehr/commit/b137d681ecb0c3d53f131d0876d0a9aefa714592))
+
 ## [1.13.1](https://github.com/Linus-f/website-dpsg-wehr/compare/v1.13.0...v1.13.1) (2025-12-26)
 
 ### Bug Fixes
