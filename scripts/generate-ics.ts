@@ -21,33 +21,74 @@ function parseDate(dateStr: string): ics.DateArray {
     return [year, month, day];
 }
 
+// Helper to determine if a date is in Daylight Saving Time (CEST) for Berlin
+// Berlin switches to DST (UTC+2) on last Sunday of March at 2:00
+// Berlin switches back to Standard (UTC+1) on last Sunday of October at 3:00
+function getBerlinOffset(year: number, month: number, day: number, hour: number): number {
+    const date = new Date(Date.UTC(year, month - 1, day, hour));
+
+    // Last Sunday of March
+    const marchNode = new Date(Date.UTC(year, 2, 31));
+    const startDst = new Date(Date.UTC(year, 2, 31 - marchNode.getDay(), 1)); // 2:00 Local = 1:00 UTC
+
+    // Last Sunday of October
+    const octNode = new Date(Date.UTC(year, 9, 31));
+    const endDst = new Date(Date.UTC(year, 9, 31 - octNode.getDay(), 1)); // 3:00 Local (shifted) = 1:00 UTC
+
+    // If between start and end of DST, it's UTC+2, otherwise UTC+1
+    return date >= startDst && date < endDst ? 2 : 1;
+}
+
+function toBerlinUTC(dateArray: ics.DateArray): ics.DateArray {
+    if (dateArray.length < 5) return dateArray; // Date-only, return as is
+
+    const [y, m, d, h, min] = dateArray;
+    const offset = getBerlinOffset(y, m, d, h);
+
+    // Create date in UTC
+    const date = new Date(Date.UTC(y, m - 1, d, h - offset, min));
+
+    return [
+        date.getUTCFullYear(),
+        date.getUTCMonth() + 1,
+        date.getUTCDate(),
+        date.getUTCHours(),
+        date.getUTCMinutes(),
+    ];
+}
+
 export function convertEventToIcsAttribute(event: AppEvent): ics.EventAttributes {
-    const start = parseDate(event.start);
+    let start = parseDate(event.start);
+    let end = event.end ? parseDate(event.end) : undefined;
+
+    // Convert to UTC if it contains time
+    if (start.length === 5) {
+        start = toBerlinUTC(start);
+    }
+    if (end && end.length === 5) {
+        end = toBerlinUTC(end);
+    }
 
     const attributes: ics.EventAttributes = {
         start: start,
-        startInputType: 'local',
-        startOutputType: 'local',
+        // startInputType: 'utc', // Default is UTC if we don't specify local
+        startOutputType: 'utc', // Force output to have 'Z'
         title: event.title,
         location: event.location,
         description: event.description,
         duration: { days: 1 }, // Default duration
     };
 
-    if (event.end) {
-        // If end date is present, we must remove duration and add end
-        // We use a temporary object to avoid TS type errors during transition
+    if (end) {
         const { duration, ...rest } = attributes;
         return {
             ...rest,
-            end: parseDate(event.end),
+            end: end,
         };
     } else {
-        // If no end date, adjust duration based on time presence
         if (start.length === 5) {
             attributes.duration = { hours: 1 };
         }
-        // If date-only (length 3), default days: 1 is already set
         return attributes;
     }
 }
