@@ -1,3 +1,9 @@
+# [1.14.0](https://github.com/Linus-f/website-dpsg-wehr/compare/v1.13.2...v1.14.0) (2025-12-26)
+
+### Features
+
+- **vps:** support dedicated GHCR_PAT for docker login ([b64f960](https://github.com/Linus-f/website-dpsg-wehr/commit/b64f960946aa1b83c436b0dbaf076a3755bdd41b))
+
 ## [1.13.2](https://github.com/Linus-f/website-dpsg-wehr/compare/v1.13.1...v1.13.2) (2025-12-26)
 
 ### Bug Fixes
