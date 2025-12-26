@@ -34,17 +34,26 @@ fi
 
 # 2. Login to GHCR
 if [ -f .env ]; then
-    GITHUB_TOKEN=$(grep '^NEXT_PUBLIC_GITHUB_TOKEN=' .env | cut -d '=' -f2- | tr -d '"' | tr -d "'")
+    # Try to find a dedicated deployment token first
+    GHCR_PAT=$(grep '^GHCR_PAT=' .env | cut -d '=' -f2- | tr -d '"' | tr -d "'")
+    
+    # Fallback to the public token
+    if [ -z "$GHCR_PAT" ]; then
+        GHCR_PAT=$(grep '^NEXT_PUBLIC_GITHUB_TOKEN=' .env | cut -d '=' -f2- | tr -d '"' | tr -d "'")
+    fi
+
     REPO_OWNER=$(grep '^NEXT_PUBLIC_REPO_OWNER=' .env | cut -d '=' -f2- | tr -d '"' | tr -d "'")
     
-    if [ -n "$GITHUB_TOKEN" ] && [ -n "$REPO_OWNER" ]; then
+    if [ -n "$GHCR_PAT" ] && [ -n "$REPO_OWNER" ]; then
         echo "🔐 Logging in to GHCR..."
-        if ! echo "$GITHUB_TOKEN" | docker login ghcr.io -u "$REPO_OWNER" --password-stdin; then
+        # We silence the password output for security
+        if ! echo "$GHCR_PAT" | docker login ghcr.io -u "$REPO_OWNER" --password-stdin; then
              echo "❌ Error: Docker login failed."
+             echo "ℹ️  Ensure the token has 'read:packages' permission."
              exit 1
         fi
     else
-        echo "⚠️  Warning: Credentials not found in .env."
+        echo "⚠️  Warning: Credentials (GHCR_PAT or NEXT_PUBLIC_GITHUB_TOKEN) not found in .env."
     fi
 else
     echo "⚠️  Warning: .env file not found."
