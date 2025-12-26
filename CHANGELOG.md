@@ -1,3 +1,9 @@
+## [1.16.3](https://github.com/Linus-f/website-dpsg-wehr/compare/v1.16.2...v1.16.3) (2025-12-26)
+
+### Bug Fixes
+
+- **calendar:** use local time for ics events to prevent timezone shifts ([bc82017](https://github.com/Linus-f/website-dpsg-wehr/commit/bc82017a783632eb14d9a840ff0ab24c58fec962))
+
 ## [1.16.2](https://github.com/Linus-f/website-dpsg-wehr/compare/v1.16.1...v1.16.2) (2025-12-26)
 
 ### Bug Fixes
