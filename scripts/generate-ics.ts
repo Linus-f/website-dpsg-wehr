@@ -28,6 +28,7 @@ export function convertEventToIcsAttribute(event: AppEvent): ics.EventAttributes
         start: start,
         startInputType: 'local',
         startOutputType: 'local',
+        timezone: 'Europe/Berlin',
         title: event.title,
         location: event.location,
         description: event.description,
