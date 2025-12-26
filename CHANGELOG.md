@@ -1,3 +1,9 @@
+## [1.16.2](https://github.com/Linus-f/website-dpsg-wehr/compare/v1.16.1...v1.16.2) (2025-12-26)
+
+### Bug Fixes
+
+- **vps:** remove nginx.conf mount to fix startup error ([20cb781](https://github.com/Linus-f/website-dpsg-wehr/commit/20cb7814b6d9a8e072c41a7bd6bf7a905d6caa8d))
+
 ## [1.16.1](https://github.com/Linus-f/website-dpsg-wehr/compare/v1.16.0...v1.16.1) (2025-12-26)
 
 ### Bug Fixes
