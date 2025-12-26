@@ -13,6 +13,7 @@ services:
                 delay: 5s
         volumes:
             - ./auth/.htpasswd:/etc/nginx/auth/.htpasswd:ro
+            - ./public/generated:/usr/share/nginx/html/generated:ro
         networks:
             - proxy
         healthcheck:

@@ -1,25 +1,20 @@
 #!/bin/sh
 
 # This script runs inside the webhook container OR on the host.
-# Inside container: Mounted at /var/scripts/vps-deploy.sh, project at /app
-# On host: Run from the project root.
 
-# If we are in the container, /app will exist. 
-# If we are on the host, we should check if we are already in a git repo.
 if [ -d "/app/.git" ]; then
     cd /app
     echo "🐳 Running inside container context (/app)"
 elif [ -d ".git" ]; then
     echo "🏠 Running on host context ($(pwd))"
 else
-    echo "❌ Error: Could not find .git directory. Run this script from the project root."
+    echo "❌ Error: Could not find .git directory."
     exit 1
 fi
 
-# Enable strict error handling
 set -e
 
-# Fix for "dubious ownership" error in Docker environment
+# Fix for "dubious ownership"
 git config --global --add safe.directory "$(pwd)"
 
 echo "🚀 [$(date)] Starting deployment for branch: main"
@@ -28,46 +23,82 @@ echo "🚀 [$(date)] Starting deployment for branch: main"
 echo "📥 Pulling latest changes from main..."
 if ! git pull origin main; then
     echo "❌ Error: git pull failed."
-    echo "ℹ️  Check if you have local changes or network issues."
     exit 1
 fi
 
 # 2. Login to GHCR
 if [ -f .env ]; then
-    # Try to find a dedicated deployment token first
     GHCR_PAT=$(grep '^GHCR_PAT=' .env | cut -d '=' -f2- | tr -d '"' | tr -d "'")
-    
-    # Fallback to the public token
     if [ -z "$GHCR_PAT" ]; then
         GHCR_PAT=$(grep '^NEXT_PUBLIC_GITHUB_TOKEN=' .env | cut -d '=' -f2- | tr -d '"' | tr -d "'")
     fi
-
     REPO_OWNER=$(grep '^NEXT_PUBLIC_REPO_OWNER=' .env | cut -d '=' -f2- | tr -d '"' | tr -d "'")
     
     if [ -n "$GHCR_PAT" ] && [ -n "$REPO_OWNER" ]; then
         echo "🔐 Logging in to GHCR..."
-        # We silence the password output for security
         if ! echo "$GHCR_PAT" | docker login ghcr.io -u "$REPO_OWNER" --password-stdin; then
              echo "❌ Error: Docker login failed."
-             echo "ℹ️  Ensure the token has 'read:packages' permission."
              exit 1
         fi
-    else
-        echo "⚠️  Warning: Credentials (GHCR_PAT or NEXT_PUBLIC_GITHUB_TOKEN) not found in .env."
     fi
-else
-    echo "⚠️  Warning: .env file not found."
 fi
 
 # 3. Pull new image
 echo "⬇️  Pulling new image..."
 docker compose pull website
 
-# 4. Update container
+# 4. Generate Internal ICS (Hybrid Approach)
+# We run a temporary Node container to generate the ICS file using the local secrets
+echo "tj📅 Generating Internal Calendar..."
+mkdir -p public/generated
+
+# We use the 'node:22-alpine' image to run the script, mounting the necessary files
+# We mount the whole project to access scripts/ and lib/
+# We output to public/generated which is then mounted by Nginx
+if [ -f "lib/events.internal.ts" ] && [ -f ".env" ]; then
+    # Extract token
+    TOKEN=$(grep '^INTERNAL_ICS_TOKEN=' .env | cut -d '=' -f2- | tr -d '"' | tr -d "'")
+    
+    if [ -n "$TOKEN" ]; then
+        echo "   Found Internal Events file and Token. Generating..."
+        
+        # Run generation in a temporary container
+        # We assume the user has 'tsx' dependencies. 
+        # Actually, simpler: The pre-built image HAS the scripts. 
+        # But the pre-built image is Nginx (no node).
+        # So we use a standard node image and install the minimal deps.
+        
+        # Optimization: We just manually construct the file or use a tiny helper script?
+        # No, we need the full 'ics' library logic.
+        
+        # Let's use a temporary container to install deps and run the script.
+        # This is slow but reliable.
+        
+        docker run --rm \
+            -v "$(pwd):/app" \
+            -w /app \
+            node:22-alpine \
+            sh -c "npm install -g pnpm && pnpm install --frozen-lockfile && npx tsx scripts/generate-ics.ts"
+            
+        # Move the generated files to the mounted directory
+        # The script outputs to public/
+        mv public/internal-events-${TOKEN}.ics public/generated/ 2>/dev/null || true
+        mv public/events.ics public/generated/ 2>/dev/null || true
+        
+        echo "   ✅ Calendar files generated in public/generated/"
+    else
+         echo "   ⚠️ INTERNAL_ICS_TOKEN not found in .env. Skipping."
+    fi
+else
+    echo "   ⚠️ lib/events.internal.ts not found. Skipping internal calendar generation."
+fi
+
+
+# 5. Update container
 echo "🚀 Restarting containers..."
 docker compose up -d website
 
-# 5. Cleanup
+# 6. Cleanup
 echo "🧹 Cleaning up..."
 docker image prune -f
 
