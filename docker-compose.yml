@@ -2,17 +2,7 @@ name: dpsg-wehr
 
 services:
     website:
-        build:
-            context: .
-            dockerfile: Dockerfile
-            args:
-                - NEXT_PUBLIC_TINA_CLIENT_ID=${NEXT_PUBLIC_TINA_CLIENT_ID}
-                - TINA_TOKEN=${TINA_TOKEN}
-                - NEXT_PUBLIC_GITHUB_TOKEN=${NEXT_PUBLIC_GITHUB_TOKEN}
-                - NEXT_PUBLIC_REPO_OWNER=${NEXT_PUBLIC_REPO_OWNER}
-                - NEXT_PUBLIC_REPO_NAME=${NEXT_PUBLIC_REPO_NAME}
-                - NEXT_PUBLIC_REPO_BRANCH=${NEXT_PUBLIC_REPO_BRANCH}
-                - INTERNAL_ICS_TOKEN=${INTERNAL_ICS_TOKEN}
+        image: ghcr.io/linus-f/website-dpsg-wehr:latest
         restart: unless-stopped
         deploy:
             mode: replicated
@@ -21,6 +11,8 @@ services:
                 order: start-first
                 failure_action: rollback
                 delay: 5s
+        volumes:
+            - ./auth/.htpasswd:/etc/nginx/auth/.htpasswd:ro
         networks:
             - proxy
         healthcheck:
