@@ -1,3 +1,9 @@
+# [1.13.0](https://github.com/Linus-f/website-dpsg-wehr/compare/v1.12.0...v1.13.0) (2025-12-26)
+
+### Features
+
+- **ci:** trigger vps deployment after docker build completes ([60d9473](https://github.com/Linus-f/website-dpsg-wehr/commit/60d9473ae0b4642270b8f713cc079298a860ef36))
+
 # [1.12.0](https://github.com/Linus-f/website-dpsg-wehr/compare/v1.11.0...v1.12.0) (2025-12-26)
 
 ### Features
