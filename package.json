@@ -1,6 +1,6 @@
 {
     "name": "website-dpsg-wehr",
-    "version": "1.16.6",
+    "version": "1.16.7",
     "private": true,
     "browserslist": [
         "defaults and supports es6-module",

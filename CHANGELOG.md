@@ -1,3 +1,9 @@
+## [1.16.7](https://github.com/Linus-f/website-dpsg-wehr/compare/v1.16.6...v1.16.7) (2025-12-26)
+
+### Bug Fixes
+
+- **vps:** add generator service to compose for reliable ics generation ([76fea53](https://github.com/Linus-f/website-dpsg-wehr/commit/76fea53b157d0fc401ff90197313a64a9bdc2437))
+
 ## [1.16.6](https://github.com/Linus-f/website-dpsg-wehr/compare/v1.16.5...v1.16.6) (2025-12-26)
 
 ### Bug Fixes
