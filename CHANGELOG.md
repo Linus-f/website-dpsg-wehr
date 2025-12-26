@@ -1,3 +1,9 @@
+# [1.17.0](https://github.com/Linus-f/website-dpsg-wehr/compare/v1.16.9...v1.17.0) (2025-12-26)
+
+### Features
+
+- **calendar:** implement utc conversion for berlin time events ([d98816d](https://github.com/Linus-f/website-dpsg-wehr/commit/d98816d8af1d3c62b6fc965ae29d062fb1875184))
+
 ## [1.16.9](https://github.com/Linus-f/website-dpsg-wehr/compare/v1.16.8...v1.16.9) (2025-12-26)
 
 ### Bug Fixes
