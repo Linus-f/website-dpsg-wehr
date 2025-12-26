@@ -1,3 +1,9 @@
+## [1.16.5](https://github.com/Linus-f/website-dpsg-wehr/compare/v1.16.4...v1.16.5) (2025-12-26)
+
+### Bug Fixes
+
+- **vps:** use 'docker compose run' for ics generation to fix volume paths ([fbefa0b](https://github.com/Linus-f/website-dpsg-wehr/commit/fbefa0b38806a7b21a28cb6cce3a3018e00c2a83))
+
 ## [1.16.4](https://github.com/Linus-f/website-dpsg-wehr/compare/v1.16.3...v1.16.4) (2025-12-26)
 
 ### Bug Fixes
