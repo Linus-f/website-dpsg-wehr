@@ -1,3 +1,9 @@
+## [1.17.2](https://github.com/Linus-f/website-dpsg-wehr/compare/v1.17.1...v1.17.2) (2025-12-27)
+
+### Bug Fixes
+
+- add NEXT_PUBLIC_GITHUB_TOKEN to docker build env ([6a01a15](https://github.com/Linus-f/website-dpsg-wehr/commit/6a01a15396935d6bd671ef36c5b0127414196457))
+
 ## [1.17.1](https://github.com/Linus-f/website-dpsg-wehr/compare/v1.17.0...v1.17.1) (2025-12-26)
 
 ### Bug Fixes
