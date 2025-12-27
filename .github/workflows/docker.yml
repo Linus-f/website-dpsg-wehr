@@ -79,6 +79,7 @@ jobs:
               env:
                   NEXT_TELEMETRY_DISABLED: 1
                   NEXT_PUBLIC_TINA_CLIENT_ID: ${{ secrets.NEXT_PUBLIC_TINA_CLIENT_ID }}
+                  NEXT_PUBLIC_GITHUB_TOKEN: ${{ secrets.NEXT_PUBLIC_GITHUB_TOKEN }}
                   TINA_TOKEN: ${{ secrets.TINA_TOKEN }}
                   GITHUB_BRANCH: ${{ github.ref_name }}
                   nextImageExportOptimizer_imageFolderPath: 'public/images'
