@@ -21,7 +21,7 @@ export default function PostPreview(props: PostMetadata) {
             >
                 <div className="relative flex-1">
                     {props.image.src == '' || props.image.src == undefined ? (
-                        <div className="w-full h-48 rounded-t-md bg-gray-100 text-gray-100 dark:bg-gray-600 dark:text-gray-600 object-cover" />
+                        <div className="w-full aspect-video rounded-t-md bg-gray-100 text-gray-100 dark:bg-gray-600 dark:text-gray-600 object-cover" />
                     ) : (
                         <ExportedImage
                             height={props.image.height}
@@ -30,7 +30,7 @@ export default function PostPreview(props: PostMetadata) {
                             priority={false}
                             sizes="(max-width: 768px) 100vw, 448px"
                             alt={props.title}
-                            className="w-full h-48 rounded-t-md bg-gray-100 text-gray-100 dark:bg-gray-600 dark:text-gray-600 object-cover"
+                            className="w-full aspect-video rounded-t-md bg-gray-100 text-gray-100 dark:bg-gray-600 dark:text-gray-600 object-cover"
                         />
                     )}
                     <div className="pt-3 ml-4 mr-2 mb-3">
