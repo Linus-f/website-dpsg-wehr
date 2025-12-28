@@ -86,140 +86,209 @@ const mdxTemplates: any[] = [
 ];
 
 const isLocal = process.env.TINA_PUBLIC_IS_LOCAL === 'true';
-const siteUrl = isLocal ? '' : 'https://dpsg-wehr.de';
 
 export default defineConfig({
     branch: isLocal ? 'main' : branch,
+
     clientId: isLocal ? undefined : process.env.NEXT_PUBLIC_TINA_CLIENT_ID,
+
     token: isLocal ? undefined : process.env.TINA_TOKEN,
+
     contentApiUrlOverride: isLocal ? 'http://localhost:4001/graphql' : undefined,
 
     build: {
         outputFolder: 'admin',
+
         publicFolder: 'public',
     },
+
     media: isLocal
         ? {
               tina: {
                   publicFolder: 'public',
+
                   mediaRoot: 'media',
               },
           }
         : {
               loadCustomStore: async () => {
                   const pack = await import('./git-media-store');
+
                   return pack.GitMediaStore;
               },
           },
+
     // See docs on content modeling for more info on how to setup new content models: https://tina.io/docs/r/content-modelling-collections/
+
     schema: {
         collections: [
             {
                 name: 'post',
+
                 label: 'Aktuelles',
+
                 path: 'content/posts',
+
                 format: 'mdx',
+
                 ui: {
-                    router: ({ document }) => `${siteUrl}/posts/${document._sys.filename}`,
+                    router: ({ document }) => `/posts/${document._sys.filename}/`,
                 },
+
                 fields: [
                     {
                         type: 'string',
+
                         name: 'title',
+
                         label: 'Title',
+
                         isTitle: true,
+
                         required: true,
                     },
+
                     {
                         type: 'string',
+
                         name: 'subtitle',
+
                         label: 'Subtitle',
                     },
+
                     {
                         type: 'string',
+
                         name: 'author',
+
                         label: 'Author',
                     },
+
                     {
                         type: 'datetime',
+
                         name: 'date',
+
                         label: 'Date',
                     },
+
                     {
                         type: 'string',
+
                         name: 'slug',
+
                         label: 'Slug',
                     },
+
                     {
                         type: 'image',
+
                         name: 'image',
+
                         label: 'Header Image',
                     },
+
                     {
                         type: 'string',
+
                         name: 'desc',
+
                         label: 'Description',
+
                         ui: {
                             component: 'textarea',
                         },
                     },
+
                     {
                         type: 'rich-text',
+
                         name: 'body',
+
                         label: 'Body',
+
                         isBody: true,
+
                         templates: mdxTemplates,
                     },
                 ],
             },
+
             {
                 name: 'page',
+
                 label: 'Seiten',
+
                 path: 'content/pages',
+
                 format: 'mdx',
+
                 ui: {
                     router: ({ document }) => {
                         if (document._sys.filename === 'startseite') {
-                            return `${siteUrl}/`;
+                            return '/';
                         }
-                        return `${siteUrl}/pages/${document._sys.filename}`;
+
+                        return `/pages/${document._sys.filename}/`;
                     },
                 },
+
                 fields: [
                     {
                         type: 'string',
+
                         name: 'title',
+
                         label: 'Title',
+
                         isTitle: true,
+
                         required: true,
                     },
+
                     {
                         type: 'string',
+
                         name: 'author',
+
                         label: 'Author',
                     },
+
                     {
                         type: 'datetime',
+
                         name: 'date',
+
                         label: 'Date',
                     },
+
                     {
                         type: 'rich-text',
+
                         name: 'body',
+
                         label: 'Body',
+
                         isBody: true,
+
                         templates: mdxTemplates,
                     },
                 ],
             },
+
             {
                 name: 'gruppen',
+
                 label: 'Gruppen',
+
                 path: 'content/gruppen',
+
                 format: 'mdx',
+
                 ui: {
-                    router: ({ document }) => `${siteUrl}/pages/gruppen/${document._sys.filename}`,
+                    router: ({ document }) => `/pages/gruppen/${document._sys.filename}/`,
                 },
+
                 fields: [
                     {
                         type: 'string',

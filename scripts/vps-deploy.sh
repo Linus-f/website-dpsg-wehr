@@ -47,6 +47,11 @@ fi
 echo "⬇️  Pulling new image..."
 docker compose pull website
 
+# 3.1 Ensure directories exist (prevents volume mount issues)
+mkdir -p auth
+mkdir -p public/generated
+chmod 755 public/generated
+
 # 4. Generate Internal ICS (Hybrid Approach)
 echo "tj📅 Generating Internal Calendar..."
 mkdir -p public/generated

@@ -12,7 +12,7 @@ services:
                 failure_action: rollback
                 delay: 5s
         volumes:
-            - ./auth/.htpasswd:/etc/nginx/auth/.htpasswd:ro
+            - ./auth:/etc/nginx/auth:ro
             - ./public/generated:/usr/share/nginx/html/generated:ro
         networks:
             - proxy
