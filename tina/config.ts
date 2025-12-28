@@ -86,6 +86,7 @@ const mdxTemplates: any[] = [
 ];
 
 const isLocal = process.env.TINA_PUBLIC_IS_LOCAL === 'true';
+const siteUrl = isLocal ? '' : 'https://dpsg-wehr.de';
 
 export default defineConfig({
     branch: isLocal ? 'main' : branch,
@@ -119,7 +120,7 @@ export default defineConfig({
                 path: 'content/posts',
                 format: 'mdx',
                 ui: {
-                    router: ({ document }) => `/posts/${document._sys.filename}`,
+                    router: ({ document }) => `${siteUrl}/posts/${document._sys.filename}`,
                 },
                 fields: [
                     {
@@ -179,9 +180,9 @@ export default defineConfig({
                 ui: {
                     router: ({ document }) => {
                         if (document._sys.filename === 'startseite') {
-                            return '/';
+                            return `${siteUrl}/`;
                         }
-                        return `/pages/${document._sys.filename}`;
+                        return `${siteUrl}/pages/${document._sys.filename}`;
                     },
                 },
                 fields: [
@@ -217,7 +218,7 @@ export default defineConfig({
                 path: 'content/gruppen',
                 format: 'mdx',
                 ui: {
-                    router: ({ document }) => `/pages/gruppen/${document._sys.filename}`,
+                    router: ({ document }) => `${siteUrl}/pages/gruppen/${document._sys.filename}`,
                 },
                 fields: [
                     {
