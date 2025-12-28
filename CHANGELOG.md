@@ -1,3 +1,9 @@
+## [1.17.4](https://github.com/Linus-f/website-dpsg-wehr/compare/v1.17.3...v1.17.4) (2025-12-28)
+
+### Bug Fixes
+
+- resolve mixed content, url routing, and docker volume issues ([4b5f29e](https://github.com/Linus-f/website-dpsg-wehr/commit/4b5f29ead8ac32d8372e00395c1b23ad11bc76b4))
+
 ## [1.17.3](https://github.com/Linus-f/website-dpsg-wehr/compare/v1.17.2...v1.17.3) (2025-12-28)
 
 ### Bug Fixes
