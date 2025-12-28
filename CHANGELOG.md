@@ -1,3 +1,5 @@
+## [1.17.6](https://github.com/Linus-f/website-dpsg-wehr/compare/v1.17.5...v1.17.6) (2025-12-28)
+
 ## [1.17.5](https://github.com/Linus-f/website-dpsg-wehr/compare/v1.17.4...v1.17.5) (2025-12-28)
 
 ## [1.17.4](https://github.com/Linus-f/website-dpsg-wehr/compare/v1.17.3...v1.17.4) (2025-12-28)
