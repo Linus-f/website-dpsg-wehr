@@ -13,7 +13,7 @@ export default function FloatingImage({
     height: number;
 }) {
     return (
-        <div className="relative w-screen md:w-full md:prose-lg -mt-8 md:mt-0 mb-8 -mx-2 sm:-mx-4 md:mx-0 h-[20rem] md:h-[28rem] overflow-hidden md:rounded-2xl shadow-sm shadow-black md:shadow-md md:shadow-black bg-gray-200 dark:bg-gray-800">
+        <div className="relative w-screen md:w-full -mt-8 md:mt-0 mb-8 -mx-2 sm:-mx-4 md:mx-0 overflow-hidden md:rounded-2xl shadow-none md:shadow-md md:shadow-black bg-gray-200 dark:bg-gray-800 flex justify-center items-center">
             {/* Background Blur Layer */}
             <ExportedImage
                 src={src}
@@ -32,7 +32,7 @@ export default function FloatingImage({
                 alt={alt}
                 width={width}
                 height={height}
-                className="relative w-full h-full object-contain z-10"
+                className="relative block w-full h-auto max-h-[35rem] object-contain z-10"
                 priority={true}
                 fetchPriority="high"
                 sizes="(max-width: 768px) 100vw, 896px"

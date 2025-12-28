@@ -12,7 +12,7 @@
         "build:ci": "tinacms build --local --skip-cloud-checks && tsx scripts/generate-ics.ts && tsx scripts/generate-search-index.ts && next build",
         "start": "tinacms build && next start",
         "lint": "eslint .",
-        "export": "pnpm run build && next-image-export-optimizer && node scripts/inline-css.mjs",
+        "export": "pnpm run build:ci && next-image-export-optimizer && node scripts/inline-css.mjs",
         "release:dry-run": "semantic-release --dry-run --no-ci --branches $(git branch --show-current) --plugins @semantic-release/commit-analyzer",
         "serve": "npx serve@latest out",
         "test": "vitest",
