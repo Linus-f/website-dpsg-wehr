@@ -1,3 +1,9 @@
+## [1.17.3](https://github.com/Linus-f/website-dpsg-wehr/compare/v1.17.2...v1.17.3) (2025-12-28)
+
+### Bug Fixes
+
+- **tina:** use absolute URLs for preview router to prevent mixed content errors ([722dfb8](https://github.com/Linus-f/website-dpsg-wehr/commit/722dfb814da17f30a0b0404d58a8415a1ad5bcf1))
+
 ## [1.17.2](https://github.com/Linus-f/website-dpsg-wehr/compare/v1.17.1...v1.17.2) (2025-12-27)
 
 ### Bug Fixes
