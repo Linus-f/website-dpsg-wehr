@@ -60,6 +60,7 @@ export default async function Navbar() {
         if (link.links) {
             const menuItems = link.links?.map((item: NavigationLink) => {
                 const Icon = getIconFromname(item.Icon, item.color);
+                const isThemed = !item.color;
 
                 return (
                     <Link
@@ -67,7 +68,11 @@ export default async function Navbar() {
                         href={item.link}
                         className="leading-none py-2 px-2 font-light hover:bg-gray-200 dark:hover:bg-gray-600 rounded dark:text-white flex flex-row items-center whitespace-nowrap"
                     >
-                        <div className="w-5 h-5 mr-2 flex items-center justify-center">{Icon}</div>
+                        <div
+                            className={`${isThemed ? 'w-[30px] h-[30px] rounded bg-blue-100 dark:bg-blue-900/30 text-blue-600 dark:text-blue-300' : 'w-5 h-5'} mr-2 flex items-center justify-center`}
+                        >
+                            {Icon}
+                        </div>
                         {item.label}
                     </Link>
                 );

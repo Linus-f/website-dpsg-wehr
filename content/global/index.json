@@ -59,12 +59,12 @@
                 "icon": "More",
                 "links": [
                     {
-                        "label": "Pfadfinerheim St. Raphael",
+                        "label": "Pfadfinderheim St. Raphael",
                         "link": "https://www.pfadfinderheim-st-raphael.de/",
                         "icon": "House"
                     },
                     {
-                        "label": "Padfinderhaus Nöggenschwiel",
+                        "label": "Pfadfinderhaus Nöggenschwiel",
                         "link": "http://www.pfadfinderhaus-noeggenschwiel.de/",
                         "icon": "House"
                     },

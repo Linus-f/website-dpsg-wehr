@@ -1,10 +1,17 @@
-import type { Metadata } from 'next';
+import type { Metadata, Viewport } from 'next';
 import './globals.css';
 import LayoutBody from '@/components/LayoutBody';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import Providers from '@/components/Providers';
 import SVGSymbols from '@/components/SVGSymbols';
+
+export const viewport: Viewport = {
+    themeColor: [
+        { media: '(prefers-color-scheme: light)', color: '#f9fafb' },
+        { media: '(prefers-color-scheme: dark)', color: '#374151' },
+    ],
+};
 
 export const metadata: Metadata = {
     metadataBase: new URL('https://dpsg-wehr.de'),
@@ -43,7 +50,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             <body className={`antialiased prose-headings:break-words prose-headings:hyphens-auto`}>
                 <SVGSymbols />
                 <Providers>
-                    <div className="flex flex-col min-h-screen">
+                    <div className="flex flex-col min-h-screen bg-gray-100 dark:bg-gray-700">
                         <Navbar />
                         <LayoutBody>{children}</LayoutBody>
                         <Footer />
