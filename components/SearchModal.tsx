@@ -60,8 +60,12 @@ export default function SearchModal({ isOpen, onClose }: { isOpen: boolean; onCl
 
     useEffect(() => {
         if (isOpen) {
-            setTimeout(() => inputRef.current?.focus(), 50);
+            // Immediate focus for most browsers
+            inputRef.current?.focus();
+            // Short timeout as fallback for some mobile browsers/modal mount delays
+            const timer = setTimeout(() => inputRef.current?.focus(), 50);
             document.body.style.overflow = 'hidden';
+            return () => clearTimeout(timer);
         } else {
             document.body.style.overflow = 'unset';
             // eslint-disable-next-line react-hooks/set-state-in-effect
@@ -257,7 +261,9 @@ export default function SearchModal({ isOpen, onClose }: { isOpen: boolean; onCl
                     <IoSearch className="text-gray-400 text-xl mr-3" />
                     <input
                         ref={inputRef}
-                        type="text"
+                        type="search"
+                        inputMode="search"
+                        autoFocus
                         className="flex-1 bg-transparent border-none outline-none text-gray-900 dark:text-white placeholder-gray-400 text-lg"
                         placeholder="Suchen..."
                         value={query}
