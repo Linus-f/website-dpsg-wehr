@@ -1,3 +1,10 @@
+# [1.18.0](https://github.com/Linus-f/website-dpsg-wehr/compare/v1.17.6...v1.18.0) (2025-12-31)
+
+### Features
+
+- **nav:** overhaul mobile menu and improve navigation consistency ([d515e9c](https://github.com/Linus-f/website-dpsg-wehr/commit/d515e9ca3ce194de7e930b01e84792171ce30423))
+- **search:** improve auto-focus on mobile ([30076c1](https://github.com/Linus-f/website-dpsg-wehr/commit/30076c172be3664f71d728152da7c31262e0df7e))
+
 ## [1.17.6](https://github.com/Linus-f/website-dpsg-wehr/compare/v1.17.5...v1.17.6) (2025-12-28)
 
 ## [1.17.5](https://github.com/Linus-f/website-dpsg-wehr/compare/v1.17.4...v1.17.5) (2025-12-28)
