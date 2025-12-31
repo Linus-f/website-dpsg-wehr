@@ -18,15 +18,13 @@ test.describe('Mobile Menu', () => {
         await menuButton.click();
 
         // 3. Verify sidebar is visible
-        // In Sidebar.tsx, it uses the "visible" class when isOpen is true
-        const sidebar = page.locator('div.z-30.absolute.min-w-full');
-        await expect(sidebar).toBeVisible();
+        const sidebar = page.getByTestId('mobile-sidebar');
+        await expect(sidebar).toBeInViewport();
 
-        // 4. Close using the X button inside sidebar
-        const closeButton = sidebar.getByRole('button');
-        await closeButton.click();
+        // 4. Close using the same toggle button (which should now be a close icon)
+        await menuButton.click();
 
-        // 5. Verify sidebar is collapsed
-        await expect(sidebar).not.toBeVisible();
+        // 5. Verify sidebar is hidden (off-screen)
+        await expect(sidebar).not.toBeInViewport();
     });
 });

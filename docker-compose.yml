@@ -55,7 +55,7 @@ services:
             - ${HOST_PROJECT_PATH:-.}:/app
         working_dir: /app
         profiles:
-            - tools  # Ensure this doesn't start with 'docker compose up'
+            - tools # Ensure this doesn't start with 'docker compose up'
 
 networks:
     proxy:

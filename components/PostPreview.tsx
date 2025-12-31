@@ -19,29 +19,34 @@ export default function PostPreview(props: PostMetadata) {
                 href={`/posts/${props.slug}`}
                 className="flex flex-col h-full w-full no-underline"
             >
-                <div className="relative flex-1">
-                    {props.image.src == '' || props.image.src == undefined ? (
-                        <div className="w-full h-48 rounded-t-md bg-gray-100 text-gray-100 dark:bg-gray-600 dark:text-gray-600 object-cover" />
+                <div className="relative aspect-video w-full overflow-hidden rounded-t-md bg-gray-200 dark:bg-gray-800">
+                    {props.image.src ? (
+                        <>
+                            <ExportedImage
+                                src={props.image.src}
+                                alt=""
+                                fill
+                                className="object-cover blur-md opacity-50 scale-105"
+                                sizes="(max-width: 768px) 50vw, 200px"
+                            />
+                            <ExportedImage
+                                src={props.image.src}
+                                alt={props.title}
+                                fill
+                                className="object-contain z-10"
+                                sizes="(max-width: 768px) 100vw, 448px"
+                            />
+                        </>
                     ) : (
-                        <ExportedImage
-                            height={props.image.height}
-                            width={props.image.width}
-                            src={props.image.src}
-                            priority={false}
-                            sizes="(max-width: 768px) 100vw, 448px"
-                            alt={props.title}
-                            className="w-full h-48 rounded-t-md bg-gray-100 text-gray-100 dark:bg-gray-600 dark:text-gray-600 object-cover"
-                        />
+                        <div className="w-full h-full bg-gray-100 dark:bg-gray-600" />
                     )}
-                    <div className="pt-3 ml-4 mr-2 mb-3">
-                        <h2 className="text-xl text-gray-900 dark:text-white">{props.title}</h2>
-                        <p className="text-gray-600 dark:text-gray-300 text-sm mt-1">
-                            {props.desc}
-                        </p>
-                    </div>
                 </div>
-                <div className="pt-3 ml-4 mr-2 mb-3 felx-1 flex flex-col">
-                    <p className="text-gray-600 dark:text-gray-200 text-xs self-end">
+                <div className="pt-3 ml-4 mr-2 mb-3 flex-1 flex flex-col">
+                    <h2 className="text-xl text-gray-900 dark:text-white">{props.title}</h2>
+                    <p className="text-gray-600 dark:text-gray-300 text-sm mt-1 flex-1">
+                        {props.desc}
+                    </p>
+                    <p className="text-gray-600 dark:text-gray-200 text-xs self-end mt-2">
                         {props.date}
                     </p>
                 </div>

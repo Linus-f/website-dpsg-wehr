@@ -2,6 +2,7 @@
 
 import { ThemeProvider } from 'next-themes';
 import { LightboxContext } from '@/lib/LightboxContext';
+import { SidebarContext } from '@/lib/SidebarContext';
 import { useState, useEffect } from 'react';
 import { SlideImage } from 'yet-another-react-lightbox';
 import dynamic from 'next/dynamic';
@@ -12,6 +13,7 @@ const LightboxWrapper = dynamic(() => import('./LightboxWrapper'), { ssr: false 
 export default function Providers({ children }: { children: React.ReactNode }) {
     const [slides, setSlides] = useState<SlideImage[]>([]);
     const [lightBoxOpen, setLightboxOpen] = useState(false);
+    const [sidebarOpen, setSidebarOpen] = useState(false);
     const [index, setIndex] = useState(0);
     const pathname = usePathname();
 
@@ -19,6 +21,9 @@ export default function Providers({ children }: { children: React.ReactNode }) {
         if (lightBoxOpen) {
             setLightboxOpen(false);
             setSlides([]);
+        }
+        if (sidebarOpen) {
+            setSidebarOpen(false);
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [pathname]);
@@ -71,25 +76,33 @@ export default function Providers({ children }: { children: React.ReactNode }) {
 
     return (
         <ThemeProvider attribute="class">
-            <LightboxContext.Provider
+            <SidebarContext.Provider
                 value={{
-                    open: lightBoxOpen,
-                    setOpen: openLightbox,
-                    slides: slides,
-                    addSlide: (s) => setSlides((prev) => [s, ...prev]),
-                    setSlides: setSlides,
+                    isOpen: sidebarOpen,
+                    toggle: () => setSidebarOpen((prev) => !prev),
+                    close: () => setSidebarOpen(false),
                 }}
             >
-                {children}
-                {lightBoxOpen && (
-                    <LightboxWrapper
-                        open={lightBoxOpen}
-                        setOpen={setLightboxOpen}
-                        slides={slides}
-                        index={index}
-                    />
-                )}
-            </LightboxContext.Provider>
+                <LightboxContext.Provider
+                    value={{
+                        open: lightBoxOpen,
+                        setOpen: openLightbox,
+                        slides: slides,
+                        addSlide: (s) => setSlides((prev) => [s, ...prev]),
+                        setSlides: setSlides,
+                    }}
+                >
+                    {children}
+                    {lightBoxOpen && (
+                        <LightboxWrapper
+                            open={lightBoxOpen}
+                            setOpen={setLightboxOpen}
+                            slides={slides}
+                            index={index}
+                        />
+                    )}
+                </LightboxContext.Provider>
+            </SidebarContext.Provider>
         </ThemeProvider>
     );
 }

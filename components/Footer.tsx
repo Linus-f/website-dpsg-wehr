@@ -220,7 +220,7 @@ export default async function Footer() {
                 // eslint-disable-next-line @typescript-eslint/no-explicit-any
                 columns = footerData.columns.map((col: any) => ({
                     title: col?.title || '',
-                     
+
                     links:
                         // eslint-disable-next-line @typescript-eslint/no-explicit-any
                         col?.links?.map((l: any) => ({

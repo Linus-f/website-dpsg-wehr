@@ -42,12 +42,12 @@ export const navigationLinks: Array<NavigationLinkGroup> = [
         Icon: 'More',
         links: [
             {
-                label: 'Heim St. Raphael',
+                label: 'Pfadfinderheim St. Raphael',
                 link: 'https://www.pfadfinderheim-st-raphael.de/',
                 Icon: 'House',
             },
             {
-                label: 'Haus Nöggenschwiel',
+                label: 'Pfadfinderhaus Nöggenschwiel',
                 link: 'http://www.pfadfinderhaus-noeggenschwiel.de/',
                 Icon: 'House',
             },

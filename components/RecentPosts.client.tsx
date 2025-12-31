@@ -11,12 +11,13 @@ export default function RecentPostsClient({ postMetadata }: { postMetadata?: Pos
         );
     }
 
-    const latestPost = postMetadata[0];
-    const displayDate = formatPostDate(latestPost.date);
+    const recentPosts = postMetadata.slice(0, 2);
 
     return (
-        <div className="grid grid-cols-1 gap-4 max-w-md mx-auto sm:ml-0 no-underline">
-            <PostPreview key={latestPost.slug} {...latestPost} date={displayDate} />
+        <div className="not-prose grid grid-cols-1 md:grid-cols-2 justify-items-center gap-4 mx-auto sm:ml-0 no-underline">
+            {recentPosts.map((post) => (
+                <PostPreview key={post.slug} {...post} date={formatPostDate(post.date)} />
+            ))}
         </div>
     );
 }

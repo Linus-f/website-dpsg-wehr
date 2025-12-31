@@ -23,7 +23,7 @@ export default function ToggleThemeButton() {
         <button
             onClick={onToggleTheme}
             aria-label="Toggle dark mode"
-            className={`cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-500 transition-all duration-100 dark:text-white text-gray-800 py-2 px-3 rounded text-xl ${!hasMounted && 'hidden'}`}
+            className={`cursor-pointer hover:bg-gray-200 dark:hover:bg-gray-600 transition-colors duration-200 dark:text-white text-gray-800 w-10 h-10 flex items-center justify-center rounded text-xl ${!hasMounted && 'hidden'}`}
         >
             {hasMounted && currentTheme == 'dark' ? <IoMdBonfire /> : <IoSunny />}
         </button>
