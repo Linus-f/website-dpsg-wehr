@@ -1,3 +1,9 @@
+## [1.18.1](https://github.com/Linus-f/website-dpsg-wehr/compare/v1.18.0...v1.18.1) (2025-12-31)
+
+### Bug Fixes
+
+- **tina:** regenerate tina-lock.json with production settings ([b03b4f0](https://github.com/Linus-f/website-dpsg-wehr/commit/b03b4f0f10f8969676a12504584f9cdc09fbbd82))
+
 # [1.18.0](https://github.com/Linus-f/website-dpsg-wehr/compare/v1.17.6...v1.18.0) (2025-12-31)
 
 ### Features
