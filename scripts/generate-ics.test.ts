@@ -6,7 +6,7 @@ import * as ics from 'ics';
 
 describe('ICS Timezone Logic (Berlin -> UTC)', () => {
     // Helper to format DateArray [Y, M, D, H, m] to ISO UTC string
-    function formatUTC(dateArray: ics.DateArray): string {
+    function formatUTC(dateArray: ics.DateTime | ics.DateArray): string {
         if (!Array.isArray(dateArray) || dateArray.length !== 5) return 'INVALID';
         const [y, m, d, h, min] = dateArray;
         return `${y}-${String(m).padStart(2, '0')}-${String(d).padStart(2, '0')}T${String(h).padStart(2, '0')}:${String(min).padStart(2, '0')}Z`;

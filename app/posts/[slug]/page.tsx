@@ -90,6 +90,7 @@ export default async function PostPage({ params }: { params: Promise<{ slug: str
                 source={content}
                 components={mdxComponents}
                 options={{
+                    blockJS: false,
                     mdxOptions: {
                         rehypePlugins: [[rehypeImgSize as never, { dir: 'public' }]],
                     },

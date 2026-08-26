@@ -40,10 +40,17 @@ export async function generateMetadata(): Promise<Metadata> {
         },
     };
 }
-
 export default function GalleryPage() {
     const fileContents = fs.readFileSync(filePath, 'utf8');
     const { content } = matter(fileContents);
 
-    return <MDXRemote source={content} components={mdxComponents} />;
+    return (
+        <MDXRemote
+            source={content}
+            components={mdxComponents}
+            options={{
+                blockJS: false,
+            }}
+        />
+    );
 }

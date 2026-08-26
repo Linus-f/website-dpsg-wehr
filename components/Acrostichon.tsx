@@ -1,6 +1,9 @@
 import { ArcostData } from '@/types';
 
-export default function Acrostichon({ data }: { data: ArcostData[] }) {
+export default function Acrostichon({ data = [] }: { data?: ArcostData[] }) {
+    if (!data || !Array.isArray(data)) {
+        return null;
+    }
     const rows = data.map((item, i) => {
         return (
             <div key={i} className="flex justify-center align-middle items-center">

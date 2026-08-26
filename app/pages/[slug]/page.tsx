@@ -64,6 +64,7 @@ export default async function GenericPage({ params }: { params: Promise<{ slug: 
                 source={content}
                 components={mdxComponents}
                 options={{
+                    blockJS: false,
                     mdxOptions: {
                         rehypePlugins: [[rehypeImgSize as never, { dir: 'public' }]],
                     },

@@ -16,8 +16,9 @@ export default function Providers({ children }: { children: React.ReactNode }) {
     const [sidebarOpen, setSidebarOpen] = useState(false);
     const [index, setIndex] = useState(0);
     const pathname = usePathname();
-
-    useEffect(() => {
+    const [prevPathname, setPrevPathname] = useState(pathname);
+    if (pathname !== prevPathname) {
+        setPrevPathname(pathname);
         if (lightBoxOpen) {
             setLightboxOpen(false);
             setSlides([]);
@@ -25,8 +26,7 @@ export default function Providers({ children }: { children: React.ReactNode }) {
         if (sidebarOpen) {
             setSidebarOpen(false);
         }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [pathname]);
+    }
 
     const openLightbox = (src: string) => {
         const images = document.querySelectorAll('img[data-lightbox="true"]');

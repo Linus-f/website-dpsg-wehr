@@ -64,6 +64,7 @@ export default async function GroupPage({ params }: { params: Promise<{ slug: st
                 source={content}
                 components={mdxComponents}
                 options={{
+                    blockJS: false,
                     mdxOptions: {
                         rehypePlugins: [[rehypeImgSize as never, { dir: 'public' }]],
                     },

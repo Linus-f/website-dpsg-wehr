@@ -14,6 +14,8 @@ export default [
             'out/**',
             'node_modules/**',
             'coverage/**',
+            'test-results/**',
+            'playwright-report/**',
             'postcss.config.js',
             'tailwind.config.js',
         ],

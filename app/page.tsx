@@ -17,6 +17,7 @@ export default async function Home() {
                     source={content}
                     components={mdxComponents}
                     options={{
+                        blockJS: false,
                         mdxOptions: {
                             rehypePlugins: [[rehypeImgSize as never, { dir: 'public' }]],
                         },
