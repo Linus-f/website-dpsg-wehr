@@ -26,34 +26,22 @@ fi
 if [ ! -f .env ]; then
     echo "📝 Creating .env from .env.example..."
     cp .env.example .env
-    echo "⚠️  Action Required: Please edit .env and add your NEXT_PUBLIC_GITHUB_TOKEN."
+    echo "⚠️  Action Required: Check .env and configure GHCR / Token settings if needed."
 else
     echo "✅ .env already exists."
 fi
 
-# 2. Setup .htpasswd
-if [ ! -f auth/.htpasswd ]; then
-    echo "🔒 Setting up Basic Auth (auth/.htpasswd)..."
-    mkdir -p auth
-    
-    # Check if htpasswd tool exists
-    if command -v htpasswd &> /dev/null; then
-        read -p "Enter username for Admin Panel: " username
-        if htpasswd -c auth/.htpasswd "$username"; then
-            echo "✅ auth/.htpasswd created."
-        else
-            echo "❌ Error: Failed to create auth/.htpasswd."
-            exit 1
-        fi
-    else
-        echo "⚠️  'htpasswd' command not found."
-        echo "   Please create auth/.htpasswd manually or install apache2-utils."
-        echo "   Format: username:hashed_password"
-        cp .htpasswd.example auth/.htpasswd
-        echo "✅ auth/.htpasswd created from example (Action required: Update manually)."
-    fi
+# 2. Setup Webhook hooks.json
+if [ ! -f scripts/hooks.json ]; then
+    echo "🔗 Creating scripts/hooks.json from template..."
+    cp scripts/hooks.json.template scripts/hooks.json
+    echo "⚠️  Action Required: Update the secret token in scripts/hooks.json."
 else
-    echo "✅ auth/.htpasswd already exists."
+    echo "✅ scripts/hooks.json already exists."
 fi
 
-echo "🎉 Setup complete! Don't forget to edit .env before starting the container."
+# 3. Create required directories
+mkdir -p public/generated
+chmod 755 public/generated
+
+echo "🎉 Setup complete! Configure .env and scripts/hooks.json, then run 'docker compose up -d'."

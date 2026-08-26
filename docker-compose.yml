@@ -12,7 +12,6 @@ services:
                 failure_action: rollback
                 delay: 5s
         volumes:
-            - ./auth:/etc/nginx/auth:ro
             - ./public/generated:/usr/share/nginx/html/generated:ro
         networks:
             - proxy
@@ -33,6 +32,39 @@ services:
             # Service Port
             - 'traefik.http.services.dpsg-website.loadbalancer.server.port=80'
 
+    website-dev:
+        image: ghcr.io/linus-f/website-dpsg-wehr:dev
+        restart: unless-stopped
+        deploy:
+            mode: replicated
+            replicas: 1
+            update_config:
+                order: start-first
+                failure_action: rollback
+                delay: 5s
+        volumes:
+            - ./public/generated:/usr/share/nginx/html/generated:ro
+        networks:
+            - proxy
+        healthcheck:
+            test: ['CMD-SHELL', 'curl -f http://127.0.0.1/ || exit 1']
+            interval: 30s
+            timeout: 10s
+            retries: 3
+            start_period: 5s
+        labels:
+            - 'traefik.enable=true'
+            - 'traefik.docker.network=proxy'
+            # HTTPS Router
+            - 'traefik.http.routers.dpsg-website-dev-secure.entrypoints=https'
+            - 'traefik.http.routers.dpsg-website-dev-secure.rule=Host(`${DEV_DOMAIN:-dev.dpsg-wehr.de}`)'
+            - 'traefik.http.routers.dpsg-website-dev-secure.tls=true'
+            - 'traefik.http.routers.dpsg-website-dev-secure.tls.certresolver=le_http'
+            # Authentik Forward-Auth Middleware
+            - 'traefik.http.routers.dpsg-website-dev-secure.middlewares=${AUTHENTIK_MIDDLEWARE:-authentik@docker}'
+            # Service Port
+            - 'traefik.http.services.dpsg-website-dev.loadbalancer.server.port=80'
+
     webhook:
         build:
             context: .
@@ -48,15 +80,7 @@ services:
             - '9000:9000'
         restart: unless-stopped
 
-    # Temporary service for generating ICS files
-    generator:
-        image: node:22-alpine
-        volumes:
-            - ${HOST_PROJECT_PATH:-.}:/app
-        working_dir: /app
-        profiles:
-            - tools # Ensure this doesn't start with 'docker compose up'
-
 networks:
     proxy:
         external: true
+

@@ -8,16 +8,6 @@ import { mdxComponents } from '@/mdx-components';
 import Post from '@/components/Post';
 import rehypeImgSize from 'rehype-img-size';
 import { getExcerpt, getOptimizedImageMetadata } from '@/lib/metadata';
-import client from '@/tina/__generated__/client';
-import TinaContentClient from '@/components/TinaContentClient';
-import { createClient } from 'tinacms/dist/client';
-import { queries } from '@/tina/__generated__/types';
-
-const localClient = createClient({
-    url: 'http://localhost:9005/graphql',
-    token: 'dummy',
-    queries,
-});
 
 export async function generateStaticParams() {
     const posts = getPostMetadata();
@@ -89,51 +79,22 @@ export async function generateMetadata({
 
 export default async function PostPage({ params }: { params: Promise<{ slug: string }> }) {
     const { slug } = await params;
-
     const postMetadata = getPostMetadata();
+    const filePath = path.join(process.cwd(), 'content/posts', `${slug}.mdx`);
+    const fileContents = fs.readFileSync(filePath, 'utf8');
+    const { content } = matter(fileContents);
 
-    let tinaData;
-    try {
-        try {
-            tinaData = await client.queries.post({ relativePath: `${slug}.mdx` });
-        } catch (e) {
-            if (process.env.NODE_ENV === 'development') {
-                // eslint-disable-next-line no-console
-                console.log('Default Tina client failed, trying localhost:9005 fallback...');
-                tinaData = await localClient.queries.post({ relativePath: `${slug}.mdx` });
-            } else {
-                throw e;
-            }
-        }
-
-        return (
-            <TinaContentClient
-                data={JSON.parse(JSON.stringify(tinaData.data))}
-                query={tinaData.query}
-                variables={tinaData.variables}
-                contentType="post"
-                postMetadata={postMetadata}
+    return (
+        <Post postMetadata={postMetadata} slug={slug}>
+            <MDXRemote
+                source={content}
+                components={mdxComponents}
+                options={{
+                    mdxOptions: {
+                        rehypePlugins: [[rehypeImgSize as never, { dir: 'public' }]],
+                    },
+                }}
             />
-        );
-    } catch (e) {
-        // eslint-disable-next-line no-console
-        console.error('TINA_FETCH_ERROR: Falling back to MDXRemote', e);
-        const filePath = path.join(process.cwd(), 'content/posts', `${slug}.mdx`);
-        const fileContents = fs.readFileSync(filePath, 'utf8');
-        const { content } = matter(fileContents);
-
-        return (
-            <Post postMetadata={postMetadata} slug={slug}>
-                <MDXRemote
-                    source={content}
-                    components={mdxComponents}
-                    options={{
-                        mdxOptions: {
-                            rehypePlugins: [[rehypeImgSize as never, { dir: 'public' }]],
-                        },
-                    }}
-                />
-            </Post>
-        );
-    }
+        </Post>
+    );
 }

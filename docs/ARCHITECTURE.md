@@ -2,114 +2,80 @@
 
 ## Overview
 
-The DPSG Wehr website is a **Statically Generated (SSG)** Next.js application designed for high performance, low maintenance, and easy hosting. It uses **TinaCMS** for content management, but with a unique "Split Brain" architecture to balance the convenience of Tina Cloud with the requirement for self-hosted, optimized images.
+The DPSG Wehr website is a **Statically Generated (SSG)** Next.js application designed for high performance, low maintenance, and simple hosting. Content is written in Markdown / MDX files stored in the repository.
 
 ## Architecture Diagram
 
 ```mermaid
 graph TD
     subgraph "Production (VPS)"
-        User[Visitor] -->|HTTPS| Nginx
-        Admin[Content Editor] -->|HTTPS + Basic Auth| Nginx
+        User[Visitor] -->|HTTPS| Traefik[Traefik Proxy]
+        Traefik -->|HTTP| Nginx[Nginx Container: website]
         Nginx -->|Static Files| Storage[Disk /out]
-
-        subgraph "Docker Container"
-            Storage
-        end
     end
 
-    subgraph "TinaCMS Ecosystem"
-        AdminBrowser["Admin SPA (Browser)"]
-        TinaCloud["Tina Cloud Identity & Content API"]
-        GitHubAPI["GitHub API"]
+    subgraph "Dev / Staging (VPS)"
+        DevUser[Authorized User] -->|HTTPS| Traefik
+        Traefik -->|Forward Auth| Authentik[Authentik]
+        Traefik -->|HTTP| NginxDev[Nginx Container: website-dev]
     end
 
     subgraph "CI/CD (GitHub Actions)"
-        PR[Pull Request] --> Tests
-        PushMain[Push to Main] --> Release
-        Release --> DockerBuild
-        DockerBuild --> GHCR[GitHub Container Registry]
+        PR[Pull Request] --> Tests[Tests & Build Check]
+        PushDev[Push to dev] --> DockerBuildDev[Build & Tag :dev]
+        DockerBuildDev --> GHCR[GitHub Container Registry]
+        DockerBuildDev -->|Trigger Webhook (dev)| Webhook[VPS Webhook Service]
+        PushMain[Push to main] --> Release[Semantic Release]
+        Release --> DockerBuild[Build Next.js SSG + Optimize Images]
+        DockerBuild --> GHCR
+        DockerBuild -->|Trigger Webhook (prod)| Webhook
+        Webhook -->|docker compose pull & up| Nginx
+        Webhook -->|docker compose pull & up| NginxDev
     end
-
-    %% Flows
-    Admin -->|1. Load Admin SPA| AdminBrowser
-    AdminBrowser -->|2. Authenticate| TinaCloud
-    AdminBrowser -->|3. Fetch Content| TinaCloud
-    AdminBrowser -->|4. Upload Media| GitHubAPI
-
-    %% Media Flow
-    GitHubAPI -->|5. Commit Image| Repo[GitHub Repo]
-    Repo -->|6. Trigger Build| PR
-
-    %% Build Process
-    PR -->|Build| NextBuild["Next.js Build"]
-    NextBuild -->|Optimize| Optimizer[next-image-export-optimizer]
-    Optimizer -->|Output| StaticHTML["Static HTML + WEBP"]
 ```
 
-## The "Hybrid" CMS Configuration
+## Content Management
 
-We use TinaCMS in a hybrid mode. Standard Tina Cloud setups host both content and media. We split this:
+Content is managed directly in Markdown/MDX within the `content/` directory:
 
-| Feature            | Provider             | Reason                                                                                                                        |
-| :----------------- | :------------------- | :---------------------------------------------------------------------------------------------------------------------------- |
-| **Authentication** | Tina Cloud           | Easy login, role management, secure.                                                                                          |
-| **Content (MDX)**  | Tina Cloud           | API-based editing, Git syncing, no local backend needed in prod.                                                              |
-| **Media (Images)** | **Custom Git Store** | Tina Cloud images (`assets.tina.io`) cannot be optimized by `next-image-export-optimizer` at build time. We need local paths. |
+- `content/pages/`: Static generic pages (e.g. `startseite.mdx`, `impressum.mdx`).
+- `content/posts/`: News posts and blog entries.
+- `content/gruppen/`: Youth group pages (e.g. `woelflinge.mdx`, `rover.mdx`).
+- `content/global/index.json`: Global navigation and footer link structure.
 
-### 1. The Custom Media Store (`tina/git-media-store.ts`)
+## Build Pipeline
 
-Instead of uploading to Tina Cloud, our custom store:
+When running `pnpm build` or in GitHub Actions:
 
-1.  Accepts a file upload in the CMS.
-2.  Uses the **GitHub API** (via a Personal Access Token) to PUT the file directly into `public/media/...`.
-3.  Returns the **Local Path** (e.g., `/media/images/camp.jpg`) to the CMS.
-4.  Provides a `raw.githubusercontent.com` URL for the CMS preview.
-
-**Result:** The MDX file saved to Git looks like this:
-
-```yaml
-image: /media/images/camp.jpg
-```
-
-This allows our build pipeline to see the file locally and generate optimized `WEBP` versions.
-
-### 2. Security Model
-
-The Custom Media Store runs in the **browser**. This means it needs the `GITHUB_TOKEN` to be available client-side.
-
-- **Risk:** If the `/admin` page is public, anyone can view source and steal the Token.
-- **Mitigation:** We protect the `/admin` route with **Nginx Basic Auth**.
-    - The credentials live in `.htpasswd` on the VPS.
-    - Only authorized users can even load the JavaScript that contains the token.
-
-## Build Pipeline (CI vs. Production)
-
-### Local / CI Build (`TINA_PUBLIC_IS_LOCAL=true`)
-
-When running `pnpm build:ci` (in GitHub Actions) or `pnpm dev`:
-
-- **Tina Mode:** Local.
-- **Content Source:** Local filesystem (via a local GraphQL server running on port 4001).
-- **Auth:** Disabled (`--skip-cloud-checks`).
-- **Goal:** Verify that the _current code and content on disk_ builds correctly.
-
-### Production Build (`TINA_PUBLIC_IS_LOCAL=false`)
-
-When running on the VPS or targeting production:
-
-- **Tina Mode:** Production.
-- **Content Source:** Tina Cloud (for the Admin SPA configuration).
-- **Static Generation:** Still builds from the _files on disk_ (checked out from Git).
-- **Goal:** Produce the static HTML and the Admin SPA configured to talk to Tina Cloud.
+1. **ICS Generation:** Generates public (and optional internal) `.ics` calendar files via `scripts/generate-ics.ts`.
+2. **Search Indexing:** Generates Fuse.js search index via `scripts/generate-search-index.ts`.
+3. **Next.js Export:** Exports static HTML/JS/CSS to `out/`.
+4. **Image Optimization:** Optimizes and converts images to WebP via `next-image-export-optimizer`.
+5. **CSS Inlining:** Inlines critical CSS for fast rendering via `scripts/inline-css.mjs`.
 
 ## Deployment Workflow
 
-1.  **Code Change:** Push to `main`.
-2.  **Semantic Release:** Bumps version, updates `CHANGELOG.md`.
-3.  **Docker Build:** Builds the `website-dpsg-wehr` image (Standard `node:22` build -> Nginx image).
-4.  **Webhook:** The VPS receives a webhook (via Watchtower or custom script).
-5.  **Deploy:** `docker compose up -d`.
+### 1. Production Deployment (`main` branch)
+
+1. **Code Change:** Commit and push to `main` (or merge PR into `main`).
+2. **Release Workflow:** Semantic Release bumps version and creates release tag.
+3. **Docker Build Workflow:**
+    - Builds static export in GitHub Actions runner.
+    - Packages `out/` into lightweight `nginx:alpine` image.
+    - Pushes image to GHCR with semver & `latest` tags.
+    - Calls the VPS webhook endpoint (`ref: main`).
+4. **VPS Deploy:** The VPS pulls the latest image and performs a zero-downtime rolling update (`docker compose up -d website`).
+
+### 2. Test / Dev Deployment (`dev` branch)
+
+1. **Code Change:** Commit and push to `dev`.
+2. **Docker Build Workflow:**
+    - Builds static export in GitHub Actions runner.
+    - Packages `out/` into `nginx:alpine` image.
+    - Pushes image to GHCR with `dev` and `dev-<sha>` tags.
+    - Calls the VPS webhook endpoint (`ref: dev`).
+3. **VPS Deploy:** The VPS pulls the `:dev` image and updates the dev container (`docker compose up -d website-dev`).
+4. **Authentication & Routing:** Traefik routes the test subdomain (`DEV_DOMAIN`, e.g. `dev.dpsg-wehr.de`) through the configured Authentik forward-auth middleware (`AUTHENTIK_MIDDLEWARE`, e.g. `authentik@docker`), restricting access to authenticated users.
 
 ## Developer Setup
 
@@ -117,24 +83,14 @@ When running on the VPS or targeting production:
 
 - Node.js 22+
 - pnpm 10+
-- Docker (optional, for local prod testing)
 
 ### Local Development
 
-1.  `cp .env.example .env` (Ask lead dev for values).
-2.  `pnpm install`
-3.  `pnpm dev`
-    - Starts Next.js on `3000`.
-    - Starts Tina Local Server on `4001`.
-    - Starts Tina Datalayer on `9000` (ensure port is free!).
+1. `pnpm install`
+2. `pnpm dev` (Runs at `http://localhost:3000`)
 
 ### VPS Setup
 
-1.  Clone repo.
-2.  Run `./scripts/setup-vps.sh` to generate `.env` and `.htpasswd`.
-3.  Add `NEXT_PUBLIC_GITHUB_TOKEN` to `.env`.
-4.  `docker compose up -d`.
-
-## Feature Guides
-
-- [Internal Calendar & Event Management](./INTERNAL_CALENDAR.md) - How the secure dual-calendar system works.
+1. Clone repo.
+2. Run `./scripts/setup-vps.sh` to initialize `.env` and `scripts/hooks.json`.
+3. Start stack: `docker compose up -d`.

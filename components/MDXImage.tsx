@@ -1,4 +1,3 @@
-import { DetailedHTMLProps, ImgHTMLAttributes } from 'react';
 import Img from './Img';
 
 export default function MDXImage(props: {

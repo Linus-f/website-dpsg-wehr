@@ -6,26 +6,6 @@ RUN npm install -g pnpm
 
 ENV NEXT_TELEMETRY_DISABLED=1
 
-# Build Arguments
-ARG NEXT_PUBLIC_TINA_CLIENT_ID
-ARG TINA_TOKEN
-ARG NEXT_PUBLIC_GITHUB_TOKEN
-ARG NEXT_PUBLIC_REPO_OWNER
-ARG NEXT_PUBLIC_REPO_NAME
-ARG NEXT_PUBLIC_REPO_BRANCH
-ARG INTERNAL_ICS_TOKEN
-
-# Set Environment Variables for Build
-ENV NEXT_PUBLIC_TINA_CLIENT_ID=$NEXT_PUBLIC_TINA_CLIENT_ID
-ENV TINA_TOKEN=$TINA_TOKEN
-ENV NEXT_PUBLIC_GITHUB_TOKEN=$NEXT_PUBLIC_GITHUB_TOKEN
-ENV NEXT_PUBLIC_REPO_OWNER=$NEXT_PUBLIC_REPO_OWNER
-ENV NEXT_PUBLIC_REPO_NAME=$NEXT_PUBLIC_REPO_NAME
-ENV NEXT_PUBLIC_REPO_BRANCH=$NEXT_PUBLIC_REPO_BRANCH
-ENV INTERNAL_ICS_TOKEN=$INTERNAL_ICS_TOKEN
-# Disable local mode to ensure we use the provided cloud credentials
-ENV TINA_PUBLIC_IS_LOCAL=false
-
 # Image Optimization Environment Variables
 ENV nextImageExportOptimizer_imageFolderPath="public/media/images"
 ENV nextImageExportOptimizer_exportFolderPath="out"
@@ -33,8 +13,8 @@ ENV nextImageExportOptimizer_exportFolderName="nextImageExportOptimizer"
 ENV nextImageExportOptimizer_quality="60"
 ENV nextImageExportOptimizer_storePicturesInWEBP="true"
 ENV nextImageExportOptimizer_generateAndUseBlurImages="true"
-ENV nextImageExportOptimizer_imageSizes="16,32,48,64,96,128,256,384"
-ENV nextImageExportOptimizer_deviceSizes="640,828,1080,1200,1920,2048,3840"
+ENV nextImageExportOptimizer_imageSizes="16,64,128,256,384"
+ENV nextImageExportOptimizer_deviceSizes="640,1080,1920"
 
 WORKDIR /app
 
@@ -65,9 +45,6 @@ RUN apk add --no-cache curl
 
 # Copy custom Nginx config
 COPY nginx.conf /etc/nginx/conf.d/default.conf
-
-# Copy authentication file (if it exists in the build context)
-COPY auth/.htpasswd /etc/nginx/auth/.htpasswd
 
 # Copy static output from builder
 COPY --from=builder /app/out /usr/share/nginx/html

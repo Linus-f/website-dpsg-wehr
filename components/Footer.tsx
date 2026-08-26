@@ -1,17 +1,9 @@
 import ExportedImage from 'next-image-export-optimizer';
 import Link from 'next/link';
-import { client } from '@/tina/__generated__/client';
-import { createClient } from 'tinacms/dist/client';
-import { queries } from '@/tina/__generated__/types';
+import globalData from '@/content/global/index.json';
 
 import dpsgLogo from '@/public/dpsg.svg';
 import pkg from '@/package.json';
-
-const localClient = createClient({
-    url: 'http://localhost:9005/graphql',
-    token: 'dummy',
-    queries,
-});
 
 function SocialLink({
     children,
@@ -156,7 +148,7 @@ function FooterMain({
     );
 }
 
-export default async function Footer() {
+export default function Footer() {
     let social = {
         facebook: 'https://de-de.facebook.com/dpsgwehr/',
         instagram: 'https://www.instagram.com/pfadfinder_wehr/',
@@ -194,46 +186,27 @@ export default async function Footer() {
         },
     ];
 
-    try {
-        let tinaData;
-        try {
-            tinaData = await client.queries.global({ relativePath: 'index.json' });
-        } catch (e) {
-            if (process.env.NODE_ENV === 'development') {
-                // eslint-disable-next-line no-console
-                console.log('Default Tina client failed, trying localhost:9005 fallback...');
-                tinaData = await localClient.queries.global({ relativePath: 'index.json' });
-            } else {
-                throw e;
-            }
+    const footerData = globalData?.footer;
+    if (footerData) {
+        if (footerData.social) {
+            social = {
+                facebook: footerData.social.facebook || social.facebook,
+                instagram: footerData.social.instagram || social.instagram,
+            };
         }
-
-        const footerData = tinaData.data.global.footer;
-        if (footerData) {
-            if (footerData.social) {
-                social = {
-                    facebook: footerData.social.facebook || social.facebook,
-                    instagram: footerData.social.instagram || social.instagram,
-                };
-            }
-            if (footerData.columns) {
-                // eslint-disable-next-line @typescript-eslint/no-explicit-any
-                columns = footerData.columns.map((col: any) => ({
-                    title: col?.title || '',
-
-                    links:
-                        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-                        col?.links?.map((l: any) => ({
-                            text: l?.text || '',
-                            url: l?.url || '',
-                            external: !!l?.external,
-                        })) || [],
-                }));
-            }
+        if (footerData.columns) {
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
+            columns = footerData.columns.map((col: any) => ({
+                title: col?.title || '',
+                links:
+                    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+                    col?.links?.map((l: any) => ({
+                        text: l?.text || '',
+                        url: l?.url || '',
+                        external: !!l?.external,
+                    })) || [],
+            }));
         }
-    } catch (e) {
-        // eslint-disable-next-line no-console
-        console.error('Failed to fetch global footer', e);
     }
 
     return (

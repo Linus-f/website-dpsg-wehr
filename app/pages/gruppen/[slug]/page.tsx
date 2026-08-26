@@ -7,17 +7,6 @@ import { mdxComponents } from '@/mdx-components';
 import rehypeImgSize from 'rehype-img-size';
 import { getExcerpt } from '@/lib/metadata';
 
-import client from '@/tina/__generated__/client';
-import TinaContentClient from '@/components/TinaContentClient';
-import { createClient } from 'tinacms/dist/client';
-import { queries } from '@/tina/__generated__/types';
-
-const localClient = createClient({
-    url: 'http://localhost:9005/graphql',
-    token: 'dummy',
-    queries,
-});
-
 export async function generateStaticParams() {
     const folder = 'content/gruppen/';
     const files = fs.readdirSync(folder).filter((file) => file.endsWith('.mdx'));
@@ -65,36 +54,6 @@ export async function generateMetadata({
 
 export default async function GroupPage({ params }: { params: Promise<{ slug: string }> }) {
     const { slug } = await params;
-
-    let tinaData;
-    try {
-        try {
-            tinaData = await client.queries.gruppen({ relativePath: `${slug}.mdx` });
-        } catch (e) {
-            if (process.env.NODE_ENV === 'development') {
-                // eslint-disable-next-line no-console
-                console.log('Default Tina client failed, trying localhost:9005 fallback...');
-                tinaData = await localClient.queries.gruppen({ relativePath: `${slug}.mdx` });
-            } else {
-                throw e;
-            }
-        }
-    } catch (e) {
-        // eslint-disable-next-line no-console
-        console.error('Error fetching Tina data, falling back to MDXRemote', e);
-    }
-
-    if (tinaData) {
-        return (
-            <TinaContentClient
-                data={JSON.parse(JSON.stringify(tinaData.data))}
-                query={tinaData.query}
-                variables={tinaData.variables}
-                contentType="gruppen"
-            />
-        );
-    }
-
     const filePath = path.join(process.cwd(), 'content/gruppen', `${slug}.mdx`);
     const fileContents = fs.readFileSync(filePath, 'utf8');
     const { content } = matter(fileContents);

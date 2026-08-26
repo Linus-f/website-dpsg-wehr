@@ -16,7 +16,6 @@ export default [
             'coverage/**',
             'postcss.config.js',
             'tailwind.config.js',
-            'tina/__generated__/**',
         ],
     },
     js.configs.recommended,

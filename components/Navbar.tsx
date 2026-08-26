@@ -6,54 +6,28 @@ import logo from '@/public/media/images/logo.png';
 import { getIconFromname } from '@/lib/icons';
 import NavbarClient from './NavbarClient';
 import SearchButton from './SearchButton';
+import globalData from '@/content/global/index.json';
 
 import { NavigationLinkGroup, NavigationLink } from '@/types';
-import { client } from '@/tina/__generated__/client';
-import { createClient } from 'tinacms/dist/client';
-import { queries } from '@/tina/__generated__/types';
 import { Icons } from '@/lib/icons';
 
-const localClient = createClient({
-    url: 'http://localhost:9005/graphql',
-    token: 'dummy',
-    queries,
-});
-
-export default async function Navbar() {
+export default function Navbar() {
     let navLinks: NavigationLinkGroup[] = navigationLinks;
 
-    try {
-        let tinaData;
-        try {
-            tinaData = await client.queries.global({ relativePath: 'index.json' });
-        } catch (e) {
-            if (process.env.NODE_ENV === 'development') {
-                // eslint-disable-next-line no-console
-                console.log('Default Tina client failed, trying localhost:9005 fallback...');
-                tinaData = await localClient.queries.global({ relativePath: 'index.json' });
-            } else {
-                throw e;
-            }
-        }
-
-        if (tinaData.data.global.header?.nav) {
+    if (globalData?.header?.nav) {
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        navLinks = globalData.header.nav.map((item: any) => ({
+            label: item.label,
+            link: item.link,
+            Icon: item.icon as Icons,
             // eslint-disable-next-line @typescript-eslint/no-explicit-any
-            navLinks = tinaData.data.global.header.nav.map((item: any) => ({
-                label: item.label,
-                link: item.link,
-                Icon: item.icon as Icons,
-                // eslint-disable-next-line @typescript-eslint/no-explicit-any
-                links: item.links?.map((subItem: any) => ({
-                    label: subItem.label,
-                    link: subItem.link,
-                    Icon: subItem.icon as Icons,
-                    color: subItem.color,
-                })),
-            }));
-        }
-    } catch (e) {
-        // eslint-disable-next-line no-console
-        console.error('Failed to fetch global nav', e);
+            links: item.links?.map((subItem: any) => ({
+                label: subItem.label,
+                link: subItem.link,
+                Icon: subItem.icon as Icons,
+                color: subItem.color,
+            })),
+        }));
     }
 
     const renderedItems = navLinks.map((link: NavigationLinkGroup) => {
