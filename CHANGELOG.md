@@ -1,3 +1,9 @@
+# [1.19.0](https://github.com/Linus-f/website-dpsg-wehr/compare/v1.18.1...v1.19.0) (2026-08-26)
+
+### Features
+
+- **deploy:** add dev staging deployment behind authentik ([e56ac96](https://github.com/Linus-f/website-dpsg-wehr/commit/e56ac96cb7c5fec2db5b36185a96787df1c510ff))
+
 ## [1.18.1](https://github.com/Linus-f/website-dpsg-wehr/compare/v1.18.0...v1.18.1) (2025-12-31)
 
 ### Bug Fixes
